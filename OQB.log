@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=latex 2011.1.18)  7 FEB 2011 09:35
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=latex 2011.1.18)  11 FEB 2011 11:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**OQB.tex
+**OQB
 (./OQB.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
@@ -922,6 +922,6 @@ Here is how much of TeX's memory you used:
  11894 multiletter control sequences out of 15000+200000
  14053 words of font info for 50 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 55i,12n,92p,1207b,562s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,12n,92p,1203b,562s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on OQB.dvi (78 pages, 171896 bytes).
+Output written on OQB.dvi (78 pages, 173080 bytes).

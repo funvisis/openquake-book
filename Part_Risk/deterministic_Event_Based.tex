@@ -96,14 +96,33 @@ Where $E[LR]$ stands for the mean loss ratio computed previously.
 
 \section{Method B}
 \subsection{Description}
-In this approach, for each ground motion field, the intensity measure level at a given site is used to calculate the mean and standard deviation of loss ratio using the vulnerability functions for each asset contained in the exposure file. Using these results, the mean and standard deviation of loss ratio across all events can be calculated. Again, loss ratios are converted into losses by multiplying by the value of the asset given in the exposure file. For this method, it is possible to aggregate the losses throughout the region and to compute the standard deviation of the aggregated loss. 
+In this approach, for each ground motion field, the intensity measure level at a given site is combined with a vulnerability function to randomly sample a loss ratio for each asset typology defined in the exposure file. contained in the exposure model. These loss ratios that are sampled for a given typology at different locations are considered to be independent or fully correlated, knowing that the reality is likely to lie somewhere in between these two assumptions. Using these results, the mean and standard deviation of loss ratio across all events can be calculated. Again, loss ratios are converted into losses by multiplying by the value of the asset given in the exposure file. For this method, it is possible to aggregate the losses throughout the region and to compute the standard deviation of the aggregated loss. 
 
 \subsection{Calculation workflow}
 
 To compute the mean loss:
 
 \begin{enumerate}
-\item For each ground motion field, the intensity measure levels are related with the vulnerability functions to compute the mean loss ratio for each asset. Since currently the vulnerability functions are being defined in a discrete way, it is quite probable that the intensity measure level provided by the ground motion field is not contained in the vulnerability function. In these cases, linear interpolation methods are being employed to derive the mean loss ratio at the intensity measure level of interest.
+\item For each ground motion field, the intensity measure level at the location of the asset is used to derived the mean loss ratio and associated coefficient of variation from the vulnerability function. Since currently the vulnerability functions are being defined in a discrete way, it is quite probable that the intensity measure level provided by the ground motion field is not contained in the vulnerability function. In these cases, linear interpolation methods are being employed to derive the mean loss ratio at the intensity measure level of interest. Once these two parameters are known, the sampling of the loss ratio is done following the probabilistic distribution of the respective vulnerability function, as described bellow:
+
+\begin{equation}
+\log{LR_n} = \mu + \epsilon\sigma
+\end{equation}
+
+Where $\mu$ and $\sigma$ stand for the mean and standard deviation of the logarithm of the loss ratios respectively and $\epsilon$ is a term that has a standard normal distribution with a zero mean and a standard deviation of one.  
+
+The method used to sample this parameter can follow two approaches depending on whether the correlation between the vulnerability of similar asset typologies is to be considered or not:
+
+\begin{itemize}
+
+\item Perfectly correlated: the term $\epsilon$ is randomly sampled once for the first asset and this result is used to derive the loss ratio for all the assets of the same typology. 
+
+\item Uncorrelated: the term $\epsilon$ is always randomly sampled for each asset and therefore the correlation between the vulnerability of the assets is ignored.
+
+\end{itemize}
+
+It is expected that the true level of correlation lies somewhere between these two assumptions, and thus they provide boundaries to the expected output. 
+
 
 \item The mean loss ratio for each asset across all possible simulations of the deterministic event can be calculated through the formula:
 
@@ -121,24 +140,10 @@ To compute the standard deviation of the loss:
 
 \begin{enumerate}
 
-\item Again, the total probability theorem is employed. $E[LR_n^2]$ is computed using the following formula:
+\item In order to compute the uncertainty, the engine takes the set of loss ratios for each asset, and computes the associated standard deviation using the classical formula:
 
 \begin{equation}
-E[LR_n^2]=SD[LR_n]^2+E[LR_n]^2
-\end{equation}
-
-Where $SD[LR_n]$ stands for the standard deviation of the distribution of loss ratios and $E[LR_n]$ stands for the mean loss ratio (for each ground motion field).
-
-\item Then, the total $E[LR^2]$ can be derived using the formula:
-
-\begin{equation}
-E[LR^2]=\frac{\sum_{n=1}^m E[LR_n]^2}{m}
-\end{equation}
-
-\item The standard deviation of the loss ratio can be computed using the expression:
-
-\begin{equation}
-SD[LR]=\sqrt{E[LR^2]-E[LR]^2}
+SD[LR]=\sqrt{  \frac{1}{m}\sum_{n=1}^m{(LR_n-E[LR])^2} }
 \end{equation}
 
 Where $E[LR]$ stands for the mean loss ratio computed previously.
