@@ -1,5 +1,5 @@
 \section{Description}
-The Classical PSHA-based risk calculator can be used to determine loss exceedance curves under certain conditions (usually for single site loss assessments). This calculator takes the configuration information, one or several vulnerability models, information describing the assets and using hazard curves, either contained in a file or computed using a PSHA input model, computes a loss exceedance curve for each asset. The following scheme illustrates the architecture of this calculator:
+The Classical PSHA-based risk calculator can be used to determine loss exceedance curves under certain conditions (usually for single site loss assessments). This calculator takes the configuration information, one or several vulnerability models, information describing the assets and using hazard curves, either contained in a file or computed using a PSHA input model, computes a loss exceedance curve for each asset. Figure \ref{fig:Scheme_PSHA_calc} illustrates the architecture of this calculator:
 
 \begin{figure}[ht]
 \centering
@@ -28,13 +28,13 @@ The Classical PSHA-based risk calculator can be used to determine loss exceedanc
 PO= PE[lower bound]-PE[upper bound]
 \end{equation}
 
-\item The discrete vulnerability functions for each asset are converted into loss ratio exceedance matrices (e.g. matrices which describe the probability of exceedance of each loss ratio for a discrete set of intensity measure levels). These matrices have a number of columns equal to the number of intensity measure levels defined on the vulnerability function and a number of rows that can go from the number of loss ratios defined by the discrete function, up to any multiple of this number. In order to properly incorporate the probabilistic distribution of loss ratios per intensity measure level, the probabilities of exceedance should be computed not just for the loss ratios defined on the vulnerability function, but also for many intermediate values between consecutive loss ratios. Currently, following a number of sensitivity analyses, the OpenQuake engine considers 5 intermediate values between consecutive loss ratios, however, this is a parameter that will be adjustable by the user. The following figure contains an example of a discrete vulnerability function and the respective loss ratio exceedance matrix (in light gray):
+\item The discrete vulnerability functions for each asset are converted into loss ratio exceedance matrices (e.g. matrices which describe the probability of exceedance of each loss ratio for a discrete set of intensity measure levels). These matrices have a number of columns equal to the number of intensity measure levels defined on the vulnerability function and a number of rows that can go from the number of loss ratios defined by the discrete function, up to any multiple of this number. In order to properly incorporate the probabilistic distribution of loss ratios per intensity measure level, the probabilities of exceedance should be computed not just for the loss ratios defined on the vulnerability function, but also for many intermediate values between consecutive loss ratios. Currently, following a number of sensitivity analyses, the OpenQuake engine considers 5 intermediate values between consecutive loss ratios, however, this is a parameter that will be adjustable by the user. Figure \ref{fig:LREM} contains an example of a discrete vulnerability function and the respective loss ratio exceedance matrix (in light gray):
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=10cm,height=6cm]{./Figures/Part_Risk/LREM.eps}
 \caption{Example of a discrete vulnerability function and respective loss ratio exceedance matrix.}
-\label{fig: LREM}
+\label{fig: v}
 \end{figure}
 
 Note that for this example only one intermediate value was considered between consecutive loss ratios and in order to consider the whole distribution of the loss ratios, the matrix was computed considering a minimum and maximum loss ratio of 0 and 1 respectively.

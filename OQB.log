@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=latex 2011.1.18)  11 FEB 2011 11:30
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=latex 2011.1.18)  10 MAR 2011 10:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**OQB
+**OQB.tex
 (./OQB.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
@@ -796,16 +796,18 @@ File: ./Figures/Part_Risk/Scheme_PSHA_calc.eps Graphic file (type eps)
 File: ./Figures/Part_Risk/ProbOccurrence.eps Graphic file (type eps)
 
 <./Figures/Part_Risk/ProbOccurrence.eps>
+
+LaTeX Warning: Reference `fig:LREM' on page 52 undefined on input line 31.
+
 File: ./Figures/openquake_logo1.eps Graphic file (type eps)
- <./Figures/openquake_logo1.eps>
-[52]
+<./Figures/openquake_logo1.eps> [52]
 File: ./Figures/Part_Risk/LREM.eps Graphic file (type eps)
  <./Figures/Part_Risk/LREM.eps>
 File: ./Figures/openquake_logo1.eps Graphic file (type eps)
- <./Figures/openquake_logo1.eps> [53])
-File: ./Figures/openquake_logo1.eps Graphic file (type eps)
 
-<./Figures/openquake_logo1.eps> [54]
+<./Figures/openquake_logo1.eps> [53])
+File: ./Figures/openquake_logo1.eps Graphic file (type eps)
+ <./Figures/openquake_logo1.eps> [54]
 Chapter 12.
 (./Part_Risk/Probabilistic_Event_Based.tex
 File: ./Figures/Part_Risk/Scheme_Prob_calc.eps Graphic file (type eps)
@@ -914,14 +916,17 @@ Overfull \hbox (0.36896pt too wide) in paragraph at lines 319--321
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 8789 strings out of 493748
- 129868 string characters out of 3143569
+ 8790 strings out of 493748
+ 129887 string characters out of 3143569
  270234 words of memory out of 3000000
- 11894 multiletter control sequences out of 15000+200000
+ 11895 multiletter control sequences out of 15000+200000
  14053 words of font info for 50 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 55i,12n,92p,1203b,562s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,12n,92p,1217b,562s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on OQB.dvi (78 pages, 173080 bytes).
+Output written on OQB.dvi (78 pages, 173460 bytes).
