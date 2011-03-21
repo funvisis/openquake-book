@@ -12,6 +12,29 @@
   timestamp = {2011.01.31}
 }
 
+@ARTICLE{Calvi1999,
+  author = {Calvi, G. M.},
+  title = {A displacement-based approach for the vulnerability evaluation of
+	classes of buildings},
+  journal = {Journal of Earthquake Engineering},
+  year = {1999},
+  volume = {26},
+  pages = {1091-1112},
+  owner = {vitorsilva},
+  timestamp = {2011.03.14}
+}
+
+@CONFERENCE{CrowleyPinho2006,
+  author = {Crowley, H. and Pinho, R.},
+  title = {Simplified equations for estimating the period of vibration of existing
+	buildings},
+  booktitle = {Proceedings of the 1st European Conference on Earthquake Engineering
+	and Seismology, Geneva, Switzerland, paper no 1122},
+  year = {2006},
+  owner = {vitorsilva},
+  timestamp = {2011.03.19}
+}
+
 @ARTICLE{CrowleyPinho2004,
   author = {Crowley, H. and Pinho, R.},
   title = {Period-height relationship for existing European reinforced concrete
@@ -24,6 +47,27 @@
   timestamp = {2011.01.25}
 }
 
+@ARTICLE{Crowleyetal2004,
+  author = {Crowley, H. and Pinho, R. and Bommer, J.},
+  title = {A probabilistic displacement-based vulnerability assessment procedure
+	for earthquake loss estimation},
+  journal = {Bulletin of Earthquake Engineering},
+  year = {2004},
+  volume = {2},
+  pages = {173-219},
+  owner = {vitorsilva},
+  timestamp = {2011.03.14}
+}
+
+@BOOK{Crowleyetal2006,
+  title = {Development of a Displacement-based Method for Earthquake Loss Assessment},
+  publisher = {IUSS Press, Pavia, Italy},
+  year = {2006},
+  author = {Crowley, H. and Pinho, R. and Bommer, J.J. and Bird, J.F.},
+  owner = {vitorsilva},
+  timestamp = {2011.03.14}
+}
+
 @TECHREPORT{FEMA440ATC2005,
   author = {FEMA-440:ATC},
   title = {Improvement of Nonlinear Static Seismic Analysis Procedures,},
@@ -31,6 +75,77 @@
   year = {2005},
   owner = {vitorsilva},
   timestamp = {2011.01.25}
+}
+
+@ARTICLE{GlaisterPinho2003,
+  author = {Glaister, S. and Pinho, R.},
+  title = {Development of a simplified deformation based method for seismic
+	vulnerability assessment},
+  journal = {Journal of Earthquake Engineering},
+  year = {2003},
+  volume = {7},
+  pages = {107-140},
+  owner = {vitorsilva},
+  timestamp = {2011.03.14}
+}
+
+@MASTERSTHESIS{Kumar2008,
+  author = {Kumar, M.},
+  title = {Development of period-height and displacement capacity equations
+	for embedded beam structures},
+  school = {Rose School, Italy},
+  year = {2008},
+  owner = {vitorsilva},
+  timestamp = {2011.03.19}
+}
+
+@BOOK{PaulayPriestley1992,
+  title = {Seismic Design of Reinforced Concrete and Masonry Buildings},
+  publisher = {John Wiley and Sons, Inc., New York},
+  year = {1992},
+  author = {Paulay, T. and Priestley, M. J. N.},
+  owner = {vitorsilva},
+  timestamp = {2011.03.18}
+}
+
+@CONFERENCE{Pinhoetal2002,
+  author = {Pinho, R. and Bommer, J. and Glaister, S.},
+  title = {A simplified approach to displacement-based earthquake loss estimation
+	analysis},
+  booktitle = {Proceedings of the 12th European Conference on Earthquake Engineering,
+	London, UK, paper no 738},
+  year = {2002},
+  owner = {vitorsilva},
+  timestamp = {2011.03.14}
+}
+
+@ARTICLE{Priestley1997,
+  author = {Priestley, M. J. N.},
+  title = {Displacement-based seismic assessment of reinforced concrete buildings},
+  journal = {Journal of Earthquake Engineering},
+  year = {1997},
+  volume = {1},
+  pages = {157-192},
+  owner = {vitorsilva},
+  timestamp = {2011.03.16}
+}
+
+@BOOK{Priestleyetal2007,
+  title = {Displacement-based seismic design of structures},
+  publisher = {IUSS Press, Pavia, Italy},
+  year = {2007},
+  author = {Priestley, M. J. N. and Calvi, G. M. and Kowalsky, M. J.},
+  owner = {vitorsilva},
+  timestamp = {2011.03.16}
+}
+
+@BOOK{Sullivanetal2006,
+  title = {Seismic design of frame-wall structures},
+  publisher = {IUSS Press, Pavia, Italy},
+  year = {2006},
+  author = {Sullivan, T. J. and Priestley, M. J. N. and Calvi, G. M.},
+  owner = {vitorsilva},
+  timestamp = {2011.03.21}
 }
 
 @comment{jabref-meta: selector_publisher:}
