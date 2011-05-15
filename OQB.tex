@@ -66,7 +66,6 @@
 	\footnotesize #1]%
 	{\raggedright\footnotesize #1}}
 % Colors
-\usepackage{color}
 	%\definecolor{blue01}{rgb}{0,0,.5}
 	\definecolor{blue01}{RGB}{4,64,116}
 	\definecolor{blue02}{RGB}{0,62,113}
@@ -79,10 +78,7 @@
 	\definecolor{orange03}{rgb}{0.6941,0.1843,0.1333}
 \usepackage[english]{babel}
 %
-%\usepackage[colorlinks=true]{hyperref}
-%\usepackage{makeindex} % Used to create the index
-%	\makeindex
-\usepackage[square,colon]{natbib} % Used to 
+\usepackage[square,colon]{natbib} % Extend bibligraphy functions
 \usepackage[labelfont=bf]{caption} % Used to reformat section typesetting
 \usepackage{scrpage2}
 	\lofoot[]{\includegraphics[width=2.0cm]{./Figures/openquake_logo1.eps}}
@@ -242,17 +238,22 @@
 	\input{./Part_Hazard/introduction.tex}
 % ------------------------------------------------------------------------------
 \chapter{OpenQuake input description}
+	\label{chap:hazinp}
 	\input{./Part_Hazard/unifiedSeismicSourceDescription.tex}
 % ------------------------------------------------------------------------------
-\chapter{Processing the Source Model Logic Tree and the calculation of the Earthquake Rupture Forecast}
+\chapter{The Logic Tree Processor}
+	\label{chap:ltp}
+	\input{./Part_Hazard/logicTreeProcessor.tex}
+% ------------------------------------------------------------------------------
+\chapter{Creating the Earthquake Rupture Forecast}
 	\label{chap:erf}
 	\input{./Part_Hazard/eqk_Rupture_Forecast_Calculator.tex}
 % ------------------------------------------------------------------------------
-\chapter{Classical PSHA calculator}
+\chapter{PSHA calculators}
 	\input{./Part_Hazard/kernel_classical_PSHA.tex}
 % ------------------------------------------------------------------------------
-\chapter{Stochastic event set and ground motion field calculators}
-	\input{./Part_Hazard/kernel_Stochastic_PSHA.tex}
+%\chapter{Stochastic event set and ground motion field calculators}
+%	\input{./Part_Hazard/kernel_Stochastic_PSHA.tex}
 % ------------------------------------------------------------------------------
 \chapter{Wesson et al. [2009] risk calculation implementation}
 	\input{./Part_Hazard/wessonMethod.tex}

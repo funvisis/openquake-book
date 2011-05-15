@@ -1,43 +1,84 @@
-OpenQuake computes classical PSHA 
-\citep{cornell1968,mcguire2004} following the methodology presented by 
-\citet{field2003}. This methodology has the distinctive property of performing
-the entire calculation using probabilities, as originally proposed by 
-\citet{chiang1984}, instead of working with occurrence rates like in most 
-of the commonest PSHA codes \citep[see for instance][]{bender1987}. 
+OpenQuake computes probabilistic seismic hazard using two different methodologies: the classical one and a methodology based on stochastic event set generation.
+
+The classical PSHA methodology implemented \citep{cornell1968,mcguire2004} follows the formulation presented by \citet{field2003}. This particular formulation has the distinctive property of performing the entire calculation using probabilities, as also originally proposed by \citet{chiang1984}, instead of working with occurrence rates like in most of the commonest PSHA codes \citep[see for instance][]{bender1987}. 
 %
 The OpenSHA methodology has also the clear advantage of decoupling the creation of the probabilistic seismicity occurrence model (in the OpenSHA terminology this is defined as the Earthquake Rupture Forecast) from the assumption of a Poissonian temporal occurrence model. 
-
-As demonstrated by \citet{field2003} - under the the assumption that the contribution to hazard coming from multiple occurrences occurring on a given  seismic source is negligible i.e. the probability that a source will generate two or more occurrences within the time span fixed for the analysis is equal to zero - the calculation of hazard following this methodology is completely consistent with the most classical procedure.
+%
+By assuming that the contributions to hazard coming from multiple occurrences in a seismic source are negligible i.e. the probability that a source will generate two or more occurrences within the time span fixed for the analysis is equal to zero - as proposed by \citet{field2003} - the calculation of hazard following this methodology is completely consistent with the most classical procedure.
 % 
 \citet{pagani2007} proved that this assumption holds at least for some prototypal situations.
 
-Two are the main steps composing the OpenSHA seismic hazard calculation 
-procedure:
+Two are the main steps composing the classical PSHA calculation procedure embedded in OpenSHA (and thus OpenQuake): the creation of the Earthquake Rupture Forecast and the calculation of the hazard at the site.
+The creation of the Earthquake Rupture Forecast (i.e. the seismicity occurrence model) - corresponding to a list of all possible ruptures on each source incliuded in the model with associated probability of occurrence in a given time span - is a first step necessary also in the case of PSHA calculations based on a stochastic event set based methodology. The creation of the ERF is discussed in Chapter \ref{chap:erf} at page \pageref{chap:erf}.
+%
+The second phase in the classical PSHA approach correspons to the calculation of hazard at the site by combining the probabilistic seismicity occurrence model with a ground motion prediction equation (in the OpenSHA jargon also called Intensity Measure Relationship). It will be described in the following section (\ref{chap:classic_psha} at page \pageref{chap:classic_psha}).
+
+The stochastic event based PSHA calculation procedure resembles recent approaches proposed in the literature (see for example \citet{musson2000} and references therein). The major advantages of this approach are that (1) hazard can be directly linked to a sequence of earthquakes and (2) the residuals of ground motion on each investigated site 
+%
+This methodology is more extensively described in section \ref{chap:stochastic_psha} at page \pageref{chap:stochastic_psha}.
+
+%
+%-------------------------------------------------------------------------------
+\section{Classical PSHA calculator}
+\label{chap:classic_psha}
+%
+In the simplest case, the classical PSHA calculation kernel takes as input: 
 %
 \begin{itemize}
-\item Creation of the probabilistic seismicity occurrence model, i.e. a discrete 
-distribution giving the probability of occurrence - in a given time span - of each possible rupture occurring on one of the seismic sources defined in the PSHA input model. This step of the procedure was already discussed in 
-Chapter \ref{chap:erf} at page \pageref{chap:erf}.
 %
-\item Calculation of hazard at the site by combining the probabilistic 
-seismicity occurrence model with a ground motion prediction equation (also Intensity Measure Relationship in the OpenSHA jargon). This second step will be the topic of the current chapter.
-\end{itemize}
-%
-% --------------------------------------------------------------------------------
-\section{Hazard calculation: traditional formulation in terms of probabilities}
-In the simplest case, the classical PSHA calculation kernel takes as an input: 
-%
-\begin{itemize}
 \item An Earthquake Rupture Forecast (ERF - also called Probabilistic Seismicity Occurrence Model). An ERF is a list of all the possible ruptures occurring on all the seismic sources included in a Source Model. Each rupture $Rup$ is associated with a probability of occurrence $P(Rup|t)$ referred to the time span $t$ fixed for the analysis. 
+%
 \item A Ground Motion Prediction Equation (GMPE). A GMPE is an equation that - given some fundamental parameters characterizing the source, the propagation
 path and the site (in the simplest case magnitude, distance and V$_\text{S,30}$) - computes the value $GM$ of a (scalar) parameter describing ground motion intensity. $gm$ is always accompanied by a standard deviation value $\sigma_{gm,T}$ specifying the aleatoric variability associated to $gm$.
 \end{itemize}
+
+We start the description of the classical PSHA procedure by illustrating the calculation of the probability of exceedance of a ground motion value $gm$ in a investigation time $t$ at site $site$ given a rupture $rup$ within source $source$; $rup$ is a rupture produced by one of the seismic sources included in the Earthquake Rupture Forecast. 
 %
-Following \cite{field2003}, the exceedance of a value probabilities :
+This probability corresponds to the product between the probability of occurrence of $rup$ in a time $t$ and the conditional probability of exceeding $gm$ at $site$ given the occurrence of $rup$. Analytically this corresponds to:
+\begin{equation}
+P_{site,source,rup}(GM \geq gm|t) = P(Rup_{source}|t)\,P_{site}(GM\geq gm|Rup_{source})
+\label{eq:prob_gm_ex_one_rup}
+\end{equation}
+%
+Some notes regarding the equation above:
+\begin{itemize}
+\item The probability of exceedance of a value of ground motion $gm$ at $site$ given a rupture (i.e. $P_{site}(GM\geq gm|Rup_{source})$) is computed (1) by assuming that the logarithm of ground motion is normally distributed. The mean - $\overline{log(gm)}$ - of this distribution is computed with a ground motion prediction equation and the standard deviation $\sigma$ is usually provided with the adopted GMPE.
+\item The ground motion temporal occurrence is controlled by the manifestation of the rupture $rup$ during the investigation time $t$.  
+\end{itemize}
+
+%
+
+%
+If the source contains several ruptures that we assume mutually exclusive, the probability that at least one rupture will generate one exceedance corresponds to the difference between unity and the probability that none of the ruptures will generate an exceedence of $gm$:
+\begin{equation}
+P_{site,source}(GM\geq gm|t) = 1 - \sum_{}^{R} \Big( P(Rup|t)\,P_{site,source}(GM\geq gm|Rup) \Big)
+\label{eq:class_psha_1}
+\end{equation}
+$R$ corresponds to the number of ruptures. We compute the final value of hazard at the site $site$ by considering the contributions from the sources whose ruptures collectively create the ERF:
 %
 \begin{equation}
-P(U\geq u)= 
-	1-\prod\limits_{i=1}^{l} 
+P_{site}(GM \geq gm|t) = 1 - \prod_{}^{S} \Big( 1-P_{site,source}(GM\geq gm|Rup) \Big)
+\label{eq:class_psha_2}
+\end{equation}
+%
+$S$ corresponds to the number of seismic sources. Combining equations \ref{eq:class_psha_1} and \ref{eq:class_psha_2} we obtain \cite[][equation 4, page 410]{field2003}:
+%
+\begin{equation}
+P_{site}(GM\geq gm)=1-\prod\limits_{}^{S} 
+	\Big( 
+		1-\sum_{}^{R} \Big( P(Rup|t)\,P_{site}(GM\geq gm|Rup)
+	\Big)
+\label{eq:PSHA_calculation}
+\end{equation}
+
+%  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{Relaxing the assumption of a single rupture per source over the investigation time}
+%
+Let's start by considering equation A8 described in \citet{field2003}:
+%
+\begin{equation}
+P_{site}(GM\geq gm)= 
+	1-\prod\limits_{}^{S} 
 	\left[\sum\limits_{s=0}^{+\infty}
 	\left(P(S=s) 
 	\left(
@@ -48,28 +89,72 @@ P(U\geq u)=
 	\right)^{s}
 	\right] 
 \end{equation}
-where $l$ i the number of sources 
+where $l$ i the number of sources.
 
-If the probability of multiple occurrences is assumed to be negligible the 
-probability to get an exceedance of $x$ in a given time span corresponds to:
+%  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{Vector-valued PSHA (VPSHA)}
+This is a procedure originally proposed by \citet{bazzurro2002}
 %
+% ==============================================================================
+\clearpage\newpage
+\section{Stochastic PSHA calculator}
+\label{chap:stochastic_psha}
+%
+The calculation of stochastic event sets \index{Stochastic event set} and the corresponding ground motion fields is a methodology tightly connected with a specific seismic risk analysis of common use within the insurance and re-insurance industry (CITATION). 
+
+OpenQuake, given a Source System, can generate a number of seismicity histories, each one representing a possible realisation of the seismicity that the sources included in a Source Model can originate within a given time span fixed by the user.
+% 
+The 
+
+Each rupture in a seismicity history is successively associated with a ground motion field, an object describing the spatial distribution of a scalar parameter representative of the intensity of shaking (e.g. PGA or Spectral Acceleration). OpenQuake has the capability to generate 
+%
+% ------------------------------------------------------------------------------
+\subsection{Stochastic Event Set Calculator}
+OpenQuake generates Stochastic Event Sets using the Inverse Trasform Sampling technique, probably the simplest and commonest methodology used to randomly sample probability distribution starting from its cumulative form. 
+%
+% ------------------------------------------------------------------------------
+\subsection{Ground Motion Fields calculator}
+\index{Ground Motion!Field}
+%
+The Ground Motion Field Calculator using a GMPE computes on a regular grid of nodes a field  describing the distribution on the topographic surface of one scalar parameter representative of the motion produced by a rupture with a specific geometry and magnitude.
+%
+The GMPE can be eventually substituted by a numerical procedure capable to generate a similar result (e.g. a kinematic or an hybrid model). 
+%
+The typologies of ground motion field that this calculator can generate are the following:
+\begin{itemize}
+\item Median ground motion field
+\item Ground motion field with a randomly sampled intra-event $\epsilon$ and spatially uncorrelated inter-event $\epsilon$
+\item
+\end{itemize}
+%
+%  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsubsection{Spatially correlated ground motion fields}
+The generation of spatially correlated ground motion fields is based on the work of \citet{jayaram2009} where they propose a model - based on a semivariogram - for describing 
 \begin{equation}
-P(X\geq x)=1-\prod\limits_{i=1}^{l} 
-	\left( 
-		1-\sum\limits_{n=1}^{N(i)}P(Rup_{i,n})P(X\geq x|Rup_{i,n})
-	\right)
+\gamma(h) = a \left[1-\exp\left(-\frac{3h}{b}\right)\right]
+\label{eq:jayaram_spat_corr}
 \end{equation}
-
-%  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-\subsection{Example}
-In case of two punctual sources each one generating a single rupture, the 
-probability of exceedance of ground motion $u$ in a given site corresponds to:
 %
-\begin{eqnarray}
-P(U\geq u)=
-	1-
-	\biggl(& 
-		\bigl[ 1-P(Rup_{i,1})P(U\geq u|Rup_{i,1}) \bigr] \nonumber \\
-		& \bigl[ 1-P(Rup_{i,2})P(U\geq u|Rup_{i,2}) \bigr]
-	\,\biggr)
-\end{eqnarray}
+%-------------------------------------------------------------------------------
+\clearpage\newpage
+\section{PSHA disaggregation}
+\label{chap:disaggregation}
+%
+Seismic hazard disaggregation - or deaggregation - \citep{mcguire1995,bazzurro1999} is a procedure aimed at identifying the contributions to a specified level of hazard coming from different combinations
+of basic variables - such as magnitude and rupture-site distance - characterizing the ruptures included in the ERF.
+%
+Two are the main typologies of disaggregation currently adopted in PSHA studies (see for example \citet{petersen2008}): the M-R-$\epsilon$ disaggregation and the geographic disaggregation. Conceptually there are no differences between the two; simply we can observe that in the geographic disaggregation the source-to-rupture distance is replaced by the position on the topographic surface of the rupture-point used to calculate the distance to the site.
+%
+
+\subsection{M-D disaggregation}
+We start the description of the disaggregation procedure by considering the  simplest disaggregation case. 
+
+As a first step we create a container where to progressively store the contributions coming from the different ruptures produced by the seismic sources contained in the Seismic Source Model.
+%
+To this purpose, we use a two-dimensional matrix $Q$ with a number or rows equal to the number of discrete distance bins and a number of columns equal to the number of discrete magnitude intervals. The magnitude and distance ranges used to create the $Q$ matrix cover the spectrum of values used in the hazard calculation. In particular, the magnitude range can be determined considering the properties of the seismicity occurrence model for each of the sources contained in the Seismic Source Model whilst the distance range is implicitly defined by a maximum integration distance parameter to be specified in the OQ configuration file. 
+%
+
+The argument of the summation contained in Equation \ref{eq:PSHA_calculation} computes the probability of exceedance in a time $t$ of $gm$ generated by the occurrence of the rupture $Rup$. Without loss of generality a rupture can be associated to a magnitude and a source-to-site distance.
+
+
+

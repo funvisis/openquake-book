@@ -1,10 +1,19 @@
 	\index{PSHA!Input model}
-An OpenQuake PSHA input model contains three distinct information blocks organised in two main objects: the Source System and the GMPEs System. 
+An OpenQuake PSHA input model contains three distinct information blocks organised 
+in two main objects: the Seismic Sources System and the GMPEs System. 
 
-These information blocks include: (1) data regarding location, geometry, and seismicity properties of seismic sources, (2) details about ground motion prediction equations to be  adopted in the calculation, (3) information about the epistemic uncertainties related to the two aforementioned points. A fourth separate, but important, chunk of information being part of the input are calculation settings.
+These information blocks include: (1) data regarding location, geometry, and 
+seismicity properties of seismic sources, (2) details about ground motion 
+prediction equations to be  adopted in the calculation, (3) information about 
+the epistemic uncertainties related to the two aforementioned points. A fourth 
+separate, but important, chunk of information being part of the input are 
+calculation settings.
 
-OpenQuake PSHA input models are always defined using two logic tree structures where properties are specified branching level by branching level. In particular, OpenQuake requires two logic-tree structures, one describing epistemic uncertainties associated with the creation of the ERF - called Seismic Source logic tree - 
-	\index{Logic Tree!Seismic source}
+OpenQuake PSHA input models are always defined using two logic tree structures 
+where properties are specified branching level by branching level. In particular,
+OpenQuake requires two logic-tree structures, one describing epistemic uncertainties 
+associated with the creation of the ERF - called Seismic Source logic tree - 
+	\index{Logic Tree!Seismic sources}
 and one considering the uncertainties connected with the use of GMPEs - called GMPE logic tree. 
 	\index{Logic Tree!Ground Motion Prediction Equations}
 In cases when epistemic uncertainties are non accounted for, the logic tree structure simply consists of one branching level with just one branch (with weight equal to 1).
@@ -62,7 +71,9 @@ Table \ref{tab:OQ_GMPEs} provides a list of the Ground Motion Prediction Equatio
 \cite{zhao2006}  & PGA,S$_{a}$ &  & ZhaoEtAl2006 \\
 \hline
 \end{tabular}
-\caption{Some of the Ground Motion Prediction Equations (in the OpenSHA termoniology Intensity Measure Relationship) currently included in OpenSHA and OpenQuake.}
+\caption{Some of the Ground Motion Prediction Equations (in the OpenSHA 
+terminology Intensity Measure Relationship) currently included in OpenSHA 
+and OpenQuake.}
 \label{tab:OQ_GMPEs}
 \end{table}
 %
