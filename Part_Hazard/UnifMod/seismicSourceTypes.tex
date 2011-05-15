@@ -59,6 +59,59 @@ internal borders can be specified so as to create holes inside an area
 \begin{itemize}
 	\item A discrete Frequency-Magnitude Distribution (FMD)
 	\item (optional) Strike, dip, and rake angles characterizing the seismicity  in the corresponding FMD.
+	For example, \cite{coppersmith2009} defines a discrete distribution of 
+	strike values (dip is not considered because the source-site metrics they 
+	use is the Joyner-Boore distance). 
+\end{itemize}
+This description permits the accurate characterization of seismicity occurrence 
+within an area by explicitly distributing the seismicity on the existing 
+faulting trends. 
+\item An array specifying the depth to the top of rupture dependency on 
+magnitude. The array contains two columns and one or many $<$depth, magnitude$>$ 
+tuples. Each tuple specifies the depth to the top of rupture for magnitudes 
+equal or greater than the corresponding value. 
+\item A value to indicate the hypocentral depth in case of punctual sources. 
+By convention all the events with magnitude lower than the lowest value of 
+magnitude contained in the depth to the top of rupture array are modelled as 
+punctual source. On the opposite, ruptures with magnitude equal or greater than 
+the lowest value of magnitude contained in the depth to the top of rupture array 
+are modelled considering their finite dimensions. The finite dimension of the 
+rupture is computed using a magnitude-area or magnitude-length relationship 
+specifies in the calculation settings file (in future versions of OQ we will 
+allow the user to specify for each tectonic region the corresponding 
+magnitude-scaling relationship).
+\end{itemize}
+%
+%  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+\subsubsection{Multi-depth area sources}
+\label{hazard:seismic_source_types:multiDepthAreaSources}
+\index{Source type!area multi-depth} 
+\index{Multi-depth area source|see{Source type}}
+Area sources model the seismicity occurring over wide areas where fault 
+sources identification or characterization - i.e. unambiguous definition 
+of seismicity occurrence parameters - is difficult. 
+
+The \citet{sshac1997} defined three main types of area seismic sources using as 
+a discriminant their extension:
+\begin{enumerate}
+\item Area sources enclosing concentrated zones of seismicity;
+\item Regional area sources;
+\item Background area sources.
+\end{enumerate}
+The criteria adopted for their definition - and the related uncertainties - vary according to each area source type. From a hazard computation standpoint we do not introduce any difference between these three area types.
+	\marginpar{marco: In the future we may support a specialized background 
+	area source type}
+%
+%  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+\paragraph{Parameters}
+\begin{itemize}
+\item A polygon that identifies the external border of the area. Eventually, 
+internal borders can be specified so as to create holes inside an area
+	\textcolor{red}{[The current version of OQ doesn't support the definition of internal borders]}
+\item One (or many) combinations of the following objects:
+\begin{itemize}
+	\item A discrete Frequency-Magnitude Distribution (FMD)
+	\item (optional) Strike, dip, and rake angles characterizing the seismicity  in the corresponding FMD.
 	For example, \cite{coppersmith2009} defines a discrete distribution of strike values (dip is not considered because the source-site metrics they use is the Joyner-Boore distance). 
 \end{itemize}
 This description permits the accurate characterization of seismicity occurrence within an area by explicitly distributing the seismicity on the existing faulting trends. 
@@ -66,6 +119,7 @@ This description permits the accurate characterization of seismicity occurrence 
 \item A value to indicate the hypocentral depth in case of punctual sources. 
 By convention all the events with magnitude lower than the lowest value of magnitude contained in the depth to the top of rupture array are modelled as punctual source. On the opposite, ruptures with magnitude equal or greater than the lowest value of magnitude contained in the depth to the top of rupture array are modelled considering their finite dimensions. The finite dimension of the rupture is computed using a magnitude-area or magnitude-length relationship specifies in the calculation settings file (in future versions of OQ we will allow the user to specify for each tectonic region the corresponding magnitude-scaling relationship).
 \end{itemize}
+
 %
 %  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Grid sources}
