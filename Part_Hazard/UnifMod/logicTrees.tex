@@ -20,13 +20,13 @@ The above described parameterization allows for a very general definition of a l
 In the current version of OpenQuake, a source model logic tree can be defined according to the following schema:
 \begin{itemize}
 \item the 1st branching level is assumed describing one or more "alternative" initial source models.
-\item subsequent branching levels define source parameters uncertainties.
+\item subsequent branching levels define source parameters uncertainties. Parameters uncertainties are applied independently to each seismic source in a source model. That is epistemic uncertainties are assumed uncorrelated between different seismic sources. 
 \item one branch set can be defined for branching level, thus assuming symmetric logic tree definition only.
 \end{itemize}
 The possibility of defining multiple source models in the first branching level responds to the need of modern PSHA of considering alternative source model creation approaches (as derived by different expert opinions, data sets, modeling methodologies, for instance). Subsequent branching levels allows defining epistemic uncertainties that apply to specific parameters seismic sources depends upon. Parameter-related epistemic uncertainties are implemented as \textbf{rules}, that is as algorithms describing how a certain model parameter has to be altered. The major advantage of using a rule-based approach is that a user does not need to a provide an input file containing a source model definition corresponding to a specific epistemic uncertainty, that is instead computed and applied on the fly to the initial model. The current version of OpenQuake offers two built-in rules:
 \begin{itemize}
-\item Gutenberg-Richter b value uncertainties. The user can specify a set of increments (positive or negative) that are added to Guteneberg-Richter b values. Conservation of total moment rate is assumed.
-\item Gutenberg-Richter maximum magnitude uncertainties. The user can specify a set of increments (positive or negative) that are added to Guteneberg-Richter maximum magnitude values. Conservation of total moment rate is assumed.
+\item Gutenberg-Richter b value uncertainties. The user can specify a set of increments (positive or negative) that are added to Gutenberg-Richter b values. Conservation of total moment rate is assumed.
+\item Gutenberg-Richter maximum magnitude uncertainties. The user can specify a set of increments (positive or negative) that are added to Gutenberg-Richter maximum magnitude values. Conservation of total moment rate is assumed.
 \end{itemize}
 Figure \ref{fig:SourceModelLogicTree} depicts a source model logic tree that can be defined with the options currently present in OpenQuake. 
 \begin{figure}
