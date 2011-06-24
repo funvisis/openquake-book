@@ -1,15 +1,33 @@
 \section{OpenQuake Hazard: main concepts}
-The OpenQuake-Hazard module offers the capability to perform seismic hazard analysis (SHA) following various approaches. Currently three main types of analysis are supported:
+% Three types of analysis
+The OpenQuake-Hazard module offers the capability to perform seismic hazard analysis (SHA) following various approaches. Currently (OpenQuake v 0.3), three main types of analysis are supported:
 \begin{itemize}
 \item \textbf{Classical probabilistic SHA}, allowing calculation of hazard curves and hazard maps  following classical integration procedure (\cite{cornell1968}) as formulated by \cite{field2003}.
 \item \textbf{Event-Based probabilistic SHA}, allowing calculation of ground motion fields from stochastic event sets.
-\item \textbf{Deterministic SHA}, allowing calculation of ground motion field realizations from single  earthquake rupture scenario.
+\item \textbf{Deterministic SHA}, allowing calculation of ground motion fields from single earthquake rupture scenario.
 \end{itemize}
-Each type of analysis involve a number of calculators, each responsible for a specific task.
+Each type of analysis involves a number of calculators, each responsible for a specific task. Figures \ref{classical_psha_workflow}, \ref{event_based_workflow}, and \ref{deterministic_workflow} schematically depict the different calculation workflows.\\
+% Classical and Event based : Input Data Definition
+For both the the classical and event-based probabilistic SHA (hereinafter PSHA), the input data consist of a seismic hazard model structured in terms of a source model logic tree (representing the seismicity model and the associated epistemic uncertainties) and a ground motion model logic tree (representing the ground motion model utilized for ground shaking estimation and the associated epistemic uncertainties).\\
+% Seismicity Model
+A seismicity model consists of a collection of seismogenic sources. A seismogenic source can be one of four typologies: area, point, simple fault, and complex fault. An area source represents a geographic region where seismicity is assumed to be uniform. A point source models a single geographical location of concentrated seismicity. A collection of point sources or area sources can be used to model distributed seismicity. Seismicity occurring on recognized fault structures can be modeled in terms of simple fault (for a geometrically regular-shaped fault), or as complex fault (allowing modeling of a more geometrically irregular fault structure). Each seismogenic source is also associated to a tectonic region type.\\
+% Ground Motion Model
+A ground motion model is defined as a collection of ground motion prediction equations (GMPEs), each one associated to a specific tectonic region type (for instance: shallow active crust, stable continental region, subduction interface, subduction intraslab, volcanic). The definition of a tectonic region type allows linking a seismogenic source with the appropriate GMPE.\\
+% Epistemic uncertainties
+Epistemic uncertainties in the source model...
+% Logic Tree processor
+Such data is then passed to the Logic Tree Processor that is responsible for 'harvesting' the information contained in the logic tree structure, that is to sample the epistemic uncertainties so that the distribution of the final hazard results reflect the uncertainties in the seismicity and ground motion models. Once a source model is selected from the logic tree, it is subsequently used as input for the Earthquake Rupture Forecast (ERF) calculator which computes the probability of occurrence, over a specified time span, for each earthquake rupture contained in the source model. Such inventory of all the ruptures defined in the source model, with their probabilities of occurrence, is referred to as ERF.\\
+When performing a classical PSHA, the ERF is provided as input (together with a ground motion model) to the the Hazard Curve Calculator which compute probabilities of exceeding a set of ground motion values (that is an hazard curve) by summing the contribution from all the earthquake ruptures contained in the ERF. For the event-based PSHA instead, the Stochastic Event Set Calculator generates stochastic event sets by sampling each rupture contained in the ERF according to its probability of occurrence. For each event in the event set, the Ground Motion Field Calculator computes a realization of the ground shaking taking into account the aleatory uncertainties in the ground motion model.\\ 
+% Deterministic
+For deterministic SHA (DSHA), the input data consist of a single earthquake rupture model and a single ground motion model. Using the Ground Motion Field Calculator, multiple realizations of ground shaking can be computed, each realization sampling the aleatory uncertainties in the ground motion model.\\
+% Modular structure
+Each type of analysis has a modular structure, thus providing the capability of investigating all possible intermediate results. Moreover, each calculator can be expanded independently so that more calculation options/methodologies can be easily introduced, without affecting the overall calculation workflow.\\
+% More details in the next chapters
+Next chapters discuss in more details the data model and the calculators. Chapter \ref{chap:idd} describe the input data definition, that is the different options for modeling seismogenic sources and how to include epistemic uncertainties in both seismicity and ground motion models in the form of a logic tree. The inclusion of epistemic uncertainties in the hazard calculations is described in Chapter \ref{chap:ltp}. The definition and modeling of earthquake ruptures for the different seismogenic source typologies is the topic of Chapter \ref{chap:erfc}. Chapter \ref{chap:hcc} describes the theoretical framework behind the hazard curve calculator. The main calculators for the event-based PSHA are described in Chapters \ref{chap:sesc} and \ref{chap:gmfc} (Stochastic Event Set Calculator, and Ground Motion Field Calculator respectively). Examples of classical PSHA, event-based PSHA, and DSHA are reported in Chapters \ref{chap:cpsha}, \ref{chap:ebpsah}, and \ref{chap:dsha}.
 \begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=10cm]{./Figures/Part_Hazard/classical_psha_workflow.eps}
-\caption{Workflow for classical PSHA. Given a seismic hazard model (expressed as source model and GMPE logic trees), the Logic Tree Processor is responsible for selecting a particular source model and GMPE. The source model is then provided to the Earthquake Rupture Forecast calculator, which computes the ERF (the list of all earthquake ruptures in the source model with their probabilities of occurrence). Together with the selected GMPE hazard curves are calculated.}
+\caption{Workflow for classical PSHA. Given a seismic hazard model (expressed as source and ground motion model logic trees), the Logic Tree Processor is responsible for selecting a particular source and ground motion models. The source model is then provided to the Earthquake Rupture Forecast calculator, which computes the ERF (the list of all earthquake ruptures in the source model with their probabilities of occurrence). Together with the selected GMPE hazard curves are calculated.}
 \label{classical_psha_workflow}
 \end{center}
 \end{figure}
