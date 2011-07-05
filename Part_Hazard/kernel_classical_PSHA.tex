@@ -125,6 +125,17 @@ P(n;\lambda_{i}) = \exp(-\lambda_{i})\frac{\lambda_{i}^{n}}{n!}
 \label{ses:p}
 \end{equation}
 For each rupture, the number of occurrences in a time span $T$ is obtained as a random sample of the Poisson probability density function described in equation \ref{ses:p}. The sampling is done using the Inverse Transform method (e.g. \cite{martinez2002}). By looping over all the ruptures in a ERF, it is therefore possible to obtain a stochastic event set where each rupture is present (one or more times) according to the input probability.\\
+\begin{figure}[htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=12cm]{./Figures/Part_Hazard/DissEventSet1.eps}}
+\subfigure[]{
+\includegraphics[width=12cm]{./Figures/Part_Hazard/DissEventSet2.eps}}
+\caption{Stochastic event sets generated from fault model for the Italian region (derived from DISS database [citation needed]) for a period of 50 years.}
+\label{default}
+\end{center}
+\end{figure}
+
 %
 % ------------------------------------------------------------------------------
 \subsection{Ground Motion Fields calculator}
