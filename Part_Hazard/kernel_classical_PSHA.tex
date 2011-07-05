@@ -110,7 +110,21 @@ Each rupture in a seismicity history is successively associated with a ground mo
 %
 % ------------------------------------------------------------------------------
 \subsection{Stochastic Event Set Calculator}
-OpenQuake generates Stochastic Event Sets using the Inverse Trasform Sampling technique, probably the simplest and commonest methodology used to randomly sample probability distribution starting from its cumulative form. 
+A stochastic event set (SES) is defined as a collection of earthquake ruptures obtained by randomly sampling an earthquake rupture forecast (ERF). As described in Chapter \ref{chap:erf}, an ERF is defined as the inventory of all ruptures in a source model, together with their probabilities of occurrence over a specified time span.\\
+OpenQuake currently supports the capability to generate SESs from Poissonian ERFs. In a Poissonian ERF, the $i-th$ rupture is associated to a probability of one or more occurrences in a time span $T$, given by:
+\begin{equation}
+P_{i}(n\geq1|T) = 1 - \exp(-\nu_{i} T)
+\end{equation} 
+where $\nu_{i}$ is the annual rate of occurrence of the $i-th$ rupture. Knowing $P_{i}(n\geq1|T)$, it is possible to derive the expected number of earthquake ruptures ($\lambda_{i}$) in the time span $T$  as:
+\begin{equation}
+\lambda_{i} = - \ln(1 - P_{i}(n\geq1|T))
+\end{equation} 
+The Poisson probability of having $n$ ruptures given $\lambda_{i}$ expected ruptures can be then computed as:
+\begin{equation}
+P(n;\lambda_{i}) = \exp(-\lambda_{i})\frac{\lambda_{i}^{n}}{n!}
+\label{ses:p}
+\end{equation}
+For each rupture, the number of occurrences in a time span $T$ is obtained as a random sample of the Poisson probability density function described in equation \ref{ses:p}. The sampling is done using the Inverse Transform method (e.g. \cite{martinez2002}). By looping over all the ruptures in a ERF, it is therefore possible to obtain a stochastic event set where each rupture is present (one or more times) according to the input probability.\\
 %
 % ------------------------------------------------------------------------------
 \subsection{Ground Motion Fields calculator}
