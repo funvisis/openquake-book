@@ -3,5 +3,31 @@ The capability to process the information contained in a logic tree is constrain
 The general plan for OpenQuake is to provide both the two processing strategies. Currently, the logic tree processor can only provide a Monte Carlo sampler.
 \subsection{The Logic Tree Monte Carlo Sampler}
 Aim of the Logic Tree Monte Carlo Sampler (hereinafter LTMCS) is to sample epistemic uncertainties, so that the distribution of the final hazard results reflect the degrees of belief that the hazard modeler specified in the different logic tree branches.\\
-\subsubsection{Sampling the source model logic tree}
-As described in \ref{hazard:source_model_logic_tree}, the first branching level in the source model logic tree is used for defining one or more alternative source models. Subsequent branches define parameter-specific epistemic uncertainties. Each branching level contains only one branch set (therefore producing a symmetric logic tree). The LTMCS constructs a source model by looping over all the branching levels. In the first branching level, a source model is randomly selected, with a probability equal to the uncertainty weight. Epistemic uncertainties defined in subsequent branching levels are then applied to this initially selected source model. For each following branching level, a loop over the seismic sources defined in the selected source model is started, and for each seismic source an epistemic uncertainty value is randomly selected (again with a probability equal to the uncertainty weight).
+\subsubsection{Sampling the source model and GMPE logic tree}
+As described in \ref{hazard:source_model_logic_tree}, the first branching level in the source model logic tree is used for defining one or more alternative source models. Subsequent branches define parameter-specific epistemic uncertainties. Each branching level contains only one branch set (therefore producing a symmetric logic tree). The LTMCS constructs a source model by looping over all the branching levels. In the first branching level, a source model is randomly selected, with a probability equal to the uncertainty weight. Epistemic uncertainties defined in subsequent branching levels are then applied to this initially selected source model. For each following branching level, a loop over the seismic sources defined in the selected source model is started, and for each seismic source an epistemic uncertainty value is randomly selected (again with a probability equal to the uncertainty weight).\\
+To better illustrate the concept of Monte Carlo sampling of epistemic uncertainties, a simple source model logic tree is shown in Figure \ref{simple_logic_tree}. A single source model is defined in the first branching level, and uncertainties in maximum magnitude are defined in the second branching level. A fault model derived from the database of the Italian seismogenic sources (DISS, \cite{basili2008}) is considered as initial source model. The faults maximum magnitudes are depicted in Figure \ref{original_model}. As described above, source parameters uncertainties are applied to each source separately. In other words, epistemic uncertainties are not correlated between different sources. Figure \ref{max_magnitude_uncertainties} shows two realizations of the maximum magnitude uncertainties as defined in second branching level. The majority of the faults do not show a change in the maximum magnitude (according to the fact that a weight of 0.8 is assigned to an unchanged maximum magnitude). However, in each plot a small number of faults presents an increased maximum magnitude (in agreement with the weight of 0.2 associated to a maximum magnitude increased by one unit.).\\
+\begin{figure}[!htbp]
+\begin{center}
+\includegraphics[width=8cm]{./Figures/Part_Hazard/simple_logic_tree.eps}
+\caption{Example of simple logic tree. In the first branching level a single source model is defined. The second branching level defines uncertainties in maximum magnitude.}
+\label{simple_logic_tree}
+\end{center}
+\end{figure}
+\begin{figure}[!htbp]
+\begin{center}
+\includegraphics[width=14cm]{./Figures/Part_Hazard/faultMaxMagnitude_original.eps}
+\caption{Fault sources maximum magnitudes as derived from the database of the Italian Seismogenic Sources (DISS, \cite{basili2008}).}
+\label{original_model}
+\end{center}
+\end{figure}
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=12cm]{./Figures/Part_Hazard/faultMaxMagnitude_random1.eps}}
+\subfigure[]{
+\includegraphics[width=12cm]{./Figures/Part_Hazard/faultMaxMagnitude_random2.eps}}
+\caption{Fault sources maximum magnitude changed according to epistemic uncertainties defined in logic tree in Figure \ref{simple_logic_tree}. Each plot [(a) and (b)] represents a random realization of the epistemic uncertainties. The initial model is depicted in Figure \ref{original_model}.}
+\label{max_magnitude_uncertainties}
+\end{center}
+\end{figure}
+The sampling of the GMPE logic tree follows the same approach as for the source model logic tree. Given the very simple structure of the logic tree (one single branching level defining multiple GMPEs), the sampling procedure simply allows sampling a GMPE based on the associated weight. The sampling procedure is repeated for each tectonic region type.
