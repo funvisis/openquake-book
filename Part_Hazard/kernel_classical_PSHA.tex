@@ -110,35 +110,35 @@ Each rupture in a seismicity history is successively associated with a ground mo
 %
 % ------------------------------------------------------------------------------
 \subsection{Stochastic Event Set Calculator}
-A stochastic event set (SES) is defined as a collection of earthquake ruptures obtained by randomly sampling an earthquake rupture forecast (ERF). As described in Chapter \ref{chap:erf}, an ERF is defined as the inventory of all ruptures in a source model, together with their probabilities of occurrence over a specified time span.\\
-OpenQuake currently supports the capability to generate SESs from Poissonian ERFs. In a Poissonian ERF, the $i-th$ rupture is associated to a probability of one or more occurrences in a time span $T$, given by:
+A stochastic event set (SES) is defined as a collection of earthquake ruptures obtained by randomly sampling an earthquake rupture forecast (ERF). As described in Chapter \ref{chap:erf}, an ERF is defined as the inventory of all ruptures in a Source Model, together with their probabilities of occurrence over a specified time span.\\
+OpenQuake currently supports the capability to generate SESs from Poissonian ERFs. In a Poissonian ERF, each rupture is associated to a probability of one or more occurrences in a time span $T$ given by:
 \begin{equation}
-P_{i}(n\geq1|T) = 1 - \exp(-\nu_{i} T)
+P(n\geq1|T) = 1 - \exp(-\nu T)
 \end{equation} 
-where $\nu_{i}$ is the annual rate of occurrence of the $i-th$ rupture. Knowing $P_{i}(n\geq1|T)$, it is possible to derive the expected number of earthquake ruptures ($\lambda_{i}$) in the time span $T$  as:
+where $\nu$ is annual rate of occurrence of the rupture. Knowing $P(n\geq1|T)$, it is possible to derive the expected number of earthquake ruptures ($\lambda$) in the time span $T$  as:
 \begin{equation}
-\lambda_{i} = - \ln(1 - P_{i}(n\geq1|T))
+\lambda = - \ln(1 - P_{i}(n\geq1|T))
 \end{equation} 
-The Poisson probability of having $n$ ruptures given $\lambda_{i}$ expected ruptures can be then computed as:
+The Poisson probability of having $n$ ruptures given $\lambda$ expected ruptures can be then computed as:
 \begin{equation}
-P(n;\lambda_{i}) = \exp(-\lambda_{i})\frac{\lambda_{i}^{n}}{n!}
+P(n;\lambda) = \exp(-\lambda)\frac{\lambda^{n}}{n!}
 \label{ses:p}
 \end{equation}
-For each rupture, the number of occurrences in a time span $T$ is obtained as a random sample of the Poisson probability density function described in equation \ref{ses:p}. The sampling is done using the Inverse Transform method (e.g. \cite{martinez2002}). By looping over all the ruptures in a ERF, it is therefore possible to obtain a stochastic event set where each rupture is present (one or more times) according to the input probability.\\
-\begin{figure}[htbp]
+For each rupture, the number of occurrences in a time span $T$ can be then obtained as a random sample of the Poisson probability density function described in equation \ref{ses:p}. By looping over all the ruptures in a ERF, it is therefore possible to simulate a stochastic event set where each rupture is present (zero, one or more times) according to the input probability. In other words, the resulting collection of sampled ruptures represents a possible realization of the seismicity as described by the ERF. By sampling an ERF multiple times, different SESs can be obtained each representing a possible realization of the seismic activity. As an example, Figure \ref{ses_italy} shows plots of two SESs produced by a fault model for the Italian region (derived from the Italian fault database (\cite{basili2008})). Each SES represents seismicity for a period of 50 years. The two SESs shows similar spatial distribution of seismicity (as expected given that they come from the same source model), but the location and magnitude of the events is different due to the fact that they depict two different 'possible' realizations of seismic activity in the region.\\
+\begin{figure}[!htbp]
 \begin{center}
 \subfigure[]{
 \includegraphics[width=12cm]{./Figures/Part_Hazard/DissEventSet1.eps}}
 \subfigure[]{
 \includegraphics[width=12cm]{./Figures/Part_Hazard/DissEventSet2.eps}}
-\caption{Stochastic event sets (a) and (b) generated from a fault model for the Italian region (derived from DISS database [citation needed]) for a period of 50 years.}
-\label{default}
+\caption{Different stochastic event sets (a) and (b) generated from a fault model for the Italian region (derived from DISS database [\cite{basili2008}]) for a period of 50 years.}
+\label{ses_italy}
 \end{center}
 \end{figure}
 
 %
 % ------------------------------------------------------------------------------
-\subsection{Ground Motion Fields calculator}
+\subsection{Ground Motion Field calculator}
 The Ground Motion Field calculator allows the calculation of a scalar ground shaking parameter (e.g. PGA, SA, PGV as predicted by a GMPE) over a set of geographical locations, by utilizing a rupture model (described in terms of geometry and magnitude) as the source of shaking.\\
 In general, a ground motion model that predict intensities at an individual site $i$ due to an earthquake $j$ take the following form (\cite{jayaram2009}):
 \begin{equation}
@@ -201,20 +201,23 @@ At short periods ($T<1$), for case $2$:
 \begin{equation}
 b = 40.7 - 15.0T
 \end{equation}
-At long periods (for both cases $1$ and $2$):
+At long periods ($T\geq1$, for both cases $1$ and $2$):
 \begin{equation}
 b = 22.0 + 3.7T
 \end{equation}
-Figure \ref{gmfs} depicts the different types of ground motion fields described.\\
+Summarizing, if $Vs30$ values do not show clustering, the correlation length between intra-event residuals is expected to increase with increasing period (with a rate that changes from $T<1$ to $T\geq1$). In case $Vs30$ values show clustering, for  $0\leq T<1$, the correlation length decreases with increasing period.\\
+Figure \ref{gmfs} depicts the different types of ground motion fields described. The median ground motion field is shown in Figure \ref{gmfs} (a). In this case the aleatory uncertainties are not taken into account, and the ground motion pattern follows exactly the rupture geometry. The highest values are observed on the surface projection of the rupture, and decreasing values are found at increasing distances from the rupture. Figure \ref{gmfs} (b) shows an intra-event uncorrelated ground motion field. The aleatory uncertainties are taken into account and therefore the ground motion pattern shows a significant level of heterogeneity. When introducing the intra-event correlation [Figure \ref{gmfs} (c)], the heterogeneity is diminished and an additional filtering is introduced when considering a longer period [Figure \ref{gmfs} (d)].\\
 \begin{figure}[htbp]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=6cm]{./Figures/Part_Hazard/uncorrelatedGmfTabasPGA.eps}}
+\includegraphics[width=5cm]{./Figures/Part_Hazard/medianGmfTabasPGA.eps}}
 \subfigure[]{
-\includegraphics[width=6cm]{./Figures/Part_Hazard/correlatedGmfTabasPGA.eps}}
+\includegraphics[width=5cm]{./Figures/Part_Hazard/uncorrelatedGmfTabasPGA.eps}}
 \subfigure[]{
-\includegraphics[width=6cm]{./Figures/Part_Hazard/medianGmfTabasPGA.eps}}
-\caption{Intra-event uncorrelated (a), correlated (b), and median ground motion fields.}
+\includegraphics[width=5cm]{./Figures/Part_Hazard/correlatedGmfTabasPGA.eps}}
+\subfigure[]{
+\includegraphics[width=5cm]{./Figures/Part_Hazard/correlatedGmfTabasSA.eps}}
+\caption{Examples of median (a), intra-event uncorrelated (b), intra-event correlated for PGA (c) and for SA at $T=1$s (d). A rectangular planar rupture is considered as source of the shaking (the red line depicts the rupture trace, and the black line the rupture border). The rupture is associated to a magnitude 7 earthquake. The ground motion is estimated using the Boore and Atkinson 2008 GMPE (\cite{boore2008})}
 \label{gmfs}
 \end{center}
 \end{figure}
