@@ -110,7 +110,31 @@ Each rupture in a seismicity history is successively associated with a ground mo
 %
 % ------------------------------------------------------------------------------
 \subsection{Stochastic Event Set Calculator}
-OpenQuake generates Stochastic Event Sets using the Inverse Trasform Sampling technique, probably the simplest and commonest methodology used to randomly sample probability distribution starting from its cumulative form. 
+A stochastic event set (SES) is defined as a collection of earthquake ruptures obtained by randomly sampling an earthquake rupture forecast (ERF). As described in Chapter \ref{chap:erf}, an ERF is defined as the inventory of all ruptures in a Source Model, together with their probabilities of occurrence over a specified time span.\\
+OpenQuake currently supports the capability to generate SESs from Poissonian ERFs. In a Poissonian ERF, each rupture is associated to a probability of one or more occurrences in a time span $T$ given by:
+\begin{equation}
+P(n\geq1|T) = 1 - \exp(-\nu T)
+\end{equation} 
+where $\nu$ is annual rate of occurrence of the rupture. Knowing $P(n\geq1|T)$, it is possible to derive the expected number of earthquake ruptures ($\lambda$) in the time span $T$  as:
+\begin{equation}
+\lambda = - \ln(1 - P_{i}(n\geq1|T))
+\end{equation} 
+The Poisson probability of having $n$ ruptures given $\lambda$ expected ruptures can be then computed as:
+\begin{equation}
+P(n;\lambda) = \exp(-\lambda)\frac{\lambda^{n}}{n!}
+\label{ses:p}
+\end{equation}
+For each rupture, the number of occurrences in a time span $T$ can be then obtained as a random sample of the Poisson probability density function described in equation \ref{ses:p}. By looping over all the ruptures in a ERF, it is therefore possible to simulate a stochastic event set where each rupture is present (zero, one or more times) according to the input probability. In other words, the resulting collection of sampled ruptures represents a possible realization of the seismicity as described by the ERF. By sampling an ERF multiple times, different SESs can be obtained each representing a possible realization of the seismic activity. As an example, Figure \ref{ses_italy} shows plots of two SESs produced by a fault model for the Italian region (derived from the Italian fault database (\cite{basili2008})). Each SES represents seismicity for a period of 50 years. The two SESs shows similar spatial distribution of seismicity (as expected given that they come from the same source model), but the location and magnitude of the events is different due to the fact that they depict two different 'possible' realizations of seismic activity in the region.\\
+\begin{figure}[!htbp]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=12cm]{./Figures/Part_Hazard/DissEventSet1.eps}}
+\subfigure[]{
+\includegraphics[width=12cm]{./Figures/Part_Hazard/DissEventSet2.eps}}
+\caption{Different stochastic event sets (a) and (b) generated from a fault model for the Italian region (derived from DISS database [\cite{basili2008}]) for a period of 50 years.}
+\label{ses_italy}
+\end{center}
+\end{figure}
 %
 % ------------------------------------------------------------------------------
 \subsection{Ground Motion Fields calculator}
