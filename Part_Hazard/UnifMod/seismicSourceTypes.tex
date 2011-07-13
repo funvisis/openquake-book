@@ -1,26 +1,34 @@
 % ------------------------------------------------------------------------------
 \section[OpenQuake seismic source typologies]{OpenQuake seismic source typologies}
 %  
-A PSHA input model - excluding memory resources constraints - contains an unlimited number of sources specified in agreement with the typologies supported by OpenQuake.
-Each source type supported by OpenQuake is described by a limited numeber of parameters; in the following sections we provide a detailed description of the source typologies currently supported.
+A PSHA input model - excluding memory resources constraints - contains an 
+unlimited number of sources specified in agreement with the typologies 
+supported by OpenQuake.
+Each source type supported by OpenQuake is described by a limited numeber 
+of parameters; in the following sections we provide a detailed description 
+of the source typologies currently supported.
 %
 %  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \subsection{Seismic source typologies description}
 \label{hazard:seismic_source_types}
 %
 OpenQuake, at present time, provides four seismic source typologies, for the 
-most part defined in the course of the GEM1 project \citep{pagani2010}. These are:
+most part defined in the course of the GEM1 project \citep{pagani2010}. 
+These are:
 \begin{itemize}
-\item Area source - So far, the most frequently adopted source type in national and regional PSHA models.
+\item Area source - So far, the most frequently adopted source type in 
+national and regional PSHA models.
 \item Grid source - Grid sources can be considered a replacement for area 
 sources since they both model distributed seismicity;
 \item Simple fault sources - Simple faults are the easiest way to
-to specify a fault source in OpenQuake. This typology is usually adopted to describe shallow seismogenic fault sources.
+to specify a fault source in OpenQuake. This typology is usually adopted 
+to describe shallow seismogenic fault sources.
 \item Complex fault sources - Complex faults are habitually adopted to model
 subduction interface sources with a complex geometry. 
 \end{itemize}
 
-These are the basic assumptions accepted in the definition of these source typologies:
+These are the basic assumptions accepted in the definition of these source 
+typologies:
 \begin{itemize}
 \item In the case of area and fault sources, the seismicity is homogeneously 
 distributed over the source; 
@@ -45,7 +53,9 @@ a discriminant their extension:
 \item Regional area sources;
 \item Background area sources.
 \end{enumerate}
-The criteria adopted for their definition - and the related uncertainties - vary according to each area source type. From a hazard computation standpoint we do not introduce any difference between these three area types.
+The criteria adopted for their definition - and the related uncertainties - vary 
+according to each area source type. From a hazard computation standpoint we do 
+not introduce any difference between these three area types.
 	\marginpar{marco: In the future we may support a specialized background 
 	area source type}
 %
@@ -54,11 +64,13 @@ The criteria adopted for their definition - and the related uncertainties - vary
 \begin{itemize}
 \item A polygon that identifies the external border of the area. Eventually, 
 internal borders can be specified so as to create holes inside an area
-	\textcolor{red}{[The current version of OQ doesn't support the definition of internal borders]}
+	\textcolor{red}{[The current version of OQ doesn't support the definition 
+	of internal borders]}
 \item One (or many) combinations of the following objects:
 \begin{itemize}
 	\item A discrete Frequency-Magnitude Distribution (FMD)
-	\item (optional) Strike, dip, and rake angles characterizing the seismicity  in the corresponding FMD.
+	\item (optional) Strike, dip, and rake angles characterizing the seismicity  
+	in the corresponding FMD.
 	For example, \cite{coppersmith2009} defines a discrete distribution of 
 	strike values (dip is not considered because the source-site metrics they 
 	use is the Joyner-Boore distance). 
@@ -98,7 +110,9 @@ a discriminant their extension:
 \item Regional area sources;
 \item Background area sources.
 \end{enumerate}
-The criteria adopted for their definition - and the related uncertainties - vary according to each area source type. From a hazard computation standpoint we do not introduce any difference between these three area types.
+The criteria adopted for their definition - and the related uncertainties - vary 
+according to each area source type. From a hazard computation standpoint we do 
+not introduce any difference between these three area types.
 	\marginpar{marco: In the future we may support a specialized background 
 	area source type}
 %
@@ -107,17 +121,34 @@ The criteria adopted for their definition - and the related uncertainties - vary
 \begin{itemize}
 \item A polygon that identifies the external border of the area. Eventually, 
 internal borders can be specified so as to create holes inside an area
-	\textcolor{red}{[The current version of OQ doesn't support the definition of internal borders]}
+	\textcolor{red}{[The current version of OQ doesn't support the definition 
+	of internal borders]}
 \item One (or many) combinations of the following objects:
 \begin{itemize}
 	\item A discrete Frequency-Magnitude Distribution (FMD)
-	\item (optional) Strike, dip, and rake angles characterizing the seismicity  in the corresponding FMD.
-	For example, \cite{coppersmith2009} defines a discrete distribution of strike values (dip is not considered because the source-site metrics they use is the Joyner-Boore distance). 
+	\item (optional) Strike, dip, and rake angles characterizing the seismicity 
+	in the corresponding FMD.
+	For example, \cite{coppersmith2009} defines a discrete distribution of 
+	strike values (dip is not considered because the source-site metrics they 
+	use is the Joyner-Boore distance). 
 \end{itemize}
-This description permits the accurate characterization of seismicity occurrence within an area by explicitly distributing the seismicity on the existing faulting trends. 
-\item An array specifying the depth to the top of rupture dependency on magnitude. The array contains two columns and one or many $<$depth, magnitude$>$ tuples. Each tuple specifies the depth to the top of rupture for magnitudes equal or greater than the corresponding value. 
+This description permits the accurate characterization of seismicity occurrence 
+within an area by explicitly distributing the seismicity on the existing 
+faulting trends. 
+\item An array specifying the depth to the top of rupture dependency on 
+magnitude. The array contains two columns and one or many $<$depth, 
+magnitude$>$ tuples. Each tuple specifies the depth to the top of rupture 
+for magnitudes equal or greater than the corresponding value. 
 \item A value to indicate the hypocentral depth in case of punctual sources. 
-By convention all the events with magnitude lower than the lowest value of magnitude contained in the depth to the top of rupture array are modelled as punctual source. On the opposite, ruptures with magnitude equal or greater than the lowest value of magnitude contained in the depth to the top of rupture array are modelled considering their finite dimensions. The finite dimension of the rupture is computed using a magnitude-area or magnitude-length relationship specifies in the calculation settings file (in future versions of OQ we will allow the user to specify for each tectonic region the corresponding magnitude-scaling relationship).
+By convention all the events with magnitude lower than the lowest value of 
+magnitude contained in the depth to the top of rupture array are modelled 
+as punctual source. On the opposite, ruptures with magnitude equal or 
+greater than the lowest value of magnitude contained in the depth to the 
+top of rupture array are modelled considering their finite dimensions. 
+The finite dimension of the rupture is computed using a magnitude-area or 
+magnitude-length relationship specifies in the calculation settings file 
+(in future versions of OQ we will allow the user to specify for each 
+tectonic region the corresponding magnitude-scaling relationship).
 \end{itemize}
 
 %

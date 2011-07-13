@@ -1,40 +1,69 @@
+%
+% ------------------------------------------------------------------------------
 	\index{PSHA!Input model}
-An OpenQuake PSHA input model contains three distinct information blocks organised 
-in two main objects: the Seismic Sources System and the GMPEs System. 
+%
+OpenQuake requires two main information blocks to perform a calculation: (1) 
+Calculation Settings and (2) a PSHA input model.
 
-These information blocks include: (1) data regarding location, geometry, and 
-seismicity properties of seismic sources, (2) details about ground motion 
-prediction equations to be  adopted in the calculation, (3) information about 
-the epistemic uncertainties related to the two aforementioned points. A fourth 
-separate, but important, chunk of information being part of the input are 
-calculation settings.
+Calculation settings specifies for example the typology of results required,
+the site or the sites where to compute the hazard, the methodology to apply.
+%
+Section \ref{hazard:calculation_settings} provides an outlook of the hazard 
+specific calculation setting supported by OpenQuake. 
 
-OpenQuake PSHA input models are always defined using two logic tree structures 
-where properties are specified branching level by branching level. In particular,
-OpenQuake requires two logic-tree structures, one describing epistemic uncertainties 
-associated with the creation of the ERF - called Seismic Source logic tree - 
+A PSHA input model on the contrary defines the properties of the seismic sources 
+of engineering  interest within the region considered in the analysis and the 
+models describing - once a rupture occurred in a given position - the properties 
+of the shaking expected at the site. 
+%
+A PSHA input model contains two main objects: the Seismic Sources System and 
+the Ground Motion Models System. 
+%
+The former specifies location, geometry, and seismicity properties of seismic 
+sources and potential epistemic uncertainties affecting this information. 
+%
+The latter describes the details of the ground motion prediction equations to 
+be adopted in the calculation and the related epistemic uncertainties. 
+%
+Therefore, OpenQuake PSHA input models are always defined using two logic 
+tree structures where properties are specified branching level by branching 
+level. One describes epistemic uncertainties associated with the creation of 
+the ERF - called Seismic Source logic tree - 
 	\index{Logic Tree!Seismic sources}
-and one considering the uncertainties connected with the use of GMPEs - called GMPE logic tree. 
-	\index{Logic Tree!Ground Motion Prediction Equations}
-In cases when epistemic uncertainties are non accounted for, the logic tree structure simply consists of one branching level with just one branch (with weight equal to 1).
+the other - called Ground Motion Models logic tree - takes into account the 
+uncertainties connected with the use of models capable to predict the expected 
+ground motion at the site. 
+	\index{Logic Tree!Ground Motion Models}
+% 
+%\begin{figure}[hb]
+%\begin{center}
+%\includegraphics[width=7cm]{./Figures/Part_Hazard/oq_hazard_input.eps}
+%\caption{OpenQuake hazard input}
+%\label{oq_hazard_input}
+%\end{center}
+%\end{figure}
 %
-Further explanations about the way we describe and model logic-trees are provided in section \ref{hazard:logic_tree} at page \pageref{hazard:logic_tree}. 
-
-OpenQuake currently support four types of seismic sources. The description of their main properties - subdivided into source location and geometry and source frequency-magnitude distribution - is provided in Section \ref{hazard:seismic_source_types}. 
-
-The selection of ground motion prediction equations (GMPE) in OpenQuake 
-is basically accomplished by specifying a label in a particular file.  
-The user can associate a GMPE to each tectonic region considered in the 
-analysis (Active Shallow tectonic, Stable Continental etc.). Examples of 
-GMPEs selection are provided in section \ref{hazard:gmpe_selection} at page 
-\pageref{hazard:gmpe_selection}.
-
-The last, but not less important, block of information characterizing a PSHA 
-input model contains calculations settings i.e. parameters specifying the way calculations must be carried out. 
 %
-The information to be included in this part of the input is strictly related to the properties of the engine. 
+In cases where the epistemic uncertainties are not considered, the logic tree 
+structure simply consists of one branching level with just one branch (with 
+weight equal to 1).
 %
-Section \ref{hazard:calculation_settings} provides an outlook of the hazard specific calculation setting supported by OpenQuake. 
+Further explanations about the way we describe and model logic-trees are 
+provided in section \ref{hazard:logic_tree} at page \pageref{hazard:logic_tree}. 
+
+
+
+%The OpenQuake PSHA input model currently support four types of seismic sources. 
+%The description of their main properties - subdivided into source location and 
+%geometry and source frequency-magnitude distribution - is provided in Section
+%\ref{hazard:seismic_source_types}. 
+%
+%The GMPEs System supports can associate a GMPE to each tectonic region 
+%considered in the 
+%analysis (Active Shallow tectonic, Stable Continental etc.). Examples of 
+%GMPEs selection are provided in section \ref{hazard:gmpe_selection} at page 
+%\pageref{hazard:gmpe_selection}.
+
 %
 % ------------------------------------------------------------------------------
 \input{./Part_Hazard/UnifMod/logicTrees.tex}
