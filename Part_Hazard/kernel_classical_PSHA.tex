@@ -1,21 +1,55 @@
-OpenQuake computes probabilistic seismic hazard using two different methodologies: the classical one and a methodology based on stochastic event set generation.
+OpenQuake computes probabilistic seismic hazard using two different 
+methodologies: the classical one and a methodology based on stochastic
+event set generation.
 
-The classical PSHA methodology implemented \citep{cornell1968,mcguire2004} follows the formulation presented by \citet{field2003}. This particular formulation has the distinctive property of performing the entire calculation using probabilities, as also originally proposed by \citet{chiang1984}, instead of working with occurrence rates like in most of the commonest PSHA codes \citep[see for instance][]{bender1987}. 
+The classical PSHA methodology implemented \citep{cornell1968,mcguire2004} 
+follows the formulation presented by \citet{field2003}. This particular 
+formulation has the distinctive property of performing the entire calculation
+using probabilities, as also originally proposed by \citet{chiang1984}, 
+instead of working with occurrence rates like in most of the commonest 
+PSHA codes \citep[see for instance][]{bender1987}. 
 %
-The OpenSHA methodology has also the clear advantage of decoupling the creation of the probabilistic seismicity occurrence model (in the OpenSHA terminology this is defined as the Earthquake Rupture Forecast) from the assumption of a Poissonian temporal occurrence model. 
+The OpenSHA methodology has also the clear advantage of decoupling the 
+creation of the probabilistic seismicity occurrence model (in the OpenSHA 
+terminology this is defined as the Earthquake Rupture Forecast) from the 
+assumption of a Poissonian temporal occurrence model. 
 %
-By assuming that the contributions to hazard coming from multiple occurrences in a seismic source are negligible i.e. the probability that a source will generate two or more occurrences within the time span fixed for the analysis is equal to zero - as proposed by \citet{field2003} - the calculation of hazard following this methodology is completely consistent with the most classical procedure.
+By assuming that the contributions to hazard coming from multiple occurrences 
+in a seismic source are negligible i.e. the probability that a source will 
+generate two or more occurrences within the time span fixed for the analysis 
+is equal to zero - as proposed by \citet{field2003} - the calculation of 
+hazard following this methodology is completely consistent with the most 
+classical procedure.
 % 
-\citet{pagani2007} proved that this assumption holds at least for some prototypal situations.
+\citet{pagani2007} proved that this assumption holds at least for some 
+prototypal situations.
 
-Two are the main steps composing the classical PSHA calculation procedure embedded in OpenSHA (and thus OpenQuake): the creation of the Earthquake Rupture Forecast and the calculation of the hazard at the site.
-The creation of the Earthquake Rupture Forecast (i.e. the seismicity occurrence model) - corresponding to a list of all possible ruptures on each source incliuded in the model with associated probability of occurrence in a given time span - is a first step necessary also in the case of PSHA calculations based on a stochastic event set based methodology. The creation of the ERF is discussed in Chapter \ref{chap:erf} at page \pageref{chap:erf}.
+Two are the main steps composing the classical PSHA calculation procedure 
+embedded in OpenSHA (and thus OpenQuake): the creation of the Earthquake 
+Rupture Forecast and the calculation of the hazard at the site.
+The creation of the Earthquake Rupture Forecast (i.e. the seismicity 
+occurrence model) - corresponding to a list of all possible ruptures 
+on each source incliuded in the model with associated probability of 
+occurrence in a given time span - is a first step necessary also in 
+the case of PSHA calculations based on a stochastic event set based 
+methodology. The creation of the ERF is discussed in Chapter \ref{chap:erf}
+at page \pageref{chap:erf}.
 %
-The second phase in the classical PSHA approach correspons to the calculation of hazard at the site by combining the probabilistic seismicity occurrence model with a ground motion prediction equation (in the OpenSHA jargon also called Intensity Measure Relationship). It will be described in the following section (\ref{chap:classic_psha} at page \pageref{chap:classic_psha}).
+The second phase in the classical PSHA approach correspons to the 
+calculation of hazard at the site by combining the probabilistic 
+seismicity occurrence model with a ground motion prediction equation
+(in the OpenSHA jargon also called Intensity Measure Relationship). 
+It will be described in the following section (\ref{chap:classic_psha} 
+at page \pageref{chap:classic_psha}).
 
-The stochastic event based PSHA calculation procedure resembles recent approaches proposed in the literature (see for example \citet{musson2000} and references therein). The major advantages of this approach are that (1) hazard can be directly linked to a sequence of earthquakes and (2) the residuals of ground motion on each investigated site 
+The stochastic event based PSHA calculation procedure resembles recent 
+approaches proposed in the literature (see for example \citet{musson2000} 
+and references therein). The major advantages of this approach are that (1) 
+hazard can be directly linked to a sequence of earthquakes and (2) the 
+residuals of ground motion on each investigated site 
 %
-This methodology is more extensively described in section \ref{chap:stochastic_psha} at page \pageref{chap:stochastic_psha}.
+This methodology is more extensively described in section 
+\ref{chap:stochastic_psha} at page \pageref{chap:stochastic_psha}.
 
 %
 %-------------------------------------------------------------------------------
@@ -26,15 +60,32 @@ In the simplest case, the classical PSHA calculation kernel takes as input:
 %
 \begin{itemize}
 %
-\item An Earthquake Rupture Forecast (ERF - also called Probabilistic Seismicity Occurrence Model). An ERF is a list of all the possible ruptures occurring on all the seismic sources included in a Source Model. Each rupture $Rup$ is associated with a probability of occurrence $P(Rup|t)$ referred to the time span $t$ fixed for the analysis. 
+\item An Earthquake Rupture Forecast (ERF - also called Probabilistic 
+Seismicity Occurrence Model). An ERF is a list of all the possible ruptures
+occurring on all the seismic sources included in a Source Model. Each 
+rupture $Rup$ is associated with a probability of occurrence $P(Rup|t)$ 
+referred to the time span $t$ fixed for the analysis. 
 %
-\item A Ground Motion Prediction Equation (GMPE). A GMPE is an equation that - given some fundamental parameters characterizing the source, the propagation
-path and the site (in the simplest case magnitude, distance and V$_\text{S,30}$) - computes the value $GM$ of a (scalar) parameter describing ground motion intensity. $gm$ is always accompanied by a standard deviation value $\sigma_{gm,T}$ specifying the aleatoric variability associated to $gm$.
+\item A Ground Motion Prediction Equation (GMPE). A GMPE is an equation 
+that - given some fundamental parameters characterizing the source, the 
+propagation
+path and the site (in the simplest case magnitude, distance and 
+V$_\text{S,30}$) - computes the value $GM$ of a (scalar) parameter 
+describing ground motion intensity. $gm$ is always accompanied by a 
+standard deviation value $\sigma_{gm,T}$ specifying the aleatoric 
+variability associated to $gm$.
 \end{itemize}
 
-We start the description of the classical PSHA procedure by illustrating the calculation of the probability of exceedance of a ground motion value $gm$ in a investigation time $t$ at site $site$ given a rupture $rup$ within source $source$; $rup$ is a rupture produced by one of the seismic sources included in the Earthquake Rupture Forecast. 
+We start the description of the classical PSHA procedure by illustrating
+the calculation of the probability of exceedance of a ground motion value
+$gm$ in a investigation time $t$ at site $site$ given a rupture $rup$ 
+within source $source$; $rup$ is a rupture produced by one of the seismic
+sources included in the Earthquake Rupture Forecast. 
 %
-This probability corresponds to the product between the probability of occurrence of $rup$ in a time $t$ and the conditional probability of exceeding $gm$ at $site$ given the occurrence of $rup$. Analytically this corresponds to:
+This probability corresponds to the product between the probability of
+occurrence of $rup$ in a time $t$ and the conditional probability of 
+exceeding $gm$ at $site$ given the occurrence of $rup$. Analytically this 
+corresponds to:
 \begin{equation}
 P_{site,source,rup}(GM \geq gm|t) = P(Rup_{source}|t)\,P_{site}(GM\geq gm|Rup_{source})
 \label{eq:prob_gm_ex_one_rup}
@@ -42,26 +93,39 @@ P_{site,source,rup}(GM \geq gm|t) = P(Rup_{source}|t)\,P_{site}(GM\geq gm|Rup_{s
 %
 Some notes regarding the equation above:
 \begin{itemize}
-\item The probability of exceedance of a value of ground motion $gm$ at $site$ given a rupture (i.e. $P_{site}(GM\geq gm|Rup_{source})$) is computed (1) by assuming that the logarithm of ground motion is normally distributed. The mean - $\overline{log(gm)}$ - of this distribution is computed with a ground motion prediction equation and the standard deviation $\sigma$ is usually provided with the adopted GMPE.
-\item The ground motion temporal occurrence is controlled by the manifestation of the rupture $rup$ during the investigation time $t$.  
+\item The probability of exceedance of a value of ground motion $gm$ at $site$ 
+given a rupture (i.e. $P_{site}(GM\geq gm|Rup_{source})$) is computed (1) by 
+assuming that the logarithm of ground motion is normally distributed. The 
+mean - $\overline{log(gm)}$ - of this distribution is computed with a ground
+motion prediction equation and the standard deviation $\sigma$ is usually 
+provided with the adopted GMPE.
+\item The ground motion temporal occurrence is controlled by the manifestation
+of the rupture $rup$ during the investigation time $t$.  
 \end{itemize}
 
 %
 
 %
-If the source contains several ruptures that we assume mutually exclusive, the probability that at least one rupture will generate one exceedance corresponds to the difference between unity and the probability that none of the ruptures will generate an exceedence of $gm$:
+If the source contains several ruptures that we assume mutually exclusive, 
+the probability that at least one rupture will generate one exceedance 
+corresponds to the difference between unity and the probability that none 
+of the ruptures will generate an exceedence of $gm$:
 \begin{equation}
 P_{site,source}(GM\geq gm|t) = 1 - \sum_{}^{R} \Big( P(Rup|t)\,P_{site,source}(GM\geq gm|Rup) \Big)
 \label{eq:class_psha_1}
 \end{equation}
-$R$ corresponds to the number of ruptures. We compute the final value of hazard at the site $site$ by considering the contributions from the sources whose ruptures collectively create the ERF:
+$R$ corresponds to the number of ruptures. We compute the final value of 
+hazard at the site $site$ by considering the contributions from the sources
+whose ruptures collectively create the ERF:
 %
 \begin{equation}
 P_{site}(GM \geq gm|t) = 1 - \prod_{}^{S} \Big( 1-P_{site,source}(GM\geq gm|Rup) \Big)
 \label{eq:class_psha_2}
 \end{equation}
 %
-$S$ corresponds to the number of seismic sources. Combining equations \ref{eq:class_psha_1} and \ref{eq:class_psha_2} we obtain \cite[][equation 4, page 410]{field2003}:
+$S$ corresponds to the number of seismic sources. Combining equations 
+\ref{eq:class_psha_1} and \ref{eq:class_psha_2} we obtain 
+\cite[][equation 4, page 410]{field2003}:
 %
 \begin{equation}
 P_{site}(GM\geq gm)=1-\prod\limits_{}^{S} 
@@ -72,7 +136,8 @@ P_{site}(GM\geq gm)=1-\prod\limits_{}^{S}
 \end{equation}
 
 %  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-\subsection{Relaxing the assumption of a single rupture per source over the investigation time}
+\subsection{Relaxing the assumption of a single rupture per source over 
+the investigation time}
 %
 Let's start by considering equation A8 described in \citet{field2003}:
 %

@@ -3,21 +3,15 @@
 	\index{PSHA!Input model}
 %
 OpenQuake requires two main information blocks to perform a calculation: (1) 
-Calculation Settings and (2) a PSHA input model.
+a PSHA input model and (2) Calculation Settings.
 
-Calculation settings specifies for example the typology of results required,
-the site or the sites where to compute the hazard, the methodology to apply.
-%
-Section \ref{hazard:calculation_settings} provides an outlook of the hazard 
-specific calculation setting supported by OpenQuake. 
-
-A PSHA input model on the contrary defines the properties of the seismic sources 
+A PSHA input model defines the properties of the seismic sources 
 of engineering  interest within the region considered in the analysis and the 
-models describing - once a rupture occurred in a given position - the properties 
-of the shaking expected at the site. 
+models capable to describe - once a rupture occurred in a given position - the 
+properties of the shaking expected at the site. 
 %
-A PSHA input model contains two main objects: the Seismic Sources System and 
-the Ground Motion Models System. 
+A PSHA input model contains two main objects: the \emph{Seismic Sources System} 
+and the \emph{Ground Motion Models System}. 
 %
 The former specifies location, geometry, and seismicity properties of seismic 
 sources and potential epistemic uncertainties affecting this information. 
@@ -26,64 +20,63 @@ The latter describes the details of the ground motion prediction equations to
 be adopted in the calculation and the related epistemic uncertainties. 
 %
 Therefore, OpenQuake PSHA input models are always defined using two logic 
-tree structures where properties are specified branching level by branching 
-level. One describes epistemic uncertainties associated with the creation of 
-the ERF - called Seismic Source logic tree - 
+tree structures, one describing epistemic uncertainties associated with the 
+creation of the ERF - called \emph{Seismic Sources logic tree} - 
 	\index{Logic Tree!Seismic sources}
-the other - called Ground Motion Models logic tree - takes into account the 
-uncertainties connected with the use of models capable to predict the expected 
-ground motion at the site. 
+the other - called \emph{Ground Motion Models logic tree} - takes into account 
+the uncertainties connected with the use of models capable to predict the 
+expected ground motion at the site. 
 	\index{Logic Tree!Ground Motion Models}
-% 
-%\begin{figure}[hb]
-%\begin{center}
-%\includegraphics[width=7cm]{./Figures/Part_Hazard/oq_hazard_input.eps}
-%\caption{OpenQuake hazard input}
-%\label{oq_hazard_input}
-%\end{center}
-%\end{figure}
-%
 %
 In cases where the epistemic uncertainties are not considered, the logic tree 
 structure simply consists of one branching level with just one branch (with 
 weight equal to 1).
-%
-Further explanations about the way we describe and model logic-trees are 
-provided in section \ref{hazard:logic_tree} at page \pageref{hazard:logic_tree}. 
 
+Calculation settings specifies for example the typology of results required,
+the site or the sites where to compute the hazard, the methodology to apply.
 
-
-%The OpenQuake PSHA input model currently support four types of seismic sources. 
-%The description of their main properties - subdivided into source location and 
-%geometry and source frequency-magnitude distribution - is provided in Section
-%\ref{hazard:seismic_source_types}. 
-%
-%The GMPEs System supports can associate a GMPE to each tectonic region 
-%considered in the 
-%analysis (Active Shallow tectonic, Stable Continental etc.). Examples of 
-%GMPEs selection are provided in section \ref{hazard:gmpe_selection} at page 
-%\pageref{hazard:gmpe_selection}.
-
+The organisation of this chapter is the following. The next section offers
+further explanations about the way we describe and model logic trees. 
+Section \ref{hazard:seismic_source_types} contains a description of the seismic
+source type currently supported by OpenQuake while section 
+\ref{hazard:seismic_source_types} provides a short description of the 
+ground motion models currently supported. Finally, section 
+\ref{hazard:calculation_settings} provides an outlook of the hazard 
+specific calculation setting supported by OpenQuake.
 %
 % ------------------------------------------------------------------------------
-\input{./Part_Hazard/UnifMod/logicTrees.tex}
+\input{./Part_Hazard/unifiedmodel/logicTrees.tex}
+\clearpage
 % ------------------------------------------------------------------------------
 %
 % ------------------------------------------------------------------------------
-\input{./Part_Hazard/UnifMod/seismicSourceTypes.tex}
+\input{./Part_Hazard/unifiedmodel/seismicSourceTypes.tex}
 %
 % ------------------------------------------------------------------------------
 \section{GMPEs description}
 \label{hazard:gmpe_selection}
-OpenQuake provides only hardcoded Ground Motion Prediction Equations and misses of a mechanisms allowing the user to specify new GMPEs. This is something the OpenQuake team may think to introduce in the future. 
+OpenQuake provides only hardcoded Ground Motion Prediction Equations and misses 
+of a mechanisms allowing the user to specify new GMPEs. This is something the 
+OpenQuake team may think to introduce in the future. 
 
-For the time being the user in need of a specific Intensity Measure Relationship, can:
+For the time being the user in need of a specific Intensity Measure 
+Relationship, can:
 \begin{itemize}
-\item Fork the OpenQuake project from the OQ repository\footnote{ The OpenQuake software repository can be reached here: \hfill \newline  https://github.com/gem/openquake/}, code the new GMPE following the examples available in the OpenQuake and OpenSHA repository and, - if he's willing to share his contribution with the other OQ users - ask to push his modified version of OpenQuake. 
-\item Post a ticket on the OpenQuake website \marginpar{this is something I need to check with Ben} 
+\item Fork the OpenQuake project from the OQ repository\footnote{The 
+OpenQuake software repository can be reached here: 
+\hfill \newline  https://github.com/gem/openquake/}, code the new GMPE 
+following the examples available in the OpenQuake and OpenSHA repository 
+and, - if he's willing to share his contribution with the other OQ users - 
+ask to push his modified version of OpenQuake. 
+\item Post a ticket on the OpenQuake website \marginpar{this is something 
+I need to check with Ben} 
 \end{itemize}
 
-Table \ref{tab:OQ_GMPEs} provides a list of the Ground Motion Prediction Equations supported. The vast majority are GMPEs implemented in OpenSHA with just a couple of developed in the course of the GEM1 project. New GMPEs are expected to be added soon with the contribution of some GEM's Regional Programmes.
+Table \ref{tab:OQ_GMPEs} provides a list of the Ground Motion Prediction 
+Equations supported. The vast majority are GMPEs implemented in OpenSHA 
+with just a couple of developed in the course of the GEM1 project. 
+New GMPEs are expected to be added soon with the contribution of 
+some GEM's Regional Programmes.
 %
 \begin{table}[!t]
 \centering
