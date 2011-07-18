@@ -5,6 +5,13 @@ Abrahamson, N.~A. and SIlva, W. (2008).
 \newblock Summary of the abrahamson \& silva nga ground-motion relations.
 \newblock {\em Earthquake Spectra}, 24(1):67--97.
 
+\bibitem[Ahmad et~al., 2011]{Ahmadetal2011}
+Ahmad, N., Crowley, H., and Pinho, R. (2011).
+\newblock Analytical fragility functions for feinforced concrete and masonry
+  buildings and building aggregates of euro-mediterranean region.
+\newblock Technical report, Department of Structural Mechanics, University of
+  Pavia.
+
 \bibitem[Aki and Richards, 2002]{aki2002}
 Aki, K. and Richards, P.~G. (2002).
 \newblock {\em Quantitative Seismology}.
@@ -189,6 +196,13 @@ Priestley, M. J.~N. (1997).
 Priestley, M. J.~N., Calvi, G.~M., and Kowalsky, M.~J. (2007).
 \newblock {\em Displacement-based seismic design of structures}.
 \newblock IUSS Press, Pavia, Italy.
+
+\bibitem[Restrepo-Velez and Magenes, 2004]{RestrepoMagenes2004}
+Restrepo-Velez, L.~F. and Magenes, G. (2004).
+\newblock Simplified procedure for the seismic risk assessment of unreinforced
+  masonry buildings.
+\newblock In {\em Proceedings of the 13th World Conference on Earthquake
+  Engineering, Vancouver, Canada, Paper no.2561}.
 
 \bibitem[{Senior Seismic Hazard Analysis Committee}, 1997]{sshac1997}
 {Senior Seismic Hazard Analysis Committee} (1997).

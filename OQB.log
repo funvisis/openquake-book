@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=latex 2011.1.18)  21 MAR 2011 16:05
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=latex 2011.1.18)  28 MAR 2011 11:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -887,17 +887,10 @@ File: ./Figures/Part_Risk/beam_types_construction.eps Graphic file (type eps)
 File: ./Figures/openquake_logo1.eps Graphic file (type eps)
 
 <./Figures/openquake_logo1.eps> [62]
-Underfull \hbox (badness 10000) in paragraph at lines 105--106
-
- []
-
 File: ./Figures/openquake_logo1.eps Graphic file (type eps)
-<./Figures/openquake_logo1.eps> [63]
-Underfull \hbox (badness 10000) in paragraph at lines 131--132
-
- []
-
+ <./Figures/openquake_logo1.eps> [63]
 File: ./Figures/openquake_logo1.eps Graphic file (type eps)
+
 <./Figures/openquake_logo1.eps> [64]
 File: ./Figures/Part_Risk/Dual_frame_wall_plan.eps Graphic file (type eps)
 
@@ -908,32 +901,23 @@ File: ./Figures/Part_Risk/Dual_frame_wall_front.eps Graphic file (type eps)
 File: ./Figures/openquake_logo1.eps Graphic file (type eps)
 
 <./Figures/openquake_logo1.eps> [65]
-Underfull \hbox (badness 10000) in paragraph at lines 201--203
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 208--210
-
- []
-
 File: ./Figures/openquake_logo1.eps Graphic file (type eps)
-<./Figures/openquake_logo1.eps> [66])
-File: ./Figures/openquake_logo1.eps Graphic file (type eps)
- <./Figures/openquake_logo1.eps> [67]
+ <./Figures/openquake_logo1.eps> [66])
 File: ./Figures/openquake_logo1.eps Graphic file (type eps)
 
-<./Figures/openquake_logo1.eps> [68
-
-] [69] [70] (./Part_SEIA/introduction.tex)
+<./Figures/openquake_logo1.eps> [67]
 File: ./Figures/openquake_logo1.eps Graphic file (type eps)
+ <./Figures/openquake_logo1.eps> [68
 
-<./Figures/openquake_logo1.eps> [71]
+]
+[69] [70] (./Part_SEIA/introduction.tex)
+File: ./Figures/openquake_logo1.eps Graphic file (type eps)
+ <./Figures/openquake_logo1.eps>
+[71]
 File: ./Figures/openquake_logo1.eps Graphic file (type eps)
  <./Figures/openquake_logo1.eps> [72
 
-]
-[73] [74]
+] [73] [74]
 Chapter 14.
 (./Part_Modellers_Toolkit/introduction.tex) [75
 
@@ -1030,12 +1014,12 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 9893 strings out of 493748
- 151547 string characters out of 3143569
+ 9900 strings out of 493748
+ 151716 string characters out of 3143569
  323155 words of memory out of 3000000
- 12954 multiletter control sequences out of 15000+200000
+ 12961 multiletter control sequences out of 15000+200000
  15707 words of font info for 56 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 55i,12n,92p,1213b,584s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 55i,12n,92p,1213b,582s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on OQB.dvi (90 pages, 217388 bytes).
+Output written on OQB.dvi (90 pages, 222536 bytes).

@@ -139,11 +139,31 @@
   timestamp = {2011.03.16}
 }
 
+@CONFERENCE{RestrepoMagenes2004,
+  author = {Restrepo-Velez, L. F. and Magenes, G.},
+  title = {Simplified procedure for the seismic risk assessment of unreinforced
+	masonry buildings},
+  booktitle = {Proceedings of the 13th World Conference on Earthquake Engineering,
+	Vancouver, Canada, Paper no.2561},
+  year = {2004},
+  owner = {vitorsilva},
+  timestamp = {2011.03.24}
+}
+
 @BOOK{Sullivanetal2006,
   title = {Seismic design of frame-wall structures},
   publisher = {IUSS Press, Pavia, Italy},
   year = {2006},
   author = {Sullivan, T. J. and Priestley, M. J. N. and Calvi, G. M.},
+  owner = {vitorsilva},
+  timestamp = {2011.03.21}
+}
+
+@CONFERENCE{Vuranetal2008,
+  author = {Vuran, E. and Bal, I. and Crowley, H. and Pinho, R.},
+  title = {Determination of equivalent SDOF characteristics of 3D dual structures},
+  booktitle = {Proceedings of the 14thWCEE, Beijing, China, paper no: S15-031},
+  year = {2008},
   owner = {vitorsilva},
   timestamp = {2011.03.21}
 }

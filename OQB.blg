@@ -5,44 +5,44 @@ The style file: apalike.bst
 Database file #1: ./Bibliography/hazard.bib
 Database file #2: ./Bibliography/risk.bib
 Database file #3: ./Bibliography/sei.bib.bib
-You've used 38 entries,
+You've used 40 entries,
             1935 wiz_defined-function locations,
-            692 strings with 10013 characters,
-and the built_in function-call counts, 13804 in all, are:
-= -- 1320
-> -- 578
-< -- 31
-+ -- 198
-- -- 190
-* -- 1144
-:= -- 2499
-add.period$ -- 115
-call.type$ -- 38
-change.case$ -- 278
-chr.to.int$ -- 38
-cite$ -- 38
-duplicate$ -- 521
-empty$ -- 954
-format.name$ -- 256
-if$ -- 2669
+            703 strings with 10527 characters,
+and the built_in function-call counts, 14475 in all, are:
+= -- 1384
+> -- 609
+< -- 32
++ -- 208
+- -- 200
+* -- 1194
+:= -- 2623
+add.period$ -- 121
+call.type$ -- 40
+change.case$ -- 294
+chr.to.int$ -- 40
+cite$ -- 40
+duplicate$ -- 550
+empty$ -- 1001
+format.name$ -- 270
+if$ -- 2799
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 34
-newline$ -- 194
-num.names$ -- 114
-pop$ -- 244
+missing$ -- 35
+newline$ -- 204
+num.names$ -- 120
+pop$ -- 262
 preamble$ -- 1
-purify$ -- 285
+purify$ -- 300
 quote$ -- 0
-skip$ -- 377
+skip$ -- 394
 stack$ -- 0
-substring$ -- 845
-swap$ -- 36
+substring$ -- 869
+swap$ -- 37
 text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 216
+type$ -- 228
 warning$ -- 0
-while$ -- 94
+while$ -- 98
 width$ -- 0
-write$ -- 490
+write$ -- 515

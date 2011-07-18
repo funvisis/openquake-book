@@ -70,7 +70,7 @@
 \contentsline {paragraph}{Bare frame structures}{62}
 \contentsline {paragraph}{Infilled frame structures}{64}
 \contentsline {subsubsection}{\numberline {13.3.1.2}Frame-wall structures}{65}
-\contentsline {subsection}{\numberline {13.3.2}Masonry Building}{67}
+\contentsline {subsection}{\numberline {13.3.2}Masonry Buildings}{66}
 \contentsline {part}{IV\hspace {1em}Socio-Economic Impact Assessment}{69}
 \contentsline {part}{V\hspace {1em}Modeller's Toolkit}{73}
 \contentsline {chapter}{\numberline {14}Introduction}{75}
