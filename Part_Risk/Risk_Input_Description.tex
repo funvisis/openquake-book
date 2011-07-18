@@ -4,17 +4,18 @@ The two main sources of input information required for a risk calculation with O
 The OpenQuake engine requires an exposure model that needs to be stored according to the respective NRML schema. This file format can include several typologies of asset such as population or buildings. The following parameters are currently being used to describe each asset of the exposure model: 
 
 \begin{itemize}
-\item Asset ID: A unique key used to identify the asset instance;
-\item Asset description: Brief description of the asset typology;
+\item Asset reference: A unique key used to identify the asset instance;
 \item Asset value: Numerical value of the quantity of the asset;
-\item Location: Geographic coordinates of the asset expressed in decimal degrees.
+\item Location: Geographic coordinates of the asset expressed in decimal degrees;
+\item Vulnerability function: Code of the vulnerability curve that should be employed on the calculations;
+\item Structure type: Reference to the structure typology.
 \end{itemize}
 
 This list of parameters will be further extended in future releases of OpenQuake once more complex data will need to be stored (e.g. value of contents or number of occupants per building at different times of the day).  
 
 \section{Vulnerability}
 Vulnerability is defined as the probability distribution of loss, given an intensity measure level. Vulnerability functions can be derived directly, usually through empirical methods where the losses from past events at given locations are related to the levels of intensity of ground motion at those locations, or they can be derived by combining fragility functions and consequence functions. Fragility functions describe the probability of exceeding a set of limit states, given an intensity measure level; limit states describe the limits to performance levels, such as damage or injury levels. Fragility functions can be derived by expert-opinion, empirically (using observed data), or analytically, by explicitly modeling the behavior of a given asset typology when subjected to increasing levels of ground motion. Consequence functions describe the probability distribution of loss, given a performance level and are generally derived empirically. 
-Version 0.2 of OpenQuake only supports vulnerability functions. However, the possibility to describe the vulnerability characteristics of the exposed assets with fragility and consequence functions is planned in future releases of OpenQuake such that users can view intermediate results of seismic loss calculations, such as the distribution of damage or injury levels. 
+Version 0.4 of OpenQuake only supports vulnerability functions. However, the possibility to describe the vulnerability characteristics of the exposed assets with fragility and consequence functions is planned in future releases of OpenQuake such that users can view intermediate results of seismic loss calculations, such as the distribution of damage or injury levels. 
 
 \subsection{Vulnerability Function}
 \subsubsection{Discrete Vulnerability Functions}
@@ -22,7 +23,7 @@ In the current version of OpenQuake (V0.2) discrete vulnerability functions are 
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=11cm,height=7cm]{./Figures/Part_Risk/VFDiscrete.eps}
+\includegraphics[width=10cm,height=6cm]{./Figures/Part_Risk/VFDiscrete.eps}
 \caption{Discrete vulnerability function.}
 \label{fig:VFDiscrete}
 \end{figure}
@@ -32,7 +33,7 @@ In version 0.3 of OpenQuake, continuous vulnerability functions will be implemen
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=11cm,height=7cm]{./Figures/Part_Risk/VFContinuous}
+\includegraphics[width=10cm,height=6cm]{./Figures/Part_Risk/VFContinuous}
 \caption{Continuous vulnerability function.}
 \label{fig:VFContinuous}
 \end{figure}
