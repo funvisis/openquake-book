@@ -1,11 +1,11 @@
 
 
 \section{Introduction}
-The deterministic event-based risk calculator is capable of computing losses and loss statistics for a single event for a collection of assets, given a set of ground motion fields. The set of ground motion fields is required to represent the aleatory variability (both inter- and intra-event) in the ground motion prediction equation. This calculator thus requires ground motion fields as an input, which are currently calculated following the workflow that has been presented and described in Chapter \ref{chap:inthaz}. 
+The deterministic event-based risk calculator is capable of computing losses and loss statistics from a single event for a collection of assets, given a set of ground motion fields. A set of ground motion fields is required to represent the aleatory variability (both inter- and intra-event) in the ground motion prediction equation. The input ground motion fields are currently calculated following the deterministic event-based workflow that has been presented in Figure X. 
 
 For each ground motion field, the intensity measure level at a given site is combined with a vulnerability function, from which a loss ratio is randomly sampled, for each asset typology contained in the exposure model. The loss ratios that are sampled for a given typology at different locations are considered to be independent or fully correlated, knowing that the reality is likely to lie somewhere in between these two assumptions. Using these results, the mean and standard deviation of loss ratio across all ground motion fields can be calculated. Loss ratios are converted into losses by multiplying by the value of the asset given in the exposure model. It is furthermore possible to aggregate the losses throughout the region and to compute the standard deviation of the aggregated loss. 
 
-\section{Calculator}
+\section{Calculation Steps}
 
 To compute the mean loss:
 
@@ -59,3 +59,4 @@ Where $E[LR]$ stands for the mean loss ratio computed previously.
 
 \end{enumerate}
 
+\section{Example Application}

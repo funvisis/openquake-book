@@ -1,7 +1,7 @@
 \section{Introduction}
-The Classical PSHA-based risk calculator can be used to calculate loss exceedance curves for single assets, site-by-site, using hazard curves. This calculator thus requires hazard curves as an input, which are currently calculated following the workflow that has been presented and described in \ref{chap:inthaz}.
+The Classical PSHA-based risk calculator can be used to calculate loss exceedance curves for single assets, site-by-site, using hazard curves. This calculator thus requires hazard curves as an input, which are currently calculated following the classical PSHA-based workflow that has been presented in Figure X.
 
-\section{Calculator}
+\section{Calculation Steps}
 
 \begin{enumerate}
 \item By default, the hazard component of the OpenQuake engine computes the hazard curves for a set of intensity measure levels that are pre-defined in the configuration file. With the integration of the hazard and risk components in the engine, a feature is currently being implemented with the purpose of verifying that this set of values covers the range of intensity measure levels defined in the vulnerability functions. If not, the set of values in which the hazard curves are going to be computed is extended based on the minimum and maximum values of the vulnerability functions.
@@ -35,3 +35,5 @@ Note that for this example only one intermediate value was considered between co
 \item Finally, each column of the aforementioned matrix is multiplied by the probability of occurrence of the respective intensity measure level (extracted from the hazard curves) to produce a conditional loss ratio exceedance matrix.  Then, for each loss ratio the probabilities of exceedance are summed, leading to a loss ratio exceedance curve, whose set of loss ratios can be multiplied by the value of the asset given by the exposure file to obtain an absolute loss exceedance curve.
 
 \end{enumerate}
+
+\section{Example Application}
