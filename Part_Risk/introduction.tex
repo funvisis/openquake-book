@@ -1,10 +1,11 @@
 %
 % ------------------------------------------------------------------------------
 \section{OpenQuake-risk: main concepts}
-Blah
+OpenQuake-risk has been developed by the scientific members of the GEM Model Facility, following an extensive review of existing software to calculate seismic risk (\citeauthor{crowleyetal2010} ). It is coded in the Python programming language and is currently linked to OpenQuake-hazard, but there are plans to allow users to input their own hazard in the future.
+
 %
 % ------------------------------------------------------------------------------
-\section{Calculation workflows}
+\section{Calculation Workflows}
 OpenQuake currently comprises three risk calculation workflows: one computing losses due to a single event, and the other two computing seismic risk due to most or all of the possible events that might occur in a given region within a certain time span. The calculation workflows are comprised of a number of separate calculators. In order to run any of the calculation workflows, it is necessary to define the geographic coordinates of the region of interest, the type of calculations, the path to the input files, the type of results that are to be produced and several parameters necessary for the hazard calculations. Currently, a configuration file to be provided to OpenQuake incorporates this information.
 The following three calculation workflows are thus supported:
 \begin{itemize}
