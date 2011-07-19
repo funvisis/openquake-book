@@ -1,4 +1,3 @@
-Introduction to risk calculations
 %
 % ------------------------------------------------------------------------------
 \section{OpenQuake-risk: main concepts}
@@ -6,13 +5,12 @@ Blah
 %
 % ------------------------------------------------------------------------------
 \section{Calculation workflows}
-The OpenQuake-Risk module offers the capability to perform seismic hazard 
-analysis (SHA) following various approaches. Currently three main types of 
-analysis are supported:
-\begin{itemize}
-\item \textbf{Classical PSHA-Based Risk}, 
-\item \textbf{Probabilistic Event-Based Risk}, 
-\item \textbf{Deterministic Event-Based Risk}, 
+OpenQuake currently comprises three risk calculation workflows: one computing losses due to a single event, and the other two computing seismic risk due to most or all of the possible events that might occur in a given region within a certain time span. The calculation workflows are comprised of a number of separate calculators. In order to run any of the calculation workflows, it is necessary to define the geographic coordinates of the region of interest, the type of calculations, the path to the input files, the type of results that are to be produced and several parameters necessary for the hazard calculations. Currently, a configuration file to be provided to OpenQuake incorporates this information.
+The following three calculation workflows are thus supported:\begin{itemize}
+\item \textbf{Deterministic Event-Based Risk}: this calculation sequence is capable of computing losses and loss statistics due to a single,deterministic earthquake, for a collection of assets (see Figure X). Such analyses are of importance, for example, for emergency management planning and for raising societal awareness of risk. 
+\item \textbf{Probabilistic Event-Based Risk}: this calculation workflow computes the probability of losses and loss statistics for a collection ofassets, based on the probabilistic hazard (see Figure Y). The losses are calculated with an event-based approach,such that the simultaneous losses to a set of assets can be calculated.
+\item \textbf{Classical PSHA-Based Risk}: this calculation workflow leads to the computation of the probability of losses and loss statistics forsingle assets, based on the probabilistic hazard (see Fgure Z). The output of this calculator is useful forcomparative risk assessment between assets at different locations.
 \end{itemize}
 
+The hazard calculators in the aforementioned workflows have already been described in the hazard section of this book, and so the following chapters focus on the input required to risk workflows, and the calculators required for the three distinct workflows: the deterministic event-based risk calculator, the probabilistic event-based risk calculator and the classical PSHA-baed risk calculator.
 %
