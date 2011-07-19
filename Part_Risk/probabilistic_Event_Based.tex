@@ -1,25 +1,12 @@
-\section{Description}
-This calculator uses stochastic event sets and associated ground motion fields to compute loss curves for each asset contained in an exposure model, as illustrated in Figure \ref{fig:Scheme_Prob_calc} :  
+\section{Introduction}
+This calculator uses stochastic event sets and associated ground motion fields to compute loss exceedance curves for each asset contained in an exposure model. This calculator thus requires ground motion fields from a number of stochastic events as an input, which are calculated following the workflow that has been presented and described in \ref{chap:inthaz}. For each ground motion field, the intensity measure level at a given site is combined with a vulnerability function, from which a loss ratio is randomly sampled, for each asset typology contained in the exposure model. The loss ratios that are sampled for a given typology at different locations are considered to be independent or fully correlated, knowing that the reality is likely to lie somewhere in between these two assumptions. The occurrence distribution of mean loss for a given asset is calculated using all of the ground motion fields, leading to a histogram of loss ratios which is then converted into a cumulative histogram, by calculating the number of cumulative occurrences for each interval of loss ratio. The rate of exceedance of each loss ratio is calculated by dividing the number of cumulative occurrences by the number of stochastic event sets multiplied by the length of each event set. By assuming a Poissionian distribution of the occurrence model, the probability of exceedance of each loss ratio is calculated. If an aggregated loss curve for a portfolio of assets is required, a secondary module is used in order to aggregate the losses from all the assets in the exposure file, per event, before calculating the occurrence distribution of mean loss. 
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=9cm,height=9cm]{./Figures/Part_Risk/Scheme_Prob_calc.eps}
-\caption{Architecture of the probabilistic event-based calculator.}
-\label{fig:Scheme_Prob_calc}
-\end{figure}
-
-For each ground motion field, the intensity measure level at a given site is used along with the vulnerability function to randomly sample the loss ratio for each asset typology defined in the exposure model. The loss ratios that are sampled for a given typology at different locations in the exposure model are considered to be independent or fully correlated, knowing that the reality is likely to lie somewhere in between these two assumptions. The occurrence distribution of mean loss for a given asset is calculated using all of the ground motion fields, leading to a histogram of loss ratios which is then converted into a cumulative histogram, by calculating the number of cumulative occurrences for each interval of loss ratio. The rate of exceedance of each loss ratio is calculated by dividing the number of cumulative occurrences by the number of stochastic event sets multiplied by the length of each event set. By assuming a Poissionian distribution of the occurrence model, the probability of exceedance of each loss ratio is calculated. 
- 
-\hfill \\
-
-If an aggregated loss curve for a portfolio of assets is required, a secondary module is necessary in order to aggregate the losses from all the assets in the exposure file, per event, before calculating the occurrence distribution of mean loss. If the assets are close enough, it is necessary to generate the ground motion fields taking into account the spatial correlation of ground motion residuals. 
-
-\section{Calculation workflow}
+\section{Calculator}
 
 \begin{enumerate}
 \item The  engine starts by using the set of ground motion fields to extract the intensity measure levels for the location of each asset. 
  
-\item Then the engine takes the vulnerability function assigned to each asset and checks if the uncertainty was specified. If not, the loss ratios are derived based on the mean loss ratio for each intensity measure level. However, if the uncertainty is defined, it is randomly sampled following the probabilistic distribution, mean loss ratio and associated coefficient of variation of the respective function, as described bellow:
+\item Then the engine takes the vulnerability function assigned to each asset and checks if the uncertainty was specified. If not, the loss ratios are derived based on the mean loss ratio for each intensity measure level. However, if the uncertainty is defined, it is randomly sampled following the probabilistic distribution, mean loss ratio and associated coefficient of variation of the respective function, as described below:
 
 \begin{equation}
 \log{LR_n} = \mu + \epsilon\sigma

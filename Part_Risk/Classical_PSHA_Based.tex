@@ -1,19 +1,12 @@
-\section{Description}
-The Classical PSHA-based risk calculator can be used to determine loss exceedance curves under certain conditions (usually for single site loss assessments). This calculator takes the configuration information, one or several vulnerability models, information describing the assets and using hazard curves, either contained in a file or computed using a PSHA input model, computes a loss exceedance curve for each asset. Figure \ref{fig:Scheme_PSHA_calc} illustrates the architecture of this calculator:
+\section{Introduction}
+The Classical PSHA-based risk calculator can be used to calculate loss exceedance curves for single assets, site-by-site, using hazard curves. This calculator thus requires hazard curves as an input, which are currently calculated following the workflow that has been presented and described in \ref{chap:inthaz}.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=9cm,height=9cm]{./Figures/Part_Risk/Scheme_PSHA_calc.eps}
-\caption{Architecture of the Classical PSHA-based risk calculator.}
-\label{fig:Scheme_PSHA_calc}
-\end{figure}
-
-\section{Calculation workflow}
+\section{Calculator}
 
 \begin{enumerate}
 \item By default, the hazard component of the OpenQuake engine computes the hazard curves for a set of intensity measure levels that are pre-defined in the configuration file. With the integration of the hazard and risk components in the engine, a feature is currently being implemented with the purpose of verifying that this set of values covers the range of intensity measure levels defined in the vulnerability functions. If not, the set of values in which the hazard curves are going to be computed is extended based on the minimum and maximum values of the vulnerability functions.
 
-\item To use this calculator (to be released with V0.3), the hazard curves need first to be converted into probability mass functions (e.g. probability of occurrence of a discrete set of intensity measure levels). To do so, the engine starts by reading the intensity measure levels from the discrete vulnerability functions, and computes the central value between consecutive levels. Two consecutive values define the boundaries of the interval for each intensity measure level and by relating these limits with the hazard curve, the engine computes the corresponding probabilities of exceedance. Figure \ref{fig:ProbOccurrence} contains a discrete vulnerability function (bottom chart) and a hazard curve (top chart) in which the definition of the interval for a given intensity measure level and associated estimation of the probabilities of exceedance of each limit are illustrated. 
+\item To use this calculator, the hazard curves need first to be converted into probability mass functions (e.g. probability of occurrence of a discrete set of intensity measure levels). To do so, the engine starts by reading the intensity measure levels from the discrete vulnerability functions, and computes the central value between consecutive levels. Two consecutive values define the boundaries of the interval for each intensity measure level and by relating these limits with the hazard curve, the engine computes the corresponding probabilities of exceedance. Figure \ref{fig:ProbOccurrence} contains a discrete vulnerability function (bottom figure) and a hazard curve (top figure) in which the definition of the interval for a given intensity measure level and associated estimation of the probabilities of exceedance of each limit are illustrated. 
 
 \begin{figure}[ht]
 \centering

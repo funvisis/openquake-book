@@ -1,22 +1,14 @@
-The deterministic event-based calculator is capable of computing losses and loss statistics for a single event for a collection of assets. The event is repeated many times to model the variation in the inter-event variability and for each event, a ground motion field is generated taking into account the intra-event variability (and possibly the spatial correlation of the latter). Figure \ref{fig:Scheme_deter_calc}  presents the deterministic event-based risk calculation workflow.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=9cm,height=9cm]{./Figures/Part_Risk/Scheme_Deter_calc.eps}
-\caption{Workflow of the deterministic event-based risk calculator.}
-\label{fig:Scheme_deter_calc}
-\end{figure}
 
 
-\section{Description}
-For each ground motion field, the intensity measure level at a given site is combined with a vulnerability function to randomly sample a loss ratio for each asset typology contained in the exposure model. These loss ratios that are sampled for a given typology at different locations are considered to be independent or fully correlated, knowing that the reality is likely to lie somewhere in between these two assumptions. Using these results, the mean and standard deviation of loss ratio across all events can be calculated. Loss ratios are converted into losses by multiplying by the value of the asset given in the exposure model. For this method, it is possible to aggregate the losses throughout the region and to compute the standard deviation of the aggregated loss. 
+\section{Introduction}
+The deterministic event-based risk calculator is capable of computing losses and loss statistics for a single event for a collection of assets, given a set of ground motion fields. The set of ground motion fields is required to represent the aleatory variability (both inter- and intra-event) in the ground motion prediction equation. This calculator thus requires ground motion fields as an input, which are calculated following the workflow that has been presented and described in \ref{chap:inthaz}. For each ground motion field, the intensity measure level at a given site is combined with a vulnerability function, from which a loss ratio is randomly sampled, for each asset typology contained in the exposure model. The loss ratios that are sampled for a given typology at different locations are considered to be independent or fully correlated, knowing that the reality is likely to lie somewhere in between these two assumptions. Using these results, the mean and standard deviation of loss ratio across all ground motion fields can be calculated. Loss ratios are converted into losses by multiplying by the value of the asset given in the exposure model. It is furthermore possible to aggregate the losses throughout the region and to compute the standard deviation of the aggregated loss. 
 
-\section{Calculation workflow}
+\section{Calculator}
 
 To compute the mean loss:
 
 \begin{enumerate}
-\item For each ground motion field, the intensity measure level at the location of the asset is used to derived the mean loss ratio and associated coefficient of variation from the vulnerability function. Since currently the vulnerability functions are being defined in a discrete way, it is quite probable that the intensity measure level provided by the ground motion field is not contained in the vulnerability function. In these cases, linear interpolation methods are being employed to derive the mean loss ratio at the intensity measure level of interest. Once these two parameters are known, the sampling of the loss ratio is done following the probabilistic distribution of the respective vulnerability function, as described bellow:
+\item For each ground motion field, the intensity measure level at the location of the asset is used to derive the mean loss ratio and associated coefficient of variation from the vulnerability function. Since currently the vulnerability functions are being defined in a discrete manner, it is quite probable that the intensity measure level provided by the ground motion field is not contained in the vulnerability function. In these cases, linear interpolation methods are being employed to derive the mean loss ratio at the intensity measure level of interest. Once these two parameters are known, the sampling of the loss ratio is done following the probabilistic distribution of the respective vulnerability function, as described below:
 
 \begin{equation}
 \log{LR_n} = \mu + \epsilon\sigma
