@@ -1,3 +1,6 @@
+% Table: list of GMPEs currently supported by OQ
+\input{./Part_Hazard/tables/gmpeslist.tex}
+%
 The Ground Motion System is a combination of one or several logic 
 trees each one associated with a specific tectonic region or group 
 of sources (this second option is still not supported in OQ).
@@ -6,7 +9,7 @@ Each Ground Motion Logic Tree specifies the alternative Ground Motion
 models available for a particular group of sources (e.g. subduction 
 interface sources).
 
-OpenQuake provides only hardcoded Ground Motion Prediction Equations 
+OpenQuake provides nonly hardcoded Ground Motion Prediction Equations 
 and misses of a mechanisms allowing the user to specify new GMPEs. 
 This is a feature that we may think to introduce in the future. 
 
@@ -16,35 +19,6 @@ Equations supported.
 The vast majority are GMPEs implemented in OpenSHA with just a couple 
 of developed in the course of the GEM1 project. New GMPEs are expected 
 to be added soon with the contribution of some GEM's Regional Programmes.
-%
-\begin{table}[!t]
-\centering
-\begin{tabular}{llll} \hline
-% >>> Table header
-\textbf{Ground Motion Prediction} & \textbf{IMTs} & \textbf{Component } & \textbf{ID} \\
-\textbf{Equation}& & \textbf{type} & \\ 
-\hline
-% <<< Table header
-\cite{abrahamson2008} & PGA & & AS2008 \\
-\cite{allen2010} & MMI & & AW2010 \\
-\cite{atkinson2006} & PGA & & AtkBoo06 \\
-\cite{boore1997} &  &  & BJF1997 \\
-%\cite{bakun1997} &  &  &  \textcolor{red}{check this} \\
-\cite{boore2008} & PGA,PGV,S$_{a}$ & Avg Hor & BA2008 \\
-\cite{campbell1997} &  &  & Campbell\_1997 \\
-\cite{campbell2003} &  &  & CB2003 \\
-\cite{campbell2008} &  &  & CB2008 \\
-%\cite{chandler2002} &  &  & \textcolor{red}{check this} \\
-\cite{chiou2008} & PGA,S$_{a}$ &  & CY2008 \\
-field 2000 &  &  &  \\
-\cite{zhao2006} & PGA,S$_{a}$ &  & ZhaoEtAl2006 \\
-\hline
-\end{tabular}
-\caption{Some of the Ground Motion Prediction Equations (in the OpenSHA 
-terminology Intensity Measure Relationship) currently included in OpenSHA 
-and OpenQuake.}
-\label{tab:OQ_GMPEs}
-\end{table}
 
 %  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \subsubsection{Ground Motion Logic Tree}
