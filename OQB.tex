@@ -16,22 +16,25 @@
 % --------------------------------------------------------------------- Packages
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
-%
+% This is used to create the cover and to plot trees
 \usepackage{pst-tree}
 \usepackage{pstricks,pstricks-add,multido}
-
+%
 \usepackage{geometry}
 \usepackage{moresize}
-%
+% 
 \usepackage{fancyvrb}
-%
+% 
 \usepackage{pbox}
-%
-\usepackage{makeidx} % http://en.wikibooks.org/wiki/LaTeX/Indexing
+% http://en.wikibooks.org/wiki/LaTeX/Indexing
+\usepackage{makeidx} 
 %
 \usepackage{subfigure}
 %
 \usepackage{bm}
+% Package to create a glossary - It must be uploaded after hyperref
+\usepackage{glossaries}
+%
 \makeindex
 %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Setting Fonts
@@ -235,7 +238,7 @@
 \chapter{OpenQuake background}
 	\input{./Part_Introduction/introduction.tex}
 % ------------------------------------------------------------------------------
-\chapter{Brief desciption of OpenQuake IT aspects}
+\chapter{Brief desciption of OpenQuake IT architecture}
 	\input{./Part_Introduction/it.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
@@ -254,7 +257,7 @@
 	\input{./Part_Hazard/logicTreeProcessor.tex}
 	\input{./Part_Hazard/eqk_Rupture_Forecast_Calculator.tex}
 % ------------------------------------------------------------------------------
-\chapter{PSHA calculators}
+\chapter{SHA calculators}
 	\label{chap:hazcalc}
 	\input{./Part_Hazard/kernel_classical_PSHA.tex}
 % ------------------------------------------------------------------------------
@@ -309,6 +312,9 @@
 % ==============================================================================
 % ------------------------------------------------------------------------ Index
 \printindex
+\cleardoublepage
+% Empty page
+\hfill \\ \thispagestyle{empty} \clearpage 
 % ==============================================================================
 % ------------------------------------------------------------------- Back Cover
 \newgeometry{hmargin={0cm,-0.4cm},height=29.7cm}
