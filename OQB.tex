@@ -3,7 +3,6 @@
 % 
 % Authors: 
 % 	H. Crowley 		- Executive Committee - GEM Foundation, Pavia, Italy
-%	L. Garrido 		- Executive Committee - GEM Foundation, Pavia, Italy
 % 	D. Monelli 		- GEM Model Facility, Zurich, Switzerland
 % 	M. Pagani 		- Executive Committee - GEM Foundation, Pavia, Italy
 % 	V. Silva 		- GEM Model Facility, Pavia, Italy
@@ -12,27 +11,34 @@
 % Document distributed under the Common Creative License 
 % © GEM Foundation, Pavia, February 2011
 % ------------------------------------------------------------------------------
-\documentclass[12pt,a4paper,headings=small,version=first,dvips]{scrbook}
+\documentclass[11pt,a4paper,headings=small,version=first,dvips]{scrbook}
 % --------------------------------------------------------------------- Packages
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
-%
+% This is used to create the cover and to plot trees
 \usepackage{pst-tree}
 \usepackage{pstricks,pstricks-add,multido}
-
+%
 \usepackage{geometry}
 \usepackage{moresize}
-%
+% 
 \usepackage{fancyvrb}
-%
+% 
 \usepackage{pbox}
-%
-\usepackage{makeidx} % http://en.wikibooks.org/wiki/LaTeX/Indexing
+% http://en.wikibooks.org/wiki/LaTeX/Indexing
+\usepackage{makeidx} 
+\makeindex
 %
 \usepackage{subfigure}
 %
 \usepackage{bm}
-\makeindex
+%
+\usepackage{hyperref} 
+%
+% Package to create a glossary - It must be uploaded after hyperref
+% to produce the glossary: makeglossaries OQB
+\usepackage[acronym]{glossaries}
+\makeglossaries
 %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Setting Fonts
 \renewcommand{\encodingdefault}{OT1}
@@ -85,7 +91,7 @@
 \usepackage[square,colon]{natbib} % Extend bibligraphy functions
 
 %\usepackage[labelfont=bf]{caption} % Used to reformat caption typesetting
-\usepackage[textfont=it,margin=10pt,font=small,labelfont=bf, labelsep=endash]{caption}
+\usepackage[textfont=it,margin=10pt,font=small,labelfont=bf,labelsep=endash]{caption}
 
 \usepackage{scrpage2}
 	\lofoot[]{\includegraphics[width=2.0cm]{./Figures/openquake_logo1.eps}}
@@ -148,7 +154,7 @@
 % ------------------------------------------------------------------------------
 \uppertitleback{
    \textbf{Authors:} \\
-   Helen Crowley$^1$, Leonardo Garrido$^1$, Damiano Monelli$^3$, 
+   Helen Crowley$^1$, Damiano Monelli$^3$, 
    Marco Pagani$^1$, Vitor Silva$^2$, Graeme Weatherill$^2$ \\ \hfill \\
    \small
    $^1$ GEM Foundation\\
@@ -171,10 +177,13 @@
    $<$name.surname$>$@globalquakemodel.org
    \normalsize
 }  
+
 %
 % =============================================================== BEGIN DOCUMENT
 % -------------------------------------------------- Title and table of contents
 \begin{document}
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Load the glossary
+\input{./Part_Introduction/glossary.tex}
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Cover
 \newgeometry{hmargin={-0.4cm,0cm},height=29.7cm}
 \thispagestyle{empty}
@@ -209,9 +218,11 @@
 %	\rput[r](18cm,27.5cm){\includegraphics[height=1.5cm]
 %		{./Figures/GEM_logo.eps}}
 	%\rput[r](18cm,9cm){\includegraphics[width=15cm]{./Figures/adapazari.eps}}
-	\rput[r](19.5cm,2cm){\sffamily\large\color{gray01}{Version 1.0}}
+	\rput[r](19.5cm,2cm){\sffamily\large\color{gray01}{Version 0.1 beta}}
 \end{pspicture}
 %  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Second page
+\hfill \\
+\clearpage
 \restoregeometry
 %
 % - - - - - - - - - - - - - - - - - - - - - - -  This is the internal title page
@@ -235,7 +246,7 @@
 \chapter{OpenQuake background}
 	\input{./Part_Introduction/introduction.tex}
 % ------------------------------------------------------------------------------
-\chapter{Brief desciption of OpenQuake IT aspects}
+\chapter{Brief desciption of OpenQuake IT architecture}
 	\input{./Part_Introduction/it.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
@@ -249,15 +260,14 @@
 	\label{chap:hazinp}
 	\input{./Part_Hazard/unifiedSeismicSourceDescription.tex}
 % ------------------------------------------------------------------------------
-\chapter{The Logic Tree Processor}
-	\label{chap:ltp}
-	\input{./Part_Hazard/logicTreeProcessor.tex}
-% ------------------------------------------------------------------------------
-\chapter{Creating the Earthquake Rupture Forecast}
+\chapter{The Logic Tree Processor and the Earthquake Rupture Forecast 
+	calculator}
 	\label{chap:erf}
+	\input{./Part_Hazard/logicTreeProcessor.tex}
 	\input{./Part_Hazard/eqk_Rupture_Forecast_Calculator.tex}
 % ------------------------------------------------------------------------------
-\chapter{PSHA calculators}
+\chapter{SHA calculators}
+	\label{chap:hazcalc}
 	\input{./Part_Hazard/kernel_classical_PSHA.tex}
 % ------------------------------------------------------------------------------
 %\chapter{Stochastic event set and ground motion field calculators}
@@ -314,7 +324,11 @@
 \bibliography{./Bibliography/hazard,./Bibliography/risk,./Bibliography/sei.bib}
 % ==============================================================================
 % ------------------------------------------------------------------------ Index
+\printglossaries
 \printindex
+\cleardoublepage
+% Final empty page
+\hfill \\ \thispagestyle{empty} \clearpage 
 % ==============================================================================
 % ------------------------------------------------------------------- Back Cover
 \newgeometry{hmargin={0cm,-0.4cm},height=29.7cm}

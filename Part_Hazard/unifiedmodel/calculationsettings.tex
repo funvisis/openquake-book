@@ -1,0 +1,21 @@
+Calculation settings is an object containing the information necessary 
+to compute hazard. Through the calculation settings is possible to 
+specify:
+\begin{itemize}
+\item The geographical coordinates of site (or sites) where to compute the 
+hazard and the soil condition at the site (through a V$_{S,30}$ value)
+\item The methodology for computing hazard 
+	\begin{itemize}
+	\item Classical PSHA
+	\item Event-based PSHA
+	\item Deterministic SHA
+	\end{itemize}
+\item The typology of result expected. Currently OpenQuake computes the 
+following results: 
+	\begin{itemize}
+	\item Hazard curves
+	\item Hazard maps representing the geographic distribution of an intensity 
+	measure type with a specified probability of being exceeded in a fixed 
+	time span.
+	\end{itemize}
+\end{itemize}

@@ -1,0 +1,65 @@
+% Table: list of GMPEs currently supported by OQ
+\input{./Part_Hazard/tables/gmpeslist.tex}
+%
+The Ground Motion System is a combination of one or several logic 
+trees each one associated with a specific tectonic region or group 
+of sources (this second option is still not supported in OQ).
+%
+Each Ground Motion Logic Tree specifies the alternative Ground Motion 
+models available for a particular group of sources (e.g. subduction 
+interface sources).
+
+OpenQuake provides nonly hardcoded Ground Motion Prediction Equations 
+and misses of a mechanisms allowing the user to specify new GMPEs. 
+This is a feature that we may think to introduce in the future. 
+
+Table \ref{tab:OQ_GMPEs} provides a list of the Ground Motion Prediction 
+Equations supported. 
+
+The vast majority are GMPEs implemented in OpenSHA with just a couple 
+of developed in the course of the GEM1 project. New GMPEs are expected 
+to be added soon with the contribution of some GEM's Regional Programmes.
+
+%  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsubsection{Ground Motion Logic Tree}
+\label{hazard:gmpe_logic_tree}
+\index{Logic Tree!Ground Motion}
+The Ground Motion Logic Tree accounts for epistemic uncertainties related 
+to the Ground Motion models.  
+%
+Given that ground motion models are often, or can be, associated to 
+specific tectonic region,  OpenQuake supports the definition of multiple 
+GMPE logic trees, one for each tectonic region type considered in 
+the source model. 
+% 
+For example, if a PSHA Input model contains seismic sources belonging to 
+
+
+In the current version, a GMPE logic tree can have only one 
+branching level, containing only one branch set, where each individual branch 
+is associated to a specific GMPE. With the current setting, epistemic 
+uncertainties coming from different models can be taken into account, but 
+epistemic uncertainties inside each model cannot be captured.
+Figure \ref{fig:GMPELogicTree} schematically shows GMPE logic trees that can 
+be currently defined in OpenQuake.
+% ..............................................................................
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . > Figure 
+\renewcommand{\psedge}{\ncdiag[armA=0,angleB=180,armB=1cm]}
+\begin{figure}[!hb]
+\centering
+\input{./Part_Hazard/pstricks/logicTreeGmpes.tex}
+\caption{Examples of Ground Motion Logic Trees. The first specifies ground
+motion models for active shallow crust (in this case we consider three GMPEs) 
+the second defines the ground motion models to adopt for subduction interface 
+sources (in the example depicted above we consider two GMPEs).}
+\label{fig:GMPELogicTree}
+\end{figure}
+
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . < Figure
+% ..............................................................................
+
+%\begin{figure}
+%\input{./Part_Hazard/pstricks/testTree.tex}
+%\caption{xx}
+%\label{fig:xx}
+%\end{figure}
