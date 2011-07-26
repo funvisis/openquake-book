@@ -1,5 +1,6 @@
 \section{Introduction}
-This calculator uses stochastic event sets and associated ground motion fields to compute loss exceedance curves for each asset contained in an exposure model. This calculator thus requires ground motion fields from a number of stochastic events as an input, which are currently calculated following the probabilistic event-based workflow that has been presented in Figure X.
+\index{Probabilistic Risk!Event-Based}
+This calculator uses stochastic event sets and associated ground motion fields to compute loss exceedance curves for each asset contained in an exposure model. This calculator thus requires ground motion fields from a number of stochastic events as an input, which are currently calculated following the probabilistic event-based workflow that has been presented in Figure \ref{event_based_workflow}.
 
 For each ground motion field, the intensity measure level at a given site is combined with a vulnerability function, from which a loss ratio is randomly sampled, for each asset typology contained in the exposure model. The loss ratios that are sampled for a given typology at different locations are considered to be independent or fully correlated, knowing that the reality is likely to lie somewhere in between these two assumptions. The occurrence distribution of mean loss for a given asset is calculated using all of the ground motion fields, leading to a histogram of loss ratios which is then converted into a cumulative histogram, by calculating the number of cumulative occurrences for each interval of loss ratio. The rate of exceedance of each loss ratio is calculated by dividing the number of cumulative occurrences by the number of stochastic event sets multiplied by the length of each event set. By assuming a Poissionian distribution of the occurrence model, the probability of exceedance of each loss ratio is calculated. If an aggregated loss curve for a portfolio of assets is required, a secondary module is used in order to aggregate the losses from all the assets in the exposure file, per event, before calculating the occurrence distribution of mean loss. 
 
@@ -56,5 +57,5 @@ Where $t$ stands for the time span used to produce the stochastic event set.
 
 \end{enumerate}
 
-\section{Example Application}
+\section{Calculator Output}
 
