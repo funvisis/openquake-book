@@ -55,7 +55,7 @@ Fragility functions can be defined in a discrete way by providing for each limit
 \begin{figure}[ht]
 \centering
 \includegraphics[width=10cm,height=6cm]{./Figures/Part_Risk/FFDiscrete.eps}
-\caption{Set of discrete fragility function.}
+\caption{Set of discrete fragility functions.}
 \label{fig:FFDiscrete}
 \end{figure}
 
@@ -66,9 +66,21 @@ Continuous fragility functions are defined by the parameters of a cumulative dis
 \begin{figure}[ht]
 \centering
 \includegraphics[width=10cm,height=6cm]{./Figures/Part_Risk/FFContinuous.eps}
-\caption{Set of continuous fragility function.}
+\caption{Set of continuous fragility functions.}
 \label{fig:FFcontinuous}
 \end{figure}
+
+\subsubsection{Uncertainty in Fragility Functions}
+\index{Fragility!Uncertainty}
+The uncertainty in continuous fragility functions will also be accounted for in future versions of OpenQuake. Figure \ref{fig:FF_uncertainty} shows a lognormal distribution that has been fit to the data, and the probabilistic distribution (i.e. mean and standard deviation) of the logarithmic mean and logarithmic standard deviation. When a set of fragility functions for different limit states are needed, it is necessary to provide information on the correlation between the logarithmic means and logarithmic standard deviations of each limit state.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=10cm,height=6cm]{./Figures/Part_Risk/FF_uncertainty.eps}
+\caption{Uncertainty of continuous fragility functions.}
+\label{fig:FFcontinuous}
+\end{figure}
+
 
 \subsection{Consequence Functions}
 \index{Consequence Function}
