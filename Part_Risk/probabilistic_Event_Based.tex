@@ -58,4 +58,16 @@ Where $t$ stands for the time span used to produce the stochastic event set.
 \end{enumerate}
 
 \section{Calculator Output}
-The output of this calculator comprises loss exceedance curves and loss maps. Loss exceedance curves are represented by a list of losses and respective probabilities of exceedance. Furthermore, each curve is associated with a pair of coordinates, an end branch label (that allows the curve to be connected to the set of specifications used in the calculations) and an asset ID (that permits tracking of the asset that each loss curve was computed for). Furthermore, for this calculator, aggregate loss exceedance curves can be produced which combine the losses to all assets in single loss exceedance curve.  Loss maps for a given probability of exceedance in a given time span can be produced, as well as maps of mean loss within a given time span.
+The output of this calculator comprises loss exceedance curves and loss maps. Loss exceedance curves are represented by a list of losses and respective probabilities of exceedance. Furthermore, each curve is associated with a pair of coordinates, an end branch label (that allows the curve to be connected to the set of specifications used in the calculations) and an asset ID (that permits tracking of the asset that each loss curve was computed for). Furthermore, for this calculator, aggregate loss exceedance curves can be produced which combine the losses to all assets in single loss exceedance curve.  Loss maps for a given probability of exceedance in a given time span can be produced, as well as maps of mean loss within a given time span. Figure \ref{fig:LossCurve} and \ref{fig:ProbLosses} present an aggregated loss exceedance curve and a loss map for a probability of exceedance of 10\% in 50 years for reinforced concrete buildings located in the metropolitan area of Istanbul respectively. 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=7.5cm,height=6cm]{./Figures/Part_Risk/LossCurveIstanbul.eps} 
+\caption{Aggregated loss exceedance curve for RC buildings.}
+\label{fig:LossCurve}
+\end{figure} 
+ \begin{figure}[ht]
+\centering
+\includegraphics[width=12cm,height=9cm]{./Figures/Part_Risk/LossesProbIstanbul.eps}
+\caption{Loss map for a probability of exceedance of 10\% in 50 years.}
+\label{fig:ProbLosses}
+\end{figure} 
