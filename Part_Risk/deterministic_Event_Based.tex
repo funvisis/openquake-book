@@ -2,16 +2,18 @@
 
 \section{Introduction}
 \index{Deterministic Risk}
-The deterministic event-based risk calculator is capable of computing losses and loss statistics from a single event for a collection of assets, given a set of ground motion fields. A set of ground motion fields is required to represent the aleatory variability (both inter- and intra-event) in the ground motion prediction equation. The input ground motion fields are currently calculated following the deterministic event-based workflow that has been presented in Figure \ref{Scheme_detrisk_calc}.
+The deterministic event-based risk calculator is capable of computing losses and loss statistics from a single event for a collection of assets, given a set of ground motion fields. A set of ground motion fields is required to represent the aleatory variability (both inter- and intra-event) in the ground motion prediction equation. The input ground motion fields are currently calculated following the deterministic event-based workflow that has been presented in Figure \ref{fig:Scheme_detrisk_calc}.
 
-For each ground motion field, the intensity measure level at a given site is combined with a vulnerability function, from which a loss ratio is randomly sampled, for each asset typology contained in the exposure model. The loss ratios that are sampled for a given typology at different locations are considered to be independent or fully correlated, knowing that the reality is likely to lie somewhere in between these two assumptions. Using these results, the mean and standard deviation of loss ratio across all ground motion fields can be calculated. Loss ratios are converted into losses by multiplying by the value of the asset given in the exposure model. It is furthermore possible to aggregate the losses throughout the region and to compute the standard deviation of the aggregated loss. 
+For each ground motion field, the intensity measure level at a given site is combined with a vulnerability function, from which a loss ratio is randomly sampled, for each asset contained in the exposure model. The loss ratios that are sampled for assets of a given taxonomy classification at different locations are considered to be either independent or fully correlated, knowing that the reality is likely to lie somewhere in between these two assumptions. Using these results, the mean and standard deviation of the loss ratios across all ground motion fields can be calculated. Loss ratios are converted into losses by multiplying by the value of the asset given in the exposure model. It is furthermore possible to aggregate the losses throughout the region and to compute the mean and standard deviation of the aggregated loss. 
 
 \section{Calculation Steps}
 
 To compute the mean loss:
 
 \begin{enumerate}
-\item For each ground motion field, the intensity measure level at the location of the asset is used to derive the mean loss ratio and associated coefficient of variation from the vulnerability function. Since currently the vulnerability functions are being defined in a discrete manner, it is quite probable that the intensity measure level provided by the ground motion field is not contained in the vulnerability function. In these cases, linear interpolation methods are being employed to derive the mean loss ratio at the intensity measure level of interest. Once these two parameters are known, the sampling of the loss ratio is done following the probabilistic distribution of the respective vulnerability function, as described below:
+\item For each ground motion field, the intensity measure level at the location of the asset is used to derive the mean loss ratio and associated coefficient of variation from the vulnerability function. Since currently the vulnerability functions are being defined in a discrete manner, it is quite probable that the intensity measure level provided by the ground motion field is not contained in the vulnerability function. In these cases, linear interpolation methods are being employed to derive the mean loss ratio at the intensity measure level of interest. 
+
+\item The engine takes the vulnerability function assigned to each asset and checks if the coefficient of variation is zero. If so, the loss ratios are derived based on the mean loss ratio for each intensity measure level. Otherwise, if the uncertainty is defined, it is randomly sampled following the probabilistic distribution of the respective vulnerability function, as described below:
 
 \begin{equation}
 \log{LR_n} = \mu + \epsilon\sigma
@@ -19,11 +21,11 @@ To compute the mean loss:
 
 Where $\mu$ and $\sigma$ stand for the mean and standard deviation of the logarithm of the loss ratios respectively and $\epsilon$ is a term that has a standard normal distribution with a zero mean and a standard deviation of one.  
 
-The method used to sample this parameter can follow two approaches depending on whether the correlation between the vulnerability of similar asset typologies is to be considered or not:
+The method used to sample epsilon can follow two approaches depending on whether the correlation between the vulnerability of assets of a given taxonomy is to be considered or not:
 
 \begin{itemize}
 
-\item Perfectly correlated: the term $\epsilon$ is randomly sampled once for the first asset and this result is used to derive the loss ratio for all the assets of the same typology. 
+\item Perfectly correlated: the term $\epsilon$ is randomly sampled once for the first asset and this result is used to derive the loss ratio for all the assets of the same taxonomy. 
 
 \item Uncorrelated: the term $\epsilon$ is always randomly sampled for each asset and therefore the correlation between the vulnerability of the assets is ignored.
 

@@ -2,14 +2,14 @@ The main sources of input information required for a risk calculation with OpenQ
 %_________________________________________________________
 \section{Exposure}
 \index{Exposure}
-The OpenQuake engine requires an exposure model that needs to be stored according to the respective NRML schema. This file format can include several typologies of asset such as population or buildings. The following parameters are currently being used to describe each asset of the exposure model: 
+The OpenQuake engine requires an exposure model that needs to be stored according to the respective NRML schema. This file format can include several typologies of asset such as population or buildings. The following parameters are currently being used to describe each asset in the exposure model: 
 
 \begin{itemize}
 \item Asset reference: A unique key used to identify the asset instance;
-\item Asset value: Numerical value of the quantity of the asset;
 \item Location: Geographic coordinates of the asset expressed in decimal degrees;
-\item Vulnerability function: Code of the physical vulnerability curve that should be employed on the calculations;
-\item Structure type: Reference to the structure typology.
+\item Asset value: Numerical value of the quantity of the asset at the given location;
+\item Vulnerability function: Code of the physical vulnerability function that should be employed in the calculations;
+\item Taxonomy: Reference to the classification code that describes the asset.
 \end{itemize}
 
 This list of parameters will be further extended in future releases of OpenQuake once more complex data will need to be stored (e.g. value of contents or number of occupants per building at different times of the day).  Furthermore, the definition of the vulnerability function to be used for each asset will be removed from the exposure model, and will instead be stored within a separate file; the two will be linked through the GEM Taxonomy (that is currently under development).
