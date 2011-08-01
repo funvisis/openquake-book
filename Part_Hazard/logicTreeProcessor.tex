@@ -1,13 +1,36 @@
+In this chapter we discuss the properties of the two main calculators 
+needed to process the information contained in the PSHA input model 
+and prepare it for hazard calculation: the Logic Tree processor and the 
+Earthquake Rupture Forecast calculator. 
+
+The Logic Tree Processor takes the PSHA Input Model and creates many 
+realisations each one containing a Seismic Sources model and one or 
+several Ground Motion models.
+
+The Earthquake Rupture Forecast Calculator uses the seismic sources 
+model produced by the Logic Tree Processor and creates a list of all 
+the possible ruptures produced by all the seismic sources included in 
+the seismic sources model. Each rupture is associated with its probability
+of occurrence within the time span defined in the Calculation Settings. 
+%
+% ------------------------------------------------------------------------------
 \section{The Logic Tree Processor}
 \label{hazard:logic_tree_processor}
-The Logic Tree Processor is responsible for processing data contained in a 
-logic tree structure (see \ref{hazard:logic_tree}), that is selecting a 
-source model from the source model logic tree (see 
-\ref{hazard:source_model_logic_tree}) and a ground motion prediction equation 
-from the GMPE logic tree (see \ref{hazard:gmpe_logic_tree}). The selected 
-source model and GMPE can be then passed to the different OpenQuake-Hazard 
-calculators (Classical PSHA calculator, \ref{chap:classic_psha}; Stochastic 
-PSHA calculator, \ref{chap:stochastic_psha}).\\
+\index{Logic Tree!Processor}
+%
+The Logic Tree Processor is responsible for processing data contained in  
+the logic tree structure included in PSHA input model 
+(see Section \ref{hazard:logic_tree}). The processing consists on producing a 
+Seismic Sources model from the Seismic Sources logic tree (see 
+Section \ref{hazard:source_model_logic_tree}) and one or several ground 
+motion models - one per tectonic region - from the ground motion logic 
+tree (see Section \ref{hazard:gmpe_logic_tree}). 
+%
+The selected source model and GMPE can be then passed to the different 
+OpenQuake-Hazard calculators: the classical PSHA calculator (described 
+in Section \ref{chap:classic_psha}) and the stochastic PSHA calculator 
+(discussed in Section \ref{chap:stochastic_psha}).
+
 The capability to process the information contained in a logic tree is 
 constrained by the size and complexity of the logic tree itself. For a 
 large logic tree, performing a seismic hazard calculation for all possible 
@@ -29,7 +52,7 @@ reflect the degrees of belief that the hazard modeler specified in the
 different logic tree branches.\\
 %
 \subsubsection{Sampling the source model logic tree}
-As described in \label{hazard:source_model_logic_tree}, the first branching 
+As described in \ref{hazard:source_model_logic_tree}, the first branching 
 level in the source model logic tree is used for defining one or more 
 alternative source models. Subsequent branches define parameter-specific 
 epistemic uncertainties. Each branching level contains only one branch set 
