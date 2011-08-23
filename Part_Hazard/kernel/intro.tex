@@ -1,0 +1,54 @@
+OpenQuake computes probabilistic seismic hazard using two different 
+methodologies: the classical one and a methodology based on the 
+generation of a stochastic event set.
+
+The classical PSHA methodology adopted in \gls{acr:oq} is the one 
+presented by \citet{field2003} and implemented in OpenSHA. 
+This particular formulation - as also proposed by \citet{chiang1984} - 
+has the distinctive property of performing the entire calculation using 
+probabilities instead of working with occurrence rates like in most 
+of the commonest PSHA codes \citep[see for instance][]{bender1987}. 
+%
+The \gls{opensha} methodology has also the clear advantage of decoupling the 
+creation of the probabilistic seismicity occurrence model (in the OpenSHA 
+terminology this is defined as the \gls{earthquakeruptureforecast}) from the 
+assumption of a Poissonian temporal occurrence model. 
+%
+\citet{field2003} demonstrated that by assuming negligible contributions to 
+hazard coming from multiple occurrences - i.e. the probability that a source 
+will generate two or more occurrences of the same rupture within the time 
+span fixed for the analysis is equal to zero - this methodology is 
+completely consistent with the most classical procedure.
+
+The \gls{acr:oq} stochastic event based PSHA calculation procedure 
+resembles recent approaches proposed in the literature (see for example 
+\citet{musson2000} and references therein). 
+%
+The major advantages of this approach are that (1) hazard can be directly 
+linked to a sequence of earthquakes and (2) the residuals of ground motion 
+on each investigated site can be distinctly considered, eventually by 
+taking into account the spatial correlation of ground motion.
+
+The two hazard calculation kernels have in common a first calculation 
+phase (see also Figures \ref{classical_psha_workflow} and 
+\ref{event_based_workflow}) which is the creation of the 
+\gls{earthquakeruptureforecast}. 
+The creation of the \gls{acr:erf} was extensively discussed in Chapter 
+\ref{chap:erf} at page \pageref{chap:erf}.
+%
+The second phase in the classical PSHA approach corresponds to the 
+calculation of hazard at the site by combining the probabilistic 
+seismicity occurrence model with a ground motion model. 
+It will be discussed in section (\ref{chap:classic_psha} 
+at page \pageref{chap:classic_psha}).
+%
+The second calculation step in the event based PSHA approach is the 
+generation of the stochastic event set, the calculation of the 
+corresponding ground motion fields and, eventually, the post-processing 
+of the set of ground motion field computed to obtain the final values 
+of hazard. This methodology will be more extensively described in section 
+\ref{chap:stochastic_psha} at page \pageref{chap:stochastic_psha}.
+%
+The last section of this Chapter (see page \pageref{sec:disaggregation}) 
+is dedicated to the discusion of the disaggregation methodology implemented 
+in OQ.

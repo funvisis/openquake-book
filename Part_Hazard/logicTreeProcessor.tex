@@ -1,67 +1,90 @@
 In this chapter we discuss the properties of the two main calculators 
-needed to process the information contained in the PSHA input model 
-and prepare it for hazard calculation: the Logic Tree processor and the 
+needed to process the information contained in the \gls{pshainputmodel} 
+and prepare it for calculation: the Logic Tree processor and the 
 Earthquake Rupture Forecast calculator. 
 
-The Logic Tree Processor takes the PSHA Input Model and creates many 
-realisations each one containing a Seismic Sources model and one or 
-several Ground Motion models.
-
-The Earthquake Rupture Forecast Calculator uses the seismic sources 
-model produced by the Logic Tree Processor and creates a list of all 
-the possible ruptures produced by all the seismic sources included in 
-the seismic sources model. Each rupture is associated with its probability
-of occurrence within the time span defined in the Calculation Settings. 
+In Section \ref{hazard:logic_tree_processor} we describe the logic 
+tree processor which takes the PSHA Input Model and creates many 
+realisations of a \gls{seismicsourcemodel} and of a 
+\gls{groundmotionmodel} while in the following two Sections we concentrate 
+on the Earthquake Rupture Forecast Calculator which takes one seismic
+sources model - produced by the Logic Tree Processor - and creates 
+the \gls{acr:erf}.  
 %
 % ------------------------------------------------------------------------------
 \section{The Logic Tree Processor}
 \label{hazard:logic_tree_processor}
 \index{Logic Tree!Processor}
 %
-The Logic Tree Processor is responsible for processing data contained in  
-the logic tree structure included in PSHA input model 
-(see Section \ref{hazard:logic_tree}). The processing consists on producing a 
-Seismic Sources model from the Seismic Sources logic tree (see 
-Section \ref{hazard:source_model_logic_tree}) and one or several ground 
-motion models - one per tectonic region - from the ground motion logic 
-tree (see Section \ref{hazard:gmpe_logic_tree}). 
+The Logic Tree Processor is responsible for processing data in a 
+PSHA input model describing the two logic tree structures
+(see Section \ref{hazard:logic_tree}). 
 %
-The selected source model and GMPE can be then passed to the different 
-OpenQuake-Hazard calculators: the classical PSHA calculator (described 
-in Section \ref{chap:classic_psha}) and the stochastic PSHA calculator 
-(discussed in Section \ref{chap:stochastic_psha}).
+The processing consists on producing a \gls{seismicsourcemodel} from the 
+seismic source logic tree (see Section \ref{hazard:source_model_logic_tree}) 
+and one \gls{groundmotionmodel} from the ground motion logic tree 
+(see Section \ref{hazard:gmpe_logic_tree}). 
+%
+%The seismic source model and ground motion model created can be then 
+%passed to the different OpenQuake-Hazard calculators: the classical PSHA 
+%calculator (described 
+%in Section \ref{chap:classic_psha}) and the stochastic PSHA calculator 
+%(discussed in Section \ref{chap:stochastic_psha}).
 
-The capability to process the information contained in a logic tree is 
-constrained by the size and complexity of the logic tree itself. For a 
-large logic tree, performing a seismic hazard calculation for all possible 
-end-branch models is an unfeasible task. Under this condition, a Monte Carlo
-sampling of the logic tree is a more efficient approach. On the contrary, 
-for a small logic tree, a Monte Carlo approach is inefficient with respect
-to enumerating all the possible end-branch models and performing a hazard 
-analysis for each of them. In other words, to get stable results in case of 
-a simple logic tree,  a Monte Carlo approach would require sampling epistemic
-uncertainties a number of times much larger than the actual number of 
-end-branch models.\\
-The general plan for OpenQuake is to provide both the two processing strategies. 
-Currently, the logic tree processor can only provide a Monte Carlo sampler.
+The potential to process the information in a logic tree is constrained 
+by its size, the complexity of the structure and the intricacy of the 
+\glspl{branchset} involved.
+%
+For a large logic tree, performing a seismic hazard calculation for 
+all possible end-branch models is an unfeasible task, therefore, 
+a Monte Carlo sampling of the tree is a more efficient approach. 
+%
+On the contrary, for a small and simple logic tree, a Monte Carlo 
+approach is inefficient with respect to enumerating all the possible 
+end-branch models and performing a hazard analysis for each of them. 
+%
+In other words, to get stable results in case of a simple logic tree, 
+a Monte Carlo approach would require sampling epistemic uncertainties 
+a number of times much larger than the actual number of end-branch models.
+%
+The general plan for OpenQuake is to provide both the two processing 
+strategies. 
+
+Currently, the logic tree processor can only provide a Monte 
+Carlo sampler.
 %
 \subsection{The Logic Tree Monte Carlo Sampler}
-Aim of the Logic Tree Monte Carlo Sampler (hereinafter LTMCS) is to sample 
-epistemic uncertainties, so that the distribution of the final hazard results
-reflect the degrees of belief that the hazard modeler specified in the 
-different logic tree branches.\\
+Aim of the \gls{acr:ltmcs} is to create a set of seismic source model 
+and group motion model representing exhaustively the combinations 
+allowed by the logic tree structures defined by the modeller.
+% 
+In this way the distribution of the final hazard results will reflect 
+the degree of uncertainty introduced by lack of precise knowledge 
+of parameters and models included in the PSHA input model.
 %
 \subsubsection{Sampling the source model logic tree}
 As described in \ref{hazard:source_model_logic_tree}, the first branching 
 level in the source model logic tree is used for defining one or more 
-alternative source models. Subsequent branches define parameter-specific 
+alternative source models called . 
+Subsequent branches define parameter-specific 
 epistemic uncertainties. Each branching level contains only one branch set 
-(therefore producing a symmetric logic tree). The LTMCS constructs a source 
-model by looping over all the branching levels. In the first branching level, 
-a source model is randomly selected, with a probability equal to the 
+(therefore producing a symmetric logic tree). 
+%
+The \gls{acr:ltmcs} constructs a source model by looping over all the 
+branching levels. In the first branching level, a source model is randomly 
+selected, with a probability equal to the 
 uncertainty weight. Epistemic uncertainties defined in subsequent branching 
 levels are then applied to this initially selected source model. For each 
 following branching level, a loop over the seismic sources defined in the 
 selected source model is started, and for each seismic source an epistemic 
 uncertainty value is randomly selected (again with a probability equal to 
 the uncertainty weight).
+%
+\subsubsection{Sampling the ground motion model logic tree}
+
+\dotfill \newline
+NOTES:
+- No mention about the methodology adopted to sample the LT
+- No description of correlated vs uncorrelated branches
+\hfill \clearpage
+

@@ -21,6 +21,8 @@
 %
 \usepackage{geometry}
 \usepackage{moresize}
+%
+\usepackage{algorithmic}
 % 
 \usepackage{fancyvrb}
 % 
@@ -36,10 +38,13 @@
 \usepackage{lscape}
 %
 \usepackage{hyperref} 
+\hypersetup{colorlinks=true}
+\hypersetup{breaklinks=true}
 %
 % Package to create a glossary - It must be uploaded after hyperref
 % to produce the glossary: makeglossaries OQB
-\usepackage[acronym]{glossaries}
+\usepackage[acronym,nonumberlist,style=altlist]{glossaries}
+\glstoctrue
 \makeglossaries
 %
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Setting Fonts
@@ -270,7 +275,10 @@
 % ------------------------------------------------------------------------------
 \chapter{SHA calculators}
 	\label{chap:hazcalc}
-	\input{./Part_Hazard/kernel_classical_PSHA.tex}
+	\input{./Part_Hazard/kernel/intro.tex}
+	\input{./Part_Hazard/kernel/classical_PSHA.tex}
+	\input{./Part_Hazard/kernel/event_based_PSHA.tex}
+	\input{./Part_Hazard/kernel/disaggregation.tex}
 % ------------------------------------------------------------------------------
 %\chapter{Stochastic event set and ground motion field calculators}
 %	\input{./Part_Hazard/kernel_Stochastic_PSHA.tex}

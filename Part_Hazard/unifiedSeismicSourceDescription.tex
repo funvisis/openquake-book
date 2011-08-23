@@ -11,20 +11,21 @@ of engineering  interest within the region considered in the analysis and the
 models capable to describe - once a rupture occurred in a given position - the 
 properties of the shaking expected at the site. 
 %
-A PSHA input model contains two main objects: the \emph{Seismic Sources System} 
-and the \emph{Ground Motion System}. 
+A PSHA input model contains two main objects: the \gls{seismicsourcesystem} 
+and the \gls{groundmotionsystem}. 
 %
-The former specifies location, geometry, and seismicity properties of seismic 
-sources and potential epistemic uncertainties affecting this information. 
+The former specifies location, geometry, and seismicity occurrence properties 
+of seismic sources and potential epistemic uncertainties affecting this 
+information. 
 %
 The latter describes the details of the ground motion prediction equations to 
 be adopted in the calculation and the related epistemic uncertainties. 
 %
 Therefore, the PSHA input models for OpenQuake are always defined using two 
 logic tree structures, one describing epistemic uncertainties associated 
-with the creation of the ERF - called \emph{Seismic Sources logic tree} - 
+with the creation of the ERF - called \gls{seismicsourcelogictree} - 
 	\index{Logic Tree!Seismic Sources}
-the other - called \emph{Ground Motion logic tree} - takes into account 
+the other - called \gls{groundmotionlogictree} - takes into account 
 the uncertainties connected with the use of models capable to predict the 
 expected ground motion at the site. 
 	\index{Logic Tree!Ground Motion}
