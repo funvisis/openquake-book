@@ -104,10 +104,10 @@ P(GM \geq gm|t,site) = \\
 	1-\prod\limits_{\forall\,src\,\text{in}\,ERF}^{}  
 	\left\{
 		1-\sum\limits_{\forall\,rup\,\text{in}\,src}^{} 
-			\biggl[ P(rup|t)\,P(GM\geq gm|rup_{src},site)
+			\biggl[ P(rup_{src}|t)\,P(GM\geq gm|rup_{src},site)
 			\biggr]
 	\right\}
-\label{eq:PSHA_calculation}
+\label{eq:PSHA_calc_classical_no_repeating}
 \end{multline}
 %
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -148,7 +148,7 @@ P(GM \geq gm|t,src,site) = \\
 \end{multline}
 %
 Substituting equation \ref{eq:prob_gm_ex_many_rup} into equation 
-\ref{eq:PSHA_calculation}
+\ref{eq:PSHA_calc_classical_no_repeating}
 \begin{multline}
 P(GM \geq gm|t,site) = \\
 	1-\prod\limits_{\forall\,src\,\text{in}\,ERF}^{}

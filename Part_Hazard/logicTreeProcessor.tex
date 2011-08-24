@@ -20,10 +20,10 @@ The Logic Tree Processor is responsible for processing data in a
 PSHA input model describing the two logic tree structures
 (see Section \ref{hazard:logic_tree}). 
 %
-The processing consists on producing a \gls{seismicsourcemodel} from the 
-seismic source logic tree (see Section \ref{hazard:source_model_logic_tree}) 
-and one \gls{groundmotionmodel} from the ground motion logic tree 
-(see Section \ref{hazard:gmpe_logic_tree}). 
+The processing consists on the creation of a \gls{seismicsourcemodel} 
+from the seismic source logic tree (see Section 
+\ref{hazard:source_model_logic_tree}) and one \gls{groundmotionmodel} 
+from the ground motion logic tree (see Section \ref{hazard:gmpe_logic_tree}). 
 %
 %The seismic source model and ground motion model created can be then 
 %passed to the different OpenQuake-Hazard calculators: the classical PSHA 
@@ -31,13 +31,14 @@ and one \gls{groundmotionmodel} from the ground motion logic tree
 %in Section \ref{chap:classic_psha}) and the stochastic PSHA calculator 
 %(discussed in Section \ref{chap:stochastic_psha}).
 
-The potential to process the information in a logic tree is constrained 
-by its size, the complexity of the structure and the intricacy of the 
-\glspl{branchset} involved.
+The potential difficulty in processing the information in a logic tree 
+is constrained by its size, the complexity of the structure and the 
+intricacy of the \glspl{branchset} involved.
 %
 For a large logic tree, performing a seismic hazard calculation for 
 all possible end-branch models is an unfeasible task, therefore, 
-a Monte Carlo sampling of the tree is a more efficient approach. 
+an approach based on Monte Carlo sampling appears a more efficient and
+thus feasible approach. 
 %
 On the contrary, for a small and simple logic tree, a Monte Carlo 
 approach is inefficient with respect to enumerating all the possible 
@@ -53,34 +54,40 @@ strategies.
 Currently, the logic tree processor can only provide a Monte 
 Carlo sampler.
 %
+%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \subsection{The Logic Tree Monte Carlo Sampler}
-Aim of the \gls{acr:ltmcs} is to create a set of seismic source model 
-and group motion model representing exhaustively the combinations 
+Aim of the \gls{acr:ltmcs} is to create a set of \glspl{seismicsourcemodel} 
+and \glspl{groundmotionmodel} representing exhaustively the combinations 
 allowed by the logic tree structures defined by the modeller.
 % 
-In this way the distribution of the final hazard results will reflect 
+This way the distribution of the final results will reflect 
 the degree of uncertainty introduced by lack of precise knowledge 
 of parameters and models included in the PSHA input model.
 %
-\subsubsection{Sampling the source model logic tree}
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsubsection{Sampling the seismic source logic tree}
 As described in \ref{hazard:source_model_logic_tree}, the first branching 
-level in the source model logic tree is used for defining one or more 
-alternative source models called . 
-Subsequent branches define parameter-specific 
-epistemic uncertainties. Each branching level contains only one branch set 
-(therefore producing a symmetric logic tree). 
+level in the source model logic tree is used to define one or more 
+alternative source models called \glspl{initialseismicsourcemodel}. 
 %
-The \gls{acr:ltmcs} constructs a source model by looping over all the 
-branching levels. In the first branching level, a source model is randomly 
-selected, with a probability equal to the 
-uncertainty weight. Epistemic uncertainties defined in subsequent branching 
-levels are then applied to this initially selected source model. For each 
-following branching level, a loop over the seismic sources defined in the 
-selected source model is started, and for each seismic source an epistemic 
+Subsequent branches define parameter-specific epistemic uncertainties. 
+\textcolor{red}{Currently} each branching level contains only one 
+branch set (therefore producing a symmetric logic tree). 
+
+The \gls{acr:ltmcs} constructs a \gls{seismicsourcemodel} by progressively
+processing all the branching levels. In the first branching level, an 
+\gls{initialseismicsourcemodel} is randomly selected, with a probability 
+equal to the uncertainty 
+weight. 
+%
+Epistemic uncertainties defined in subsequent branching levels are then 
+applied to this initially selected source model. For each following 
+branching level, a loop over the seismic sources defined in the selected
+source model is started, and for each seismic source an epistemic 
 uncertainty value is randomly selected (again with a probability equal to 
 the uncertainty weight).
 %
-\subsubsection{Sampling the ground motion model logic tree}
+\subsubsection{Sampling the ground motion logic tree}
 
 \dotfill \newline
 NOTES:

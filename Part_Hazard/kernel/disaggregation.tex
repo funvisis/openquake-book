@@ -6,41 +6,109 @@
 %
 Seismic hazard disaggregation - or deaggregation - 
 \citep{mcguire1995,bazzurro1999} is a procedure aimed at identifying the 
-contributions to a specified level of hazard coming from different combinations
-of basic variables - such as magnitude and rupture-site distance - 
-characterizing the ruptures included in the ERF.
+contributions to a specified level of hazard -  referred to a specific site -
+coming from different combinations of basic variables - such as magnitude
+and rupture-site distance - characterizing the ruptures included in the 
+\gls{acr:erf} and the ground motion models selected.
 %
 Two are the main typologies of disaggregation currently adopted in PSHA 
 studies (see for example \citet{petersen2008}): the M-R-$\epsilon$ 
-disaggregation and the geographic disaggregation. Conceptually there 
-are no differences between the two; simply we can observe that in the 
-geographic disaggregation the source-to-rupture distance is replaced by
-the position on the topographic surface of the rupture-point used to 
-calculate the distance to the site.
+disaggregation and the geographic disaggregation. 
+%
+Conceptually there are no differences between them; 
+simply, in the geographic disaggregation the source-to-rupture 
+distance is replaced by the position of the point used to calculate
+the distance to the site.
 %
 
-\subsection{M-D disaggregation}
-We start the description of the disaggregation procedure by considering 
-the  simplest disaggregation case. 
+In \gls{acr:oq} we introduced a number of new disaggregation typologies 
+that should help the modeller in better understanding the PSHA models   
+and controlling the results provided for specific sites.
+% 
+In particular, we added tectonic region and seismic source type to 
+the classical disaggregation variables (i.e. magnitude, distance and
+epsilon); this way is possible to clearly identify the contribution to 
+hazard coming from distinct variables and source/ground motion model
+attributes.
 
-As a first step we create a container where to progressively store the 
-contributions coming from the different ruptures produced by the seismic 
-sources contained in the Seismic Source Model.
+The disaggregation methodologies implemented in \gls{acr:oq} is flexible 
+enough to provide the best combination possible according to the 
+modeller's needs.
+% 
+\gls{acr:oq} supports disaggregation based on the classical PSHA 
+methodology as well as on the event based methodology one. In the 
+following sections we describe the details of the approaches
+implemented.
 %
-To this purpose, we use a two-dimensional matrix $Q$ with a number or 
-rows equal to the number of discrete distance bins and a number of 
-columns equal to the number of discrete magnitude intervals. 
-
-The magnitude and distance ranges used to create the $Q$ matrix cover 
-the spectrum of values used in the hazard calculation. In particular, 
-the magnitude range can be determined considering the properties of 
-the seismicity occurrence model for each of the sources contained in
-the Seismic Source Model whilst the distance range is implicitly defined
-by a maximum integration distance parameter to be specified in the OQ 
-configuration file. 
+%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\subsection{Disaggregation methodology}
+Disaggregation from a calculation point of view, simply consists on 
+systematically collecting the contributions (i.e. conditional probabilities
+of exceedance) to a selected value of hazard for a specific site coming 
+from all the rupture included in an \gls{acr:erf}. 
+%
+In \gls{acr:oq} we use a multidimensional matrix (called disaggregation
+matrix) to store these contributions; this matrix contains indexes for:
+\begin{itemize}
+\item Magnitude (index i)
+\item Longitude (index j)
+\item Latitude (index k)
+\item Source (index s)
+\item Epsilon (index l)
+\end{itemize}
+%
+For each rupture the longitude and latitude coordinates is the point 
+on the rupture used to calculate the source-site distance.
+%
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsubsection{Classical PSHA: examples of application of the 
+disaggregation methodology}
+%
+In case of the classical PSHA methodology, the cumulation in 
+the disaggregation matrix of contributions is based on a 
+somewhat modified version of Equation \ref{eq:prob_gm_ex_one_rup}
+that distinctly accounts for inputs to the probability of exceedance
+of $gm$ coming from different $\epsilon$ intervals.
+%
+\begin{equation}
+P(GM \geq gm|t,rup_{src},\epsilon,site) = 
+	P(rup_{src}|t)\,
+	P(GM\geq gm|rup_{src},\epsilon,site)
+\label{eq:prob_gm_ex_one_rup_eps}
+\end{equation}
+%
+This equation is used recursively to store in the appropriate 
+cell the contribution coming from all the ruptures included in 
+\gls{acr:erf}. 
+%
+%
+\paragraph{Disaggregation in terms of tectonic region}
+The disaggregation in terms of tectonic region is probably the simplest 
+disaggregation from a conceptual point of view. 
+\begin{multline}
+P(GM \geq gm|t,site) = \\
+	1-\prod\limits_{\forall\,src\,\text{in}\,ERF}^{}  
+	\left\{
+		1-\sum\limits_{\forall\,rup\,\text{in}\,src}^{}
+		\biggl[ 
+			1-\sum\limits_{\forall\,\epsilon}^{} 
+			P(GM \geq gm|t,rup_{src},\epsilon,site)
+		\biggr]
+	\right\}
+\label{eq:disaggregation_kernel}
+\end{multline}
 %
 
-The argument of the summation contained in Equation \ref{eq:PSHA_calculation} 
-computes the probability of exceedance in a time $t$ of $gm$ generated by the 
-occurrence of the rupture $Rup$. Without loss of generality a rupture can be
-associated to a magnitude and a source-to-site distance.
+%
+%
+\paragraph{Disaggregation in terms of tectonic region, magnitude,
+distance and epsilon}
+
+
+%
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+\subsubsection{Event based PSHA: examples of application of the 
+disaggregation methodology}
+%
+In case of the event-based PSHA methodology the disaggregation consist 
+on the cumulation of the events with specific characteristics. 
