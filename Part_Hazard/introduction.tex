@@ -62,7 +62,7 @@ and calculation settings.}
 	eventually by taking into account the epistemic uncertainties. 
 	\begin{itemize}
 	\index{Logic Tree!Ground Motion} %%%%%%
-	\item One or several ground motion logic trees, each one describing 
+	\item One or several ground-motion logic trees, each one describing 
 	the epistemic uncertainties connected with the objects and parameters 
 	characterizing the \glspl{groundmotionmodel} designated for a specific 
 	tectonic region.
@@ -70,7 +70,7 @@ and calculation settings.}
 
 %
 \item \emph{Process the logic tree structures to account for epistemic 
-uncertainties connected with the seismic source and ground motion and
+uncertainties connected with the seismic source and ground-motion and
 create Seismic Source Models and Ground Motion Models}.
 	\index{Seismic Source!Model} %%%%%%
 	\index{Ground Motion!Model} %%%%%%
@@ -100,12 +100,12 @@ allowing calculation of hazard curves and hazard maps following the
 classical integration procedure 
 (\cite{cornell1968}) as formulated by \cite{field2003}).
 \item \textit{Event-Based Probabilistic Seismic Hazard Analysis (ePSHA)}, 
-allowing calculation of ground motion fields from stochastic event sets. 
+allowing calculation of ground-motion fields from stochastic event sets. 
 Eventually, classical cPSHA results - such as hazard curves - can be 
-obtained by post processing the set of computed ground motion fields.
+obtained by post processing the set of computed ground-motion fields.
 \item \textit{Deterministic SHA (DSHA)}, allowing calculation of ground 
 motion fields from single earthquake rupture scenario taking into account 
-ground motion aleatory variability.
+ground-motion aleatory variability.
 \end{itemize}
 Each of these analysis types has a modular structure (see Figure 
 \ref{fig:openquake_schema}); this provides the capability of investigating 
@@ -129,7 +129,7 @@ is provided together with a set of calculation settings.
 Chapter \ref{chap:hazinp} describes extensively the content of a PSHAim and 
 - in particular - the different options for modeling seismogenic sources 
 and the option offered to include epistemic uncertainties on both seismicity 
-and ground motion models in the form of a logic tree; Chapter 
+and ground-motion models in the form of a logic tree; Chapter 
 \ref{chap:hazinp} also incorporates the description of the logic tree 
 structure adopted.
 %
@@ -141,7 +141,7 @@ structure adopted.
 \caption{Workflow for classical PSHA (boxes with purple border represent the 
 calculators). Given a PSHA Input Model 
 the Logic Tree Processor is responsible for creating a Seismic Source model
-and a ground motion model. 
+and a ground-motion model. 
 The Seismic Source model is then provided to the Earthquake Rupture Forecast 
 calculator, which computes the ERF (the list of all earthquake ruptures in the 
 source model with their probabilities of occurrence). 
@@ -195,7 +195,7 @@ set of calculation settings.
 (Figure \ref{classical_psha_workflow}), an ERF is computed, which is then used 
 to generate a stochastic event set (representative of the seismic activity of 
 a region in a given time span). Each event is then utilized to calculate a 
-ground motion field over a region of interest.}
+ground-motion field over a region of interest.}
 \label{event_based_workflow}
 \end{figure}
 % . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . < Figure
@@ -227,15 +227,15 @@ of hazard (normally corresponding to 50 years).
 The Ground Motion Field Calculator computes for each event contained in a 
 Stochastic Event Set - provided as an input - a realization of the 
 ground shaking taking into account the aleatory uncertainties in 
-the ground motion model. Eventually, the Ground Motion Field calculator 
-can consider the spatial correlation of the ground motion during the 
+the ground-motion model. Eventually, the Ground Motion Field calculator 
+can consider the spatial correlation of the ground-motion during the 
 generation of the GMF.
 %
 \item \emph{Event-based PSHA Calculator} \hfill \\
-The event-based PSHA calculator takes a (large) set of ground motion 
+The event-based PSHA calculator takes a (large) set of ground-motion 
 fields representative of the possible shaking that the investigated 
 area can eventually experience over a (large) time span and for each 
-grid node in a ground motion fields computes the corresponding hazard 
+grid node in a ground-motion fields computes the corresponding hazard 
 curve. 
 %
 This procedure is computationally intensive and is not recommended for 
@@ -251,9 +251,9 @@ introduced during the descrption of the cPSHA workflow (see section
 \label{section:deterministicSHA}
 % Deterministic
 For deterministic SHA (DSHA), the input data consist of a single earthquake 
-rupture model and a single ground motion model. Using the Ground Motion Field 
+rupture model and a single ground-motion model. Using the Ground Motion Field 
 Calculator, multiple realizations of ground shaking can be computed, each 
-realization sampling the aleatory uncertainties in the ground motion model.
+realization sampling the aleatory uncertainties in the ground-motion model.
 
 As represented in Figure \ref{deterministic_workflow}, the main calculators 
 used to perform this analysis are:
@@ -269,8 +269,8 @@ introduced during the descrption of the ePSHA workflow (see section
 \centering
 \includegraphics[width=12cm]{./Figures/Part_Hazard/deterministic_workflow.eps}
 \caption{Workflow for deterministic SHA. Given a rupture scenario model, 
-consisting of an earthquake rupture model, plus a GMPE, the ground motion 
-field calculator can compute multiple ground motion field realizations (by 
+consisting of an earthquake rupture model, plus a GMPE, the ground-motion 
+field calculator can compute multiple ground-motion field realizations (by 
 taking into account GMPE aleatory uncertainties).}
 \label{deterministic_workflow}
 \end{figure}
@@ -281,7 +281,7 @@ taking into account GMPE aleatory uncertainties).}
 %Next chapters discuss in more details the data model and the calculators. 
 %Chapter \ref{chap:hazinp} describe the input data definition, that is the 
 %different options for modeling seismogenic sources and how to include 
-%epistemic uncertainties in both seismicity and ground motion models in 
+%epistemic uncertainties in both seismicity and ground-motion models in 
 %the form of a logic tree; Chapter \ref{chap:hazinp} also incorporates 
 %the description of the logic tree structure adopted. 
 %

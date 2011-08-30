@@ -96,9 +96,10 @@ of these cells tends to be squeezed as we move towards the poles.
 
 The problem of this uneven distribution of the cell size arises when we 
 distribute the seismicity defined for the entire area source over the 
-nodes used to represent its shape. If the node spacing was homogenous,
-the seismicity on each node would be simply the total seismicity divided 
-by the number of nodes selected to discretize the area source.
+nodes used to represent its shape. If the node spacing along the 
+meridians was homogenous, the seismicity on each node would be 
+simply the total seismicity divided by the number of nodes selected 
+to discretize the area source.
 %
 In reality this condition is never satisfied, as a consequence, to 
 guarantee a homogeneous distribution of seismicity rates,
@@ -131,6 +132,7 @@ with looping for the grid nodes used to discretize the source polygon).
 %
 % .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  
 \paragraph{ERF calculation}
+\label{par:erf_calc_area_src}
 In case of a Poissonian temporal occurrence model, the probability of 
 occurrence during the investigation time $t$ of a rupture $rup$ with 
 magnitude $m$ on node $node$ (belonging to $src$) corresponds to:
@@ -138,7 +140,7 @@ magnitude $m$ on node $node$ (belonging to $src$) corresponds to:
 P(rup_{src}(m_i)|t)=\lambda_{node}(m_i)\,t\exp(-\lambda_{node}(m_i)\,t)
 \end{equation}
 where $\lambda_{node}(m_i)$ is the rate of occurrence of magnitude $m_i$ 
-for $rup$ on $node$. $\lambda_{node}$ is computed as follows:
+for rupture $rup$ on node $node$. $\lambda_{node}$ is computed as follows:
 \[ 
 \lambda_{node}(m_i) = \lambda_{src}(m_i)a_{node}/a_{src}
 \]
@@ -148,6 +150,11 @@ within source $src$, $a_{node}$ is the area of the $node$ computed using
 equation \ref{eq:cell_area} and $a_{src}$ is the area of $src$ (it can be
 computed by iteratively applying equation \ref{eq:cell_area} to the 
 nodes used to represent the $src$ polygon and summing the results). 
+
+The inclusion in the \gls{acr:erf} of the ruptures produced by an 
+area source is an iterative procedure with two nested that loops, one 
+for the nodes used to discretize the area polygon and the second for 
+the magnitude interval. 
 %
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Multi-depth area source}
@@ -157,10 +164,11 @@ of OQ}
 %
 This source typology is an extension of the just described 
 \gls{areasource} (see page \pageref{sec:areasource});
-it allows to distribute seismicity within a volume delimited by the 
-projection of a polygon lying on the topographic surface along the 
-depth-axis and two planes parallel to the topographic surface 
-identifying the upper and lower seismogenic depth.
+it allows to distribute seismicity within a volume limited 
+laterally by the projection along the depth-axis of a polygon 
+lying on the topographic surface and on top and bottom by 
+two planes parallel to the topographic surface identifying the 
+upper and lower seismogenic depth.
 
 The creation of the \gls{acr:erf} in case of multi-depth area sources
 follows the same fundamental criteria discussed in the previous section 
@@ -176,12 +184,14 @@ the same general concepts described for the area source typology.
 %
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Grid source}
-\Glspl{gridsource} are a typology that's becoming a valuable alternative
-to area sources when modeling distributed seismicity. 
+\Glspl{gridsource} are becoming a valuable alternative
+to area sources when there's a need for modeling distributed 
+seismicity. 
 %
-The main advantage of grid sources consists on the seismicity smoothing 
-procedure that's laying behind their calculation, an objective methodology,
-reproducible and - usually - not particularly complex. 
+The main advantage of \glspl{gridsource} consists on the seismicity 
+smoothing procedure usually adopted for their calculation, an 
+objective methodology, reproducible and - generally - not particularly 
+complex. 
 
 The creation of the \gls{acr:erf} in case of \glspl{gridsource} follows 
 the same concepts described in the previous section in case of area 
@@ -191,13 +201,22 @@ the seismicity properties are specified for each single node (see Section
 \ref{hazard:seismic_source_types:gridSources} at page 
 \pageref{hazard:seismic_source_types:gridSources}).
 %
-%- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  
+\paragraph{ERF calculation}
+The calculation of the ERF in case of grid sources follows the same 
+general concepts described for the area source typology.
+In particular, for each node included in the grid we repeat the procedure
+described in case of the area source typology. 
+The most relevant difference is that in this case the information about 
+seismicity will be changing from node to node.
+%
+%. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Accounting for rupture finiteness in case of distributed 
 seismicity}
 %
 Each node used to discretise an area source or a multi-depth area 
-source or belonging to a grid source has tuples composed by 
-the following objects:
+source or belonging to a grid source has at least one object containing 
+the following information:
 \begin{itemize}
 \item A discrete representation of a \gls{acr:fmd} 
 \item A faulting style, that is strike [optional], dip [optional] and 
@@ -205,6 +224,22 @@ rake [optional]
 \end{itemize}
 The definition of one, or several, faulting styles is optional; this 
 means that in the simplest case only one discrete FMD is specified.
+
+\gls{acr:oq} can eventually take into account the finiteness of the 
+ruptures produced by each source. Different approaches are available 
+depending on the information provided by the user, in particular:
+\begin{itemize}
+\item Ruptures aligned along a specified faulting style
+\item Random ruptures 
+\item Crosshair ruptures
+\item Spoked rupture
+\end{itemize}
+\marginpar{Here we have to revise the GEM1ERF and check that its
+behaviour}
+%
+% .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  
+%\paragraph{\citeauthor{harmsen2008}}
+
 
 %The \gls{earthquakeruptureforecastcalculator} operates in agreement with
 %the parameters specifying the properties of each single node composing
@@ -233,11 +268,15 @@ means that in the simplest case only one discrete FMD is specified.
 %\item
 %\end{enumerate}
 %%
-
+%
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-\clearpage
 \subsection{ERF creation in case of Fault sources}
-
+\gls{acr:oq} currently supports two types of fault sources that 
+differ at most in the geometry of the fault surface. 
+%
+Fault sources with a simple geometry are usually utilized to model 
+shallow sources while fault sources with a complex geometry are 
+better suited to model subduction interface sources.
 %
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Fault sources with simple geometry}
@@ -245,25 +284,36 @@ Simple faults in OQ are representations of tectonic structures with a .
 The methodology adopted fot the creation of the fault surface uses the 
 fault trace, a representative dip direction (e.g. it could be the mean 
 dip direction) and, the upper and lower seismogenic depth. 
-
 %
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Fault sources with complex geometry}
-
+Fault sources with complex geometry tries to replicate the geometry of
+subduction interfaces 
+\marginpar{here we need a citation}
+Because of the methodology used to create the source and float the 
+ruptures on its surface this seismic source typology has a major 
+drawback which corresponds to an in-homogenous density of seismic 
+moment released per unit of surface (i.e. the rupture area for a specific
+magnitude varies over the fault surface).
+\marginpar{here we could add the units - check the SI latex package}
 %
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Computing the probability of occurrence of each rupture}
-In OQ, by convention, we describe the frequency-magnitude distribution using 
-a discrete representation. 
-This choice offers the largest flexibility in describing the rate of 
-earthquakes with respect to magnitude. 
+In case of sources with a Poissonian \gls{temporaloccurrencemodel}, the 
+probability of occurrence for a given rupture - corresponding to 
+a specific magnitude - is computed using a procedure that's conceptually 
+homologous with the one described in case of \glspl{areasource} (see
+page \pageref{par:erf_calc_area_src}). 
+The main difficulty in this case is related to the calculation - given a 
+magnitude interval - of the number of finite ruptures that can be 
+homogeneously distributed over the fault surface.
 %
 % . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . > Figure
-\begin{figure}[!ht]
-\includegraphics[width=15cm]{./Figures/Part_Hazard/gr_example.eps}
-\caption{Example of a discrete incremental frequency-magnitude Gutenberg-Richter distribution}
-\label{fig:gr-example}
-\end{figure}
+%\begin{figure}[!ht]
+%\includegraphics[width=15cm]{./Figures/Part_Hazard/gr_example.eps}
+%\caption{Example of a discrete incremental frequency-magnitude Gutenberg-Richter distribution}
+%\label{fig:gr-example}
+%\end{figure}
 % . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . < Figure
 %
 

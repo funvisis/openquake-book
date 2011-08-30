@@ -16,27 +16,25 @@ investigation time (fixed by the user).
 The ensamble of these \glspl{seismicityhistory} is called a 
 \gls{acr:ses} .
 
-Each rupture in a seismicity history is successively associated with a ground
-motion field, an object describing the spatial distribution of a scalar 
-parameter representative of the intensity of shaking (e.g. PGA or Spectral 
-Acceleration). 
+Each rupture in a seismicity history is successively associated with a 
+\gls{groundmotionfield}, an object describing the spatial distribution 
+of a \gls{groundmotionparameter} representative of the intensity of 
+shaking. 
 %
 % ------------------------------------------------------------------------------
 \subsection{Stochastic Event Set Calculator}
 \index{Seismicity History}
 \index{Stochastic event set}
-A stochastic event set (SES) is collection of seismicity histories; a 
-seismicity history contains earthquake ruptures obtained by randomly 
-sampling an \gls{earthquakeruptureforecast}. 
+A \gls{acr:ses} is collection of seismicity histories; a seismicity 
+history contains earthquake ruptures obtained by randomly sampling 
+an \gls{earthquakeruptureforecast}. 
 %
-As described in Chapter \ref{chap:erf}, an \gls{acr:erf} is defined 
-as the inventory of all ruptures produced by a \gls{seismicsourcemodel}, 
-together with their probabilities of occurrence over a specified time span.
 
-Currently OpenQuake supports the capability to generate SESs from 
-Poissonian \glspl{acr:erf}. In a Poissonian ERF, the probability of one
-or more occurrences in a time span $t$ associated to each rupture is 
-given by:
+Currently OpenQuake can generate \glspl{acr:ses} from Poissonian 
+\glspl{acr:erf}. 
+%
+In a Poissonian ERF, the probability of at least one occurrence 
+of the rupture $rup$ during the \gls{investigationtime} $t$ is given by:
 %
 \begin{equation}
 P(\#rup\geq1|t) = 1 - \exp(-\nu t)
@@ -69,11 +67,11 @@ a possible realization of the seismicity as described by the ERF.
 By sampling an \gls{acr:erf} multiple times, different \glspl{acr:ses} 
 can be obtained each representing a possible realization of the seismic 
 activity. 
-As an example, Figure \ref{ses_italy} shows two SESs produced by a 
-fault model for the Italian region (derived from the Italian fault 
-database \citep{basili2008}). 
+As an example, Figure \ref{ses_italy} shows two \glspl{acr:ses} 
+produced by a fault model for the Italian region (derived from the 
+Italian fault database \citep{basili2008}). 
 %
-Each SES represents seismicity for a period of 50 years. The two 
+Each \gls{acr:ses} represents seismicity for a period of 50 years. The two 
 \glspl{acr:ses} shows similar spatial distribution of seismicity (as 
 expected given that they come from the same source model), but the 
 location and magnitude of the events is different due to the fact that 
@@ -99,24 +97,24 @@ fault model for the Italian region (derived from DISS database
 % ------------------------------------------------------------------------------
 \subsection{Ground Motion Field calculator}
 \index{Ground Motion!Field}
-The \gls{groundmotionfieldcalc} computes values of a scalar
-ground motion intensity parameter (e.g. \gls{acr:pga}, \gls{acr:sa}, 
-\gls{acr:pgv} as predicted 
-by a GMPE) over a set of geographical locations, by utilizing a 
-rupture model (described in terms of geometry and magnitude) as 
-the source of shaking.
+%
+The \gls{groundmotionfieldcalc} computes a value of a 
+\gls{groundmotionparameter} on each element in a set of 
+geographical locations, utilizing a rupture model (minimally 
+described in terms of geometry and magnitude) as the source of 
+shaking.
 
-In general, a ground motion model that predicts intensities at 
-an individual site $i$ due to an earthquake $j$ takes the following 
-form (\cite{jayaram2009}):
+In general, a ground-motion model that predicts values of a 
+\gls{groundmotionparameter} at an individual site $i$ due to 
+an earthquake $j$ takes the following form (\cite{jayaram2009}):
 %
 \begin{equation}
 \ln (Y_{ij}) = \ln (\overline{Y}_{ij})+\epsilon_{ij}+\eta_{j}
 \label{gmfeq}
 \end{equation}
 %
-where $Y_{ij}$ denotes the ground motion parameter of interest; 
-$\overline{Y}_{ij}$ denotes the predicted median ground motion 
+where $Y_{ij}$ denotes the ground-motion parameter of interest; 
+$\overline{Y}_{ij}$ denotes the predicted median ground-motion 
 intensity (which depends on parameters like magnitude, distance, 
 period, etc.); $\epsilon_{ij}$ denotes the intra-event residuals 
 (which is a gaussian random variable with zero mean and standard 
@@ -149,20 +147,20 @@ where
 and $\bm{\eta}=[\eta_{1},\eta_{2},...,\eta_{N}]$, 
 where $\eta_{1}=\eta_{2}=...=\eta_{N}=\eta$.\\
 Given a GMPE, the Ground Motion Field calculator can compute different types 
-of ground motion fields:
+of ground-motion fields:
 \begin{itemize}
 \item Median
 \item Intra-Event Uncorrelated
 \item Intra-Event Correlated
 \end{itemize}
-The median ground motion field provides for each location the median value of 
+The median ground-motion field provides for each location the median value of 
 the ground shaking parameter as predicted by the GMPE. Following the notation 
-of equation \ref{gmfeqvec}, the median ground motion is computed simply from 
+of equation \ref{gmfeqvec}, the median ground-motion is computed simply from 
 the equation:
 \begin{equation}
 \ln (\bm{Y}) = \ln (\overline{\bm{Y}})
 \end{equation}
-The intra-event uncorrelated ground motion field calculator provides for each 
+The intra-event uncorrelated ground-motion field calculator provides for each 
 location a value of the ground shaking parameter that takes into account 
 the aleatory uncertainties defined in the GMPE. In particular, for a single 
 field calculation, it randomly samples the inter-event standard deviation, 
@@ -170,7 +168,7 @@ and for each location, it randomly samples the intra-event standard deviation.
 %
 Both the inter- and intra-event residuals are then added to the mean value of 
 the ground shaking parameter. In other words, the intra-event uncorrelated 
-ground motion field is computed using equation \ref{gmfeqvec} where the 
+ground-motion field is computed using equation \ref{gmfeqvec} where the 
 intra-event residuals are sampled from a multivariate normal distribution
 with mean zero and a diagonal covariance matrix ($\bm{\Sigma}$):
 \begin{equation}
@@ -185,7 +183,7 @@ with mean zero and a diagonal covariance matrix ($\bm{\Sigma}$):
 where $\sigma_{1}, \sigma_{2},...,\sigma_{N}$ are the intra-event standard 
 deviations for sites $1$ to $N$.
 
-The Intra-Event Correlated ground motion field calculator follows the same 
+The Intra-Event Correlated ground-motion field calculator follows the same 
 workflow of the uncorrelated field calculator, with the only difference that 
 the intra-event residuals are assumed to be spatially correlated. 
 %
@@ -203,7 +201,7 @@ normal distribution with mean zero and a non-diagonal covariance matrix:
 where $\rho_{ij}$ is the correlation between intra-event residuals at site 
 $i$ and $j$.
 
-Currently, the intra-event correlated ground motion field calculator adopts 
+Currently, the intra-event correlated ground-motion field calculator adopts 
 the correlation model of \citet{jayaram2009}, according to which the 
 correlation between intra-event residuals is given by:
  \begin{equation}
@@ -238,18 +236,18 @@ $T<1$ to $T\geq1$).
 In case \gls{acr:vs30} values show clustering, for  $0\leq T<1$, the 
 correlation length decreases with increasing period.
 
-Figure \ref{fig:gmfs} depicts the different types of ground motion 
-fields described. The median ground motion field is shown in Figure 
+Figure \ref{fig:gmfs} depicts the different types of ground-motion 
+fields described. The median ground-motion field is shown in Figure 
 \ref{fig:gmfs} (a). 
 %
 In this case the aleatory uncertainties are not taken into account, 
-and the ground motion pattern follows exactly the rupture geometry. 
+and the ground-motion pattern follows exactly the rupture geometry. 
 The highest values are observed on the surface projection of the rupture, and 
 decreasing values are found at increasing distances from the rupture. 
 %
-Figure \ref{fig:gmfs} (b) shows an intra-event uncorrelated ground motion 
+Figure \ref{fig:gmfs} (b) shows an intra-event uncorrelated ground-motion 
 field. The aleatory uncertainties are taken into account and therefore the
-ground motion pattern shows a significant level of heterogeneity. 
+ground-motion pattern shows a significant level of heterogeneity. 
 %
 When introducing the intra-event correlation [Figure \ref{fig:gmfs} (c)], 
 the heterogeneity is diminished and an additional filtering is introduced 
@@ -269,7 +267,7 @@ when considering a longer period [Figure \ref{fig:gmfs} (d)].
 correlated for PGA (c) and for SA at $T=1$s (d). A rectangular planar rupture 
 is considered as source of the shaking (the red line depicts the rupture trace,
 and the black line the rupture border). The rupture is associated to a 
-magnitude 7 earthquake. The ground motion is estimated using the 
-\citet{boore2008} ground motion prediction equation.}
+magnitude 7 earthquake. The ground-motion is estimated using the 
+\citet{boore2008} ground-motion prediction equation.}
 \label{fig:gmfs}
 \end{figure}
