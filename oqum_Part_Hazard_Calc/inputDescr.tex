@@ -1,0 +1,153 @@
+The OQ \gls{pshainputmodel} consists of the following files:
+\begin{itemize}
+	\item A configuration file (usually named config.gem)	
+	\item A file describing the \gls{seismicsourcesystem}
+	\item One or several files corresponding to the number of 
+		\glspl{initialseismicsourcemodel}
+	\item A file containing the information relative to the 
+		\glspl{groundmotionsystem}
+\end{itemize}
+%
+% ==============================================================================
+\section{Anatomy of the Configuration file for hazard calculation}
+The configuration file contains the following parts:
+\begin{itemize}
+	\item general 
+	\item hazard
+\end{itemize}
+Each line starting with a cancel symbol is a comment line that is skipped
+by the file parser. 
+
+In order to discuss the content of the input file we use the 'config.gem' 
+provided with the hazard demo relative to the PEER test set 1 case 10.
+
+This is the general section of this file 
+\begin{Verbatim}[baselinestretch=1,fontsize=\small,numbers=left,frame=single]
+[general]
+CALCULATION_MODE = Classical
+# NOTE: The order of the vertices is to be kept!!!
+# lat, lon of polygon vertices (in clock or counter-clock wise order)
+REGION_VERTEX = 38.000, -122.000, 38.000, -122.000, 38.000, ...
+# degrees
+REGION_GRID_SPACING = 0.1
+\end{Verbatim}
+%
+The first line contains a label specifying the section (in this 
+particular case the 'general' section.
+
+The second part composing the configuration file contains hazard 
+specific information that can be divided into the following units: 
+general calculation parameters and PSHA input model files, 
+ground-motion model, seismic source model section and, results.
+%
+%
+\subsubsection{General calculation parameters and PSHA input model files}
+%
+\begin{Verbatim}[baselinestretch=1,fontsize=\small,numbers=left,frame=single]
+[HAZARD]
+SOURCE_MODEL_LT_RANDOM_SEED = 23
+GMPE_LT_RANDOM_SEED = 5
+GMF_RANDOM_SEED = 3
+
+# file containing erf logic tree structure
+SOURCE_MODEL_LOGIC_TREE_FILE = source_model_logic_tree.xml
+# file containing gmpe logic tree structure
+GMPE_LOGIC_TREE_FILE = gmpe_logic_tree.xml
+# output directory - relative to this file
+OUTPUT_DIR = computed_output
+
+# moment magnitude (Mw)
+MINIMUM_MAGNITUDE = 5.0
+# years
+INVESTIGATION_TIME = 1.0
+# maximum integration distance (km)
+MAXIMUM_DISTANCE = 200.0
+# bin width of the magnitude frequency distribution
+WIDTH_OF_MFD_BIN = 0.1
+\end{Verbatim}
+
+%
+% ============================================================================== 
+\section{Description of the seismic source system file}
+The seismic source system is described by an XML formatted file 
+compatible with the NRML schema.
+\marginpar{We miss a citation for NRML and a website as well!!}
+%
+\begin{Verbatim}[baselinestretch=1,fontsize=\small,numbers=left,frame=single]
+	<logicTreeSet>
+        <logicTree id="lt1">
+            <logicTreeBranchSet branchingLevel="1" 
+                                uncertaintyType="sourceModel">
+                <logicTreeBranch>
+                    <uncertaintyModel>source_model.xml</uncertaintyModel>
+                    <uncertaintyWeight>1.0</uncertaintyWeight>
+                </logicTreeBranch>
+             </logicTreeBranchSet>
+        </logicTree>
+    </logicTreeSet>
+\end{Verbatim}
+%
+% ------------------------------------------------------------------------------
+\subsection{Basic seismic source typologies }
+
+%
+% ------------------------------------------------------------------------------
+\subsection{Initial Seismic Source Model description}
+The initial seismic source model used in this example is extremely simple, 
+since it contains a single area source. 
+%
+\begin{Verbatim}[baselinestretch=1,fontsize=\small,numbers=left,frame=single]
+    <areaSource gml:id="Src1">
+      <gml:name>PEER test "AREA 1" model</gml:name>
+      <tectonicRegion>Active Shallow Crust</tectonicRegion>
+      <areaBoundary>
+        <gml:Polygon>
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>
+				-122.000 38.901 
+				-121.920 38.899 
+				...
+				-122.160 38.892 
+				-122.080 38.899 
+			  </gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </areaBoundary>
+      <ruptureRateModel>
+        <truncatedGutenbergRichter>
+          <aValueCumulative>3.097</aValueCumulative>
+          <bValue>0.9</bValue>
+          <minMagnitude>5.0</minMagnitude>
+          <maxMagnitude>6.5</maxMagnitude>
+        </truncatedGutenbergRichter>
+        <focalMechanism publicID="smi:f01/11">
+          <qml:nodalPlanes>
+            <qml:nodalPlane1>
+              <qml:strike>
+                <qml:value>0.0</qml:value>
+              </qml:strike>
+              <qml:dip>
+                <qml:value>90.0</qml:value>
+              </qml:dip>
+              <qml:rake>
+                <qml:value>0.0</qml:value>
+              </qml:rake>
+            </qml:nodalPlane1>
+          </qml:nodalPlanes>
+        </focalMechanism>
+      </ruptureRateModel>
+      <ruptureDepthDistribution>
+        <magnitude>6.5</magnitude>
+        <depth>5.0</depth>
+      </ruptureDepthDistribution>
+      <hypocentralDepth>5.0</hypocentralDepth>
+    </areaSource>
+  </sourceModel>
+\end{Verbatim}
+
+
+%
+% ============================================================================== 
+\section{Ground-motion system file description}

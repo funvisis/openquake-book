@@ -1,0 +1,171 @@
+% ------------------------------------------------------------------------------
+% OpenQuake Users Manual
+% 
+% Authors: 
+% 	H. Crowley 		- Executive Committee - GEM Foundation, Pavia, Italy
+% 	D. Monelli 		- GEM Model Facility, Zurich, Switzerland
+% 	M. Pagani 		- Executive Committee - GEM Foundation, Pavia, Italy
+% 	V. Silva 		- GEM Model Facility, Pavia, Italy
+%	G. Weatherhill 	- GEM Model Facility, Pavia, Italy
+% 
+% Document distributed under the Common Creative License 
+% © GEM Foundation, Pavia, February 2011
+% ------------------------------------------------------------------------------
+\documentclass[12pt,a4paper,headings=small,version=first,dvips]{scrbook}
+% --------------------------------------------------------------------- Packages
+\input{configuration.tex}
+% ------------------------------------------------------------------------------
+\uppertitleback{
+   \textbf{Authors:} \\
+   Helen Crowley$^1$, Leonardo Garrido$^1$, Damiano Monelli$^3$, 
+   Marco Pagani$^1$, Vitor Silva$^2$, Graeme Weatherill$^2$ \\ \hfill \\
+   \small
+   $^1$ GEM Foundation\\
+   via Ferrata, 1 \\ 
+   20133 Pavia \\
+   Italy \\
+   \hfill\\
+   $^2$ GEM Model Facility\hfill\\
+   via Ferrata, 1\hfill\\ 
+   20133 Pavia\hfill\\
+   Italy\hfill\\
+   \hfill\\
+   $^3$ GEM Model Facility\hfill\\
+   SED - ETHZ\hfill\\ 
+   Sonneggstrasse, 5\\
+   CH-8092 Zurich\hfill\\
+   Switzerland \hfill\\ 
+   \hfill\\
+   Email address (for all the authors):\hfill\\
+   $<$name.surname$>$@globalquakemodel.org
+   \normalsize
+}  
+%
+% =============================================================== BEGIN DOCUMENT
+% -------------------------------------------------- Title and table of contents
+\begin{document}
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Load the glossary
+\input{./Part_Introduction/glossary.tex}
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Cover
+\newgeometry{hmargin={-0.4cm,0cm},height=29.7cm}
+\thispagestyle{empty}
+\psset{unit=1cm}
+\begin{pspicture}(0,0)(21cm,29.7cm)
+	\psframe[fillstyle=solid,linecolor=white,fillcolor=white]
+		(0.0cm,15.0cm)(21cm,29.7cm)	
+	\rput[l](0cm,15cm){\includegraphics[width=21cm,height=15cm]{./Figures/adapazari.eps}}
+	\psframe[fillstyle=solid,linecolor=gray02,fillcolor=white]
+		(0.0cm,0.0cm)(21cm,15.1cm)
+	\psframe[fillstyle=solid,linecolor=orange01,fillcolor=orange01]
+		(0.0cm,15.0cm)(21cm,15.5cm)
+	\psframe[fillstyle=solid,linecolor=orange01,fillcolor=orange01]
+		(0.0cm,25.0cm)(21cm,25.1cm)
+	% Title
+	\rput[r](19.5cm,13.5cm){\sffamily\bfseries\HUGE\color{orange01}
+		{OpenQuake User's Manual}}
+	% Logos
+	\rput[r](19.5,27.5cm){\includegraphics[height=1cm]
+		{./Figures/GEM_logo.eps}}	
+	\rput(4cm,27.5cm){\includegraphics[height=1.5cm]
+		{./Figures/openquake_logo1.eps}}
+	%
+	\rput[r](19.5cm,2cm){\sffamily\large\color{gray01}{Version 1.0}}
+\end{pspicture}
+%  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Second page
+\restoregeometry
+%
+% - - - - - - - - - - - - - - - - - - - - - - -  This is the internal title page
+\setcounter{page}{1}
+\begin{titlepage}
+	\titlehead{\emph{``OpenQuake: Shaken not stirred''}}
+	\title{ \textcolor{blue01}{\textsf{\bfseries\Huge OpenQuake User's Manual}}  }
+	\date{}
+\end{titlepage}
+\pagestyle{scrheadings}
+\maketitle
+\tableofcontents
+%
+% --------------------------------------------------------- Symbols and acronyms
+\chapter*{Symbols and acronyms}
+	\input{./oqum_Part_Introduction/symbolsAcronyms.tex}
+% ==============================================================================
+% ------------------------------------------------------------------------- Part
+\part{Introduction}
+% ------------------------------------------------------------------------------
+\chapter{OpenQuake background}
+	\input{./oqum_Part_Introduction/introduction.tex}
+\chapter{Getting started}
+	\input{./oqum_Part_Introduction/gettingStarted.tex}
+% ==============================================================================
+% ------------------------------------------------------------------------- Part
+\part{Hazard}
+% ------------------------------------------------------------------------------
+\chapter{Introduction}
+	\input{./oqum_Part_Hazard_Calc/introduction.tex}
+% ------------------------------------------------------------------------------
+\chapter{OpenQuake hazard input description}
+	\label{chap:hazinp}
+	\input{./oqum_Part_Hazard_Calc/inputDescr.tex}
+% ------------------------------------------------------------------------------
+\chapter{OpenQuake hazard calculation examples}
+	\label{chap:hazexamples}
+	\input{./oqum_Part_Hazard_Calc/calcExamples.tex}
+% ==============================================================================
+% ------------------------------------------------------------------------- Part
+\part{Risk}
+% ------------------------------------------------------------------------------
+\chapter{Introduction}
+	\input{./oqum_Part_Risk_Calc/introduction.tex}
+% ------------------------------------------------------------------------------
+\chapter{OpenQuake input description}
+	\label{chap:riskinp}
+	\input{./oqum_Part_Risk_Calc/inputDescr.tex}
+% ------------------------------------------------------------------------------
+\chapter{OpenQuake risk calculation examples}
+	\label{chap:riskexamples}
+	\input{./oqum_Part_Risk_Calc/calcExamples.tex}
+% ==============================================================================
+% ------------------------------------------------------------------------- Part
+\part{Modeller's Toolkit}
+% ------------------------------------------------------------------------------
+\chapter{Introduction}
+	\input{./oqum_Part_Modellers_Toolkit/introduction.tex}
+% ==============================================================================
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------- Part
+\part{Appendixes}
+\appendix
+% ------------------------------------------------------------------------------
+\chapter{Smoke Tests: Hazard}
+	\input{./oqum_Part_Appendix/smokeTestHaz.tex}
+% ------------------------------------------------------------------------------
+\chapter{Smoke Tests: Risk}
+	\input{./oqum_Part_Appendix/smokeTestRisk.tex}
+% ==============================================================================
+% ----------------------------------------------------------------- Bibliography
+\bibliographystyle{apalike}
+\bibliography{./Bibliography/hazard,./Bibliography/risk,./Bibliography/sei}
+% ==============================================================================
+% ------------------------------------------------------------------------ Index
+\printglossaries
+\printindex
+\cleardoublepage
+% Final empty page
+\hfill \\ \thispagestyle{empty} \clearpage 
+% ==============================================================================
+% ------------------------------------------------------------------- Back Cover
+\newgeometry{hmargin={0cm,-0.4cm},height=29.7cm}
+\thispagestyle{empty}
+\psset{unit=1cm}
+\begin{pspicture}(0,0)(21cm,29.7cm)
+	\psframe[fillstyle=solid,linecolor=gray02,fillcolor=white]
+		(0.0cm,0.0cm)(21cm,15.0cm)
+	\psframe[fillstyle=solid,linecolor=white,fillcolor=white]
+		(0.0cm,15.0cm)(21cm,29.7cm)
+	\psframe[fillstyle=solid,linecolor=orange01,fillcolor=orange01]
+		(0.0cm,15.0cm)(21cm,15.5cm)
+	\psframe[fillstyle=solid,linecolor=orange01,fillcolor=orange01]
+		(0.0cm,25.0cm)(21cm,25.1cm)
+\end{pspicture}
+%
+\end{document}
