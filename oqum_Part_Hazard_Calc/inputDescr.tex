@@ -1,16 +1,27 @@
-The OQ \gls{pshainputmodel} consists of the following files:
+In this Chapter we provide with the reader a description of the input 
+files containing the information necessary to completely describe a 
+\gls{pshainputmodel} following a format compatible with \gls{acr:oq}. 
+%
+In OpenQuake the information commonly characterizing a 
+\gls{pshainputmodel} is organized into - at least - four main files:
+%
 \begin{itemize}
-	\item A configuration file (usually named config.gem)	
+	\item A \gls{configurationfile} (usually named config.gem) - It contains the 	
 	\item A file describing the \gls{seismicsourcesystem}
 	\item One or several files corresponding to the number of 
 		\glspl{initialseismicsourcemodel}
 	\item A file containing the information relative to the 
 		\glspl{groundmotionsystem}
 \end{itemize}
+
 %
 % ==============================================================================
-\section{Anatomy of the Configuration file for hazard calculation}
-The configuration file contains the following parts:
+\section{Anatomy of the configuration file for hazard calculation}
+The configuration file contains the following parts
+parts\footnote{
+Each line starting with a cancel symbol is a comment line that is skipped
+by the file parser.
+}:
 \begin{itemize}
 	\item general 
 	\item hazard

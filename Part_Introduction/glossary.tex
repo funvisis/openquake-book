@@ -15,25 +15,47 @@
 	seismicity. The rate of occurrence of seismicity is assumed uniform over
 	the source area; this produces an hazard pattern consisting of a more or 
 	less uniform patch resembling the shape of the polygon smoothed at the 
-	borders.}
+	borders}
 }
 %
 % ------- B
 \newglossaryentry{branch}{
 	name = branch,
-	description={xxx}
+	plural= branches,
+	description={
+	The simplest element in a logic tree; it belongs to a 
+	\gls{branchset} where it represents one possible option among a finite 
+	number of alternatives. A branch is associated with a weight 
+	value \citep{scherbaum2011} if the \gls{branchset} represents the 
+	epistemic uncertainty on a parameter or a model when the \gls{branchset} 
+	is used to specify alternative models (e.g. district \glspl{acr:fmd}
+	}
 }
 \newglossaryentry{branchinglevel}{
 	name = branching level,
-	description={xxx}
+	description={It indicates the position where a \gls{branchset} or a 
+	\gls{branch} is located in a logic tree structure. For example, 
+	in \gls{acr:oq} the first branching level of the 
+	\gls{seismicsourcelogictree} always contains one or several 
+	\glspl{initialseismicsourcemodel}}
 }
 \newglossaryentry{branchset}{
 	name = branch set,
-	description={xxx}
+	description={The structure describing the epistemic uncertainty on 
+	a specific parameter or model included in a logic tree structure. 
+	It ensembles a number of \glspl{branch}, each one representing a 
+	discrete alternative}
 }
 %
 % ------- C
 \newacronym{cpsha}{cPSHA}{Classical PSHA}
+\newglossaryentry{configurationfile}{
+	name =  configuration file,
+	description = {
+	Usually the file containing the information necessary to run a calculation
+	in OpenQuake
+	}
+}
 %
 % ------- D
 \newglossaryentry{seismichazarddisaggregation}{
@@ -48,9 +70,9 @@
 	name =  disaggregation matrix,
 	description = {
 	A multi-dimensional matrix used to systematically store the contributions
-	to a user-specified level of hazard to be disaggregated. See also 
-	\gls{seismichazarddisaggregation}
-	}
+	to a level of hazard to be disaggregated and that is specified by the 
+	user.
+	See also \gls{seismichazarddisaggregation}}
 }
 %
 % ------- E
@@ -79,8 +101,7 @@
 \newglossaryentry{epsilon}{
 	name = epsilon,
 	description={
-	normalized residual of the ground motion 
-	}
+	normalized residual of the ground motion}
 }
 %
 % ------- F
@@ -89,7 +110,7 @@
 	name =  frequency-magnitude distribution,
 	description = {
 	This can can be continuonus or discrete. One frequency-magnitude 
-	distribution frequently adopted in \gls{psha} is the double truncated 
+	distribution frequently adopted in \gls{acr:psha} is the double truncated 
 	Gutenberg-Richter distribution 
 	\[
 	N(m)
@@ -193,12 +214,18 @@
 % ------- P
 \newacronym{acr:pga}{PGA}{Peak Ground Acceleration}
 \newacronym{acr:pgv}{PGV}{Peak Ground Velocity}
-\newacronym{psha}{PSHA}{Probabilistic Seismic Hazard Analysis}
+\newacronym{acr:psha}{PSHA}{Probabilistic Seismic Hazard Analysis}
 \newglossaryentry{pshainputmodel}{
 	name=PSHA input model, 
 	description={Object containing the information necessary to describe 
 	the seismic source and the ground motion models - plus the related 
 	epistemic uncertainties}	
+}
+\newglossaryentry{psha}{
+	name = probabilistic seismic hazard analysis, 
+	description={A methodology to compute seismic hazard by taking into 
+	account for the potential contributions coming from all the sources 
+	of engineering importance for a specified site}	
 }
 %
 % ------- R
@@ -232,7 +259,7 @@
 \newglossaryentry{seismicsourcedata}{
 	name = seismic source data,
 	description={An object containing the information necessary 
-	to completely describe a \gls{psha} seismic source i.e. seismic 
+	to completely describe a \gls{acr:psha} seismic source i.e. seismic 
 	source type, position, geometry and seismicity occurrence 
 	model}
 }

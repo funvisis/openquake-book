@@ -138,6 +138,7 @@ occurrence during the investigation time $t$ of a rupture $rup$ with
 magnitude $m$ on node $node$ (belonging to $src$) corresponds to:
 \begin{equation}
 P(rup_{src}(m_i)|t)=\lambda_{node}(m_i)\,t\exp(-\lambda_{node}(m_i)\,t)
+\label{eq:rupture_prob_occ}
 \end{equation}
 where $\lambda_{node}(m_i)$ is the rate of occurrence of magnitude $m_i$ 
 for rupture $rup$ on node $node$. $\lambda_{node}$ is computed as follows:
@@ -151,10 +152,16 @@ equation \ref{eq:cell_area} and $a_{src}$ is the area of $src$ (it can be
 computed by iteratively applying equation \ref{eq:cell_area} to the 
 nodes used to represent the $src$ polygon and summing the results). 
 
-The inclusion in the \gls{acr:erf} of the ruptures produced by an 
-area source is an iterative procedure with two nested that loops, one 
+The inclusion of ruptures produced by an area source in the 
+\gls{acr:erf} is an iterative procedure with two nested loops, one 
 for the nodes used to discretize the area polygon and the second for 
-the magnitude interval. 
+the magnitude intervals. 
+%
+During each loop, the probability of occurrence of the rupture $rup$
+with magnitude $m_i$ is computed using equation \ref{eq:rupture_prob_occ}.
+Eventually, a finite rupture geometry is generated using a magnitude 
+scaling relationship. Finally, rupture geometry and $P(rup_{src}(m_i)|t)$
+are added to the \gls{acr:erf}.
 %
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Multi-depth area source}
@@ -164,82 +171,162 @@ of OQ}
 %
 This source typology is an extension of the just described 
 \gls{areasource} (see page \pageref{sec:areasource});
-it allows to distribute seismicity within a volume limited 
-laterally by the projection along the depth-axis of a polygon 
+it allows to distribute seismicity within a volume laterally 
+limited by the projection along the depth-axis of a polygon 
 lying on the topographic surface and on top and bottom by 
-two planes parallel to the topographic surface identifying the 
-upper and lower seismogenic depth.
+two planes - parallel to the topographic surface - identifying the 
+upper and lower seismogenic depths.
 
 The creation of the \gls{acr:erf} in case of multi-depth area sources
 follows the same fundamental criteria discussed in the previous section 
 for area sources. 
 %
 The \gls{acr:fmd} for the entire source is distributed over the nodes 
-of the 3D grid used to describe the multi-depth volume.
+of the 3D grid used to describe the source1 volume.
 %
 % .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  
 \paragraph{ERF calculation}
 The calculation of the ERF in case of multi-depth area sources follows
 the same general concepts described for the area source typology.
 %
+The processing is based on two nested loops, one for the nodes 
+used to discretize the volume and the second for the magnitude intervals. 
+%
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Grid source}
 \Glspl{gridsource} are becoming a valuable alternative
 to area sources when there's a need for modeling distributed 
-seismicity. 
+seismicity in \gls{acr:psha} \citep{frankel1995}. 
 %
 The main advantage of \glspl{gridsource} consists on the seismicity 
-smoothing procedure usually adopted for their calculation, an 
-objective methodology, reproducible and - generally - not particularly 
-complex. 
-
-The creation of the \gls{acr:erf} in case of \glspl{gridsource} follows 
-the same concepts described in the previous section in case of area 
-sources (see page \pageref{sec:areasource}); the main difference is that 
-in case of this source type the discretisation step is not needed and 
-the seismicity properties are specified for each single node (see Section
-\ref{hazard:seismic_source_types:gridSources} at page 
-\pageref{hazard:seismic_source_types:gridSources}).
+smoothing procedure usually adopted for their calculation, which appears
+to be objective, reproducible and - generally - not particularly complex. 
+%
+In spite of their simplicity, these source typology must be created 
+with extreme care \citep[][page 9]{abrahamson2006}
+%
+During the latest years an number of regional and national PSHA models 
+based on grid sources to account for distributed seismicity were 
+published in the literature \citep{stirling2002,petersen2008}. 
 %
 % .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  
 \paragraph{ERF calculation}
-The calculation of the ERF in case of grid sources follows the same 
-general concepts described for the area source typology.
-In particular, for each node included in the grid we repeat the procedure
-described in case of the area source typology. 
-The most relevant difference is that in this case the information about 
-seismicity will be changing from node to node.
+The calculation of the \gls{acr:erf} in case of grid sources follows 
+the same general concepts described for the area source typology.
+The most relevant difference in case of grid sources relates to the 
+information about seismicity that changes from node to node.
+
+The inclusion of the ruptures produced by a grid source in the 
+\gls{acr:erf} is an iterative procedure with two nested loops, one 
+for the nodes of the grid and the second for the magnitude intervals. 
 %
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Accounting for rupture finiteness in case of distributed 
 seismicity}
+% 
+The increase - within the last two decades - of the number of 
+ground-motion recordings and earthquakes meta-information raised 
+the need to appropriately account for the finite dimension of rupture 
+in the calculation of hazard.
+% 
+While this issue does not imply relevant difficulties in case of 
+fault sources, different approaches exists to account for rupture 
+finiteness in case of seismic sources modelling distributed 
+seismicity. 
+% 
+These approaches reflects distinct thinking of the 
+large epistemic uncertainties affecting the potential seismogenic 
+structures and the computation demand implied by the likely 
+large number of ruptures to process when ruptures are explicitly
+considered.
+
+Two are the common approaches adopted to properly take into 
+consideration the finite dimension of ruptures in case of sources 
+of distributed seismicity.
+
+The first approach uses punctual sources and adjusts the 
+rupture-site distance to account for the finite dimension of rupture.
 %
-Each node used to discretise an area source or a multi-depth area 
-source or belonging to a grid source has at least one object containing 
-the following information:
+This distance correction is usually based on a complete ignorance 
+hypothesis implying the use of vertical uniformly spoked ruptures.
+%
+Such an assumption is in general acceptable but in cases where the 
+ground-motion models using a R$_{rup}$ metric and the tectonic context
+is characterized by very low dipping sources.
+%
+For example, \citet{petersen2008} used this solution to calculate
+the latest release of the National Seismic Hazard Maps for the 
+conterminous United States \citep[see also][]{harmsen2008}. 
+%
+Rupture-site corrections factors where also proposed by 
+\citet{scherbaum2004} and discussed in \citet{beyer2006}.
+
+The second approach uses finite ruptures - centered on each node 
+of the grid - either spoked or with random orientation and,  
+usually, vertical dip. 
+%
+In some cases, the generation of ruptures with properties 
+restrained to specific seismotectonic styles available for distinct  
+geographic contexts is possible. 
+%
+This approach is generally more computationally intensive than the 
+solution based on a source-distance adjustment but - being 
+customizable - offers a larger flexibility than precomputed solutions.
+%
+This approach was used by \citet{frankel2002} to calculate the 2002
+version of the United States National Seismic Hazard Maps.
+%
+%.  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+\paragraph{Options available in OpenQuake}
+Of the two just approaches just discussed, OpenQuake currently supports 
+only the one based on the use of finite ruptures.
+
+The computation of finite ruptures in \gls{acr:oq} follows a unified 
+procedure for area, multi-depth and grid sources since each node
+of the grid used in the different cases has always one or several 
+sets containing the following information:
+%
 \begin{itemize}
 \item A discrete representation of a \gls{acr:fmd} 
-\item A faulting style, that is strike [optional], dip [optional] and 
-rake [optional] 
+\item A faulting style: strike [optional], dip [optional] and rake 
+[optional] 
 \end{itemize}
-The definition of one, or several, faulting styles is optional; this 
-means that in the simplest case only one discrete FMD is specified.
+%
+The definition of one, or several, faulting styles is optional; the 
+simplest case - using on compulsory information - is based on the 
+knowledge of just one discrete FMD.
+%
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . > Figure
+\begin{figure}[!hb]
+\centering
+\includegraphics[width=13cm]{./Figures/Part_Hazard/area_source_finite_ruptures.eps}
+\caption{Example of random ruptures generated with OpenQuake to take 
+into account rupture finiteness in case of hazard computation based 
+on a single area source.}
+\label{fig:area_source_finite_ruptures}
+\end{figure}
+% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . < Figure
+%
 
-\gls{acr:oq} can eventually take into account the finiteness of the 
-ruptures produced by each source. Different approaches are available 
-depending on the information provided by the user, in particular:
+Different approaches are available to account for finite ruptures;
+their adoption depends on the information provided by the user on
+the specific requirements of the analysis and the computational demand
+sustainable. 
+%
+These are the main options available:
 \begin{itemize}
-\item Ruptures aligned along a specified faulting style
-\item Random ruptures 
-\item Crosshair ruptures
-\item Spoked rupture
+	\item Generate ruptures aligned according to a specified faulting style 
+	(this approach can be used when at least the strike direction is 
+	specified)
+	\item Random ruptures 
+	\item Crosshair ruptures
+	\item Spoked rupture
 \end{itemize}
-\marginpar{Here we have to revise the GEM1ERF and check that its
-behaviour}
+The last three options are always applicable since compulsory information 
+suffices.
 %
 % .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  
 %\paragraph{\citeauthor{harmsen2008}}
-
 
 %The \gls{earthquakeruptureforecastcalculator} operates in agreement with
 %the parameters specifying the properties of each single node composing
