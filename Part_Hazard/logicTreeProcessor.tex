@@ -88,6 +88,7 @@ uncertainty value is randomly selected (again with a probability equal to
 the uncertainty weight).
 %
 \subsubsection{Sampling the ground-motion logic tree}
+The ground-motion logic tree allows the definition of multiple branch sets (containing different GMPEs), each referring to a specific tectonic region type. The sampling of the ground-motion logic tree takes place by looping over the different tectonic region types defined by the modeler, and, for each of them, by randomly selecting a GMPE according to its weight. The final set of sampled GMPEs will contain therefore a GMPE for each tectonic region type considered in the source model.
 
 \dotfill \newline
 NOTES:
