@@ -89,14 +89,18 @@ the uncertainty weight).
 %
 \subsubsection{Sampling the ground-motion logic tree}
 The ground-motion logic tree allows the definition of multiple branch sets 
-(containing different ground-motion model), each referring to a specific 
+(containing different ground-motion models), each referring to a specific 
 tectonic region type. 
 %
 The sampling of the ground-motion logic tree takes place by looping 
 over the different tectonic region types defined by the modeler, and, for 
 each of them, by randomly selecting a GMPE according to its weight. 
 %
-The final set of sample will contain therefore a ground-motion model for
+The final set of samples will contain therefore a ground-motion model for
 each tectonic region type considered in the source model.
-
-
+%
+For both the source model and ground-motion logic trees, the sampling
+of the epistemic weights is performed by using the inverse transform method (\citet{martinez2002}).
+The method consists in computing the inverse distribution function of the epistemic weights,
+and then generating a uniform random number between 0 and 1, that put as argument of the inverse transform function, gives a epistemic uncertainty model with a probability equal to the
+associated weight.
