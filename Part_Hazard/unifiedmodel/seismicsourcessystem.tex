@@ -72,22 +72,30 @@ The third branching level defines uncertainties in maximum magnitude
 % . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Supported branch set typologies}
 The current version of OpenQuake offers only two built-in typologies of 
-branch set. They are only a sample of possible source model epistemic 
-uncertainties, and future versions of OpenQuake will provide a broader 
-spectrum of built-in epistemic uncertainties. 
-%
-Currently, rules are applied to all sources. Option to apply rules only 
-to specific sources will be also supported in the future.
+branch set. They are only a sample of the possible seismic source model 
+epistemic uncertainties, and future versions of OpenQuake will provide 
+a broader spectrum of built-in branch sets accounting for distinct 
+types of epistemic uncertainties. 
 
 Figure \ref{fig:SourceModelLogicTree} depicts a source model logic tree that 
 can be defined with the options currently present in OpenQuake.
 %
 \paragraph{Gutenberg-Richter b value uncertainties}
-The user can specify a set of increments (positive or negative) that are 
-added to Gutenberg-Richter b values. Conservation of total moment rate 
+This is the \gls{branchset} in the second \gls{branchinglevel} of the 
+seismic source logic tree depicted in Figure \ref{fig:SourceModelLogicTree}. 
+This \gls{branchset}, contains a number of branches. Each one has associated: 
+(1) a differential value to be added or subtracted to the Gutenberg-Richter b 
+value of each source as specified in the \gls{initialseismicsourcemodel} and 
+(2) a weight.
+Within this \gls{branchset} conservation of total moment rate 
+(corresponding to the one specified in the initial seismic source model) 
 is assumed.
 %
 \paragraph{Gutenberg-Richter maximum magnitude uncertainties}
-The user can specify a set of increments (positive or negative) that are 
-added to Gutenberg-Richter maximum magnitude values. 
-Conservation of total moment rate is assumed.
+For this \gls{branchset} the user can specify for each \gls{branch} a 
+value (positive or negative) to be added to the Gutenberg-Richter maximum 
+magnitude values. 
+%
+Within this \gls{branchset} conservation of total moment rate 
+(corresponding to the one specified in the initial seismic source model) 
+is assumed.

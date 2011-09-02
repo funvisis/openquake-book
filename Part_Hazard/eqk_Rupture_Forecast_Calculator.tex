@@ -152,8 +152,8 @@ equation \ref{eq:cell_area} and $a_{src}$ is the area of $src$ (it can be
 computed by iteratively applying equation \ref{eq:cell_area} to the 
 nodes used to represent the $src$ polygon and summing the results). 
 
-The inclusion of ruptures produced by an area source in the 
-\gls{acr:erf} is an iterative procedure with two nested loops, one 
+The inclusion in the \gls{acr:erf} of the of ruptures produced by 
+an area source is an iterative procedure with two nested loops, one 
 for the nodes used to discretize the area polygon and the second for 
 the magnitude intervals. 
 %
@@ -182,7 +182,7 @@ follows the same fundamental criteria discussed in the previous section
 for area sources. 
 %
 The \gls{acr:fmd} for the entire source is distributed over the nodes 
-of the 3D grid used to describe the source1 volume.
+of the 3D grid used to describe the source volume.
 %
 % .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  
 \paragraph{ERF calculation}
@@ -208,6 +208,11 @@ with extreme care \citep[][page 9]{abrahamson2006}
 During the latest years an number of regional and national PSHA models 
 based on grid sources to account for distributed seismicity were 
 published in the literature \citep{stirling2002,petersen2008}. 
+
+%
+The current \gls{acr:oq} implementation of this source typology 
+uses most of all the \gls{opensha} \texttt{PointEqkSource.java}
+and \texttt{PointToLineSource.java} classes.
 %
 % .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  
 \paragraph{ERF calculation}
@@ -325,37 +330,6 @@ These are the main options available:
 The last three options are always applicable since compulsory information 
 suffices.
 %
-% .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  
-%\paragraph{\citeauthor{harmsen2008}}
-
-%The \gls{earthquakeruptureforecastcalculator} operates in agreement with
-%the parameters specifying the properties of each single node composing
-%a seismic source:
-%\begin{enumerate}
-%\item If no faulting style parameters are specified:
-%	\begin{enumerate}
-%	\item If the finiteness of the ruptures has to be considered in the 
-%	calculation (at least for a given specific magnitude range)
-%	\end{enumerate}
-%\item If only strike is specified:
-%	\begin{enumerate}
-%	\item If the finiteness of the ruptures has to be considered in the 
-%	calculation (at least for a given specific magnitude range)
-%	\end{enumerate}
-%\item If strike and rake are specified:
-%	\begin{enumerate}
-%	\item If the finiteness of the ruptures has to be considered in the 
-%	calculation (at least for a given specific magnitude range)
-%	\end{enumerate}
-%\item If strike, dip and rake are specified:
-%	\begin{enumerate}
-%	\item If the finiteness of the ruptures has to be considered in the 
-%	calculation (at least for a given specific magnitude range)
-%	\end{enumerate}
-%\item
-%\end{enumerate}
-%%
-%
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 \subsection{ERF creation in case of Fault sources}
 \gls{acr:oq} currently supports two types of fault sources that 
@@ -367,16 +341,30 @@ better suited to model subduction interface sources.
 %
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Fault sources with simple geometry}
-Simple faults in OQ are representations of tectonic structures with a . 
-The methodology adopted fot the creation of the fault surface uses the 
+%
+The current \gls{acr:oq} implementation of this source typology 
+corresponds to the one included in the \gls{opensha}
+\texttt{FloatingPoissonFaultSource.java} class.
+
+In \gls{acr:oq}, \glspl{simplefaultsource} represents tectonic structures 
+with a straightforward geometry characterized by relatively constant 
+values of dip over the entire surface and along-strike profiles at 
+different depths similar to the fault trace. 
+
+The methodology used for the creation of the fault surface takes the 
 fault trace, a representative dip direction (e.g. it could be the mean 
-dip direction) and, the upper and lower seismogenic depth. 
+dip direction) and, the upper and lower seismogenic depth and creates 
+a 3D gridded surface using a number of equally spaced nodes. 
 %
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Fault sources with complex geometry}
+%
+The \gls{acr:oq} implementation of this source typology at the moment 
+uses most of all the \gls{opensha} \texttt{FloatingPoissonFaultSource.java}
+and \texttt{ApproxEvenlyGriddedSurface.java} classes.
+
 Fault sources with complex geometry tries to replicate the geometry of
-subduction interfaces 
-\marginpar{here we need a citation}
+subduction interfaces \citep{hayes2009,heuret2011}.
 Because of the methodology used to create the source and float the 
 ruptures on its surface this seismic source typology has a major 
 drawback which corresponds to an in-homogenous density of seismic 
@@ -387,20 +375,16 @@ magnitude varies over the fault surface).
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Computing the probability of occurrence of each rupture}
 In case of sources with a Poissonian \gls{temporaloccurrencemodel}, the 
-probability of occurrence for a given rupture - corresponding to 
-a specific magnitude - is computed using a procedure that's conceptually 
+probability of occurrence for a given rupture - that equals the probability
+of occurrence of corresponding magnitude, given a magnitude scaling
+relationship - is computed using a procedure that's conceptually 
 homologous with the one described in case of \glspl{areasource} (see
 page \pageref{par:erf_calc_area_src}). 
-The main difficulty in this case is related to the calculation - given a 
-magnitude interval - of the number of finite ruptures that can be 
-homogeneously distributed over the fault surface.
-%
-% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . > Figure
-%\begin{figure}[!ht]
-%\includegraphics[width=15cm]{./Figures/Part_Hazard/gr_example.eps}
-%\caption{Example of a discrete incremental frequency-magnitude Gutenberg-Richter distribution}
-%\label{fig:gr-example}
-%\end{figure}
-% . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . < Figure
-%
 
+In this case, the main difficulty is related to the calculation - given a 
+magnitude interval - arises when ruptures with a surface smaller than the 
+entire fault are allowed to float. In this case finite ruptures are 
+homogeneously distributed over the fault surface and the rate of occurrence
+for each rupture (i.e. magnitude) is computed as the ratio between the number 
+in order to derive the 
+rate of occurrence. 

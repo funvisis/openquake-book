@@ -61,7 +61,7 @@
 	}
 }
 \makeatother
-
+%
 % Solves problems with margin notes
 \usepackage{mparhack} 
 	\setlength{\marginparwidth}{1.1in}
@@ -69,8 +69,7 @@
 	\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedright\color{red01}
 	\footnotesize #1]%
 	{\raggedright\footnotesize #1}}
-% Colors
-	%\definecolor{blue01}{rgb}{0,0,.5}
+% Define some colors
 	\definecolor{blue01}{RGB}{4,64,116}
 	\definecolor{blue02}{RGB}{0,62,113}
 	\definecolor{gray01}{rgb}{0.1,0.1,0.1}
@@ -81,15 +80,19 @@
 	\definecolor{orange02}{rgb}{0.7608,0.4157,0.1804}
 	\definecolor{orange03}{rgb}{0.6941,0.1843,0.1333}
 \usepackage[english]{babel}
-%
+% Bibliography settings
 \usepackage[square,colon]{natbib} % Extend bibligraphy functions
-
-%\usepackage[labelfont=bf]{caption} % Used to reformat caption typesetting
+% Figure caption settings
 \usepackage[textfont=it,margin=10pt,font=small,labelfont=bf,labelsep=endash]{caption}
-
+% Page numbering by Chapter
+%\usepackage[auto]{chappg} 
+%\pagenumbering{bychapter}
+% 
 \usepackage{scrpage2}
+	\pagestyle{scrheadings}
 	\lofoot[]{\includegraphics[width=2.0cm]{./Figures/openquake_logo1.eps}}
 	\refoot[]{\includegraphics[width=2.0cm]{./Figures/openquake_logo1.eps}}
+	\renewcommand{\partpagestyle}{empty}
 % - - - - - - - - - - - - - - - - - - - - - - - - - -  Reformatting PART Titles
 \titleformat{\part}[display]
 {\filleft\normalfont\sffamily}
@@ -144,6 +147,7 @@
 	{.5em} % sep
 	{} % before
 	[] % after
+%
 %
 % ------------------------------------------------------------------------------
 \uppertitleback{
