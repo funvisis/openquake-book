@@ -17,14 +17,14 @@ for the most part defined in the GEM1 project \citep{pagani2010}.
 %
 The main seismic source types currently supported are the following:
 \begin{itemize}
-\item \emph{Area source} - So far, the most frequently adopted source 
+\item \Gls{areasource} - So far, the most frequently adopted source 
 type in national and regional PSHA models.
-\item \emph{Grid source} - Grid sources can be considered a replacement 
+\item \Gls{gridsource} - Grid sources can be considered a replacement 
 for area sources since they both model distributed seismicity;
-\item \emph{Simple fault source} - A Simple fault is the easiest way to
+\item \Gls{simplefaultsource} - A Simple fault is the easiest way to
 specify a fault source in OpenQuake. This typology is habitually adopted 
 to describe shallow seismogenic fault sources.
-\item \emph{Complex fault sources} - A complex fault is more often used 
+\item \Gls{complexfaultsource} - A complex fault is more often used 
 to model subduction interface sources with a complex geometry. 
 \end{itemize}
 
@@ -70,7 +70,7 @@ The current version of OQ doesn't support the definition
 of internal borders
 \item One (or several) combinations of the following objects:
 \begin{itemize}
-	\item A discrete Frequency-Magnitude Distribution (FMD)
+	\item A discrete \gls{acr:fmd}
 	\item (optional) Strike, dip, and rake angles indicating 
 	main fault geometry and slip direction for the seismicity  
 	in the corresponding FMD.
@@ -86,8 +86,8 @@ occurrence within an area by explicitly taking into account the existing
 faulting trends. 
 %
 \item An array specifying the depth to the top of rupture dependency on 
-magnitude. The array contains two columns and as many columns as the 
-$<$depth, magnitude$>$ tuples used. 
+magnitude. The array contains two columns and as many rows as the 
+number of $<$depth, magnitude$>$ tuples used. 
 The depth in each tuple defines the top of rupture for magnitudes equal 
 or greater than the corresponding value. 
 %
@@ -106,11 +106,14 @@ magnitude-scaling relationship).
 \end{itemize}
 %
 %  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-\subsubsection[Multi-depth area sources]{Multi-depth area sources - 
-\textcolor{red}{Currently implemented only in a prototype version of OQ}}
+\subsubsection[Multi-depth area sources]{Multi-depth area source}
 \label{hazard:seismic_source_types:multiDepthAreaSources}
 \index{Source type!area multi-depth} 
 \index{Multi-depth area source|see{Source type}}
+%
+\marginpar{This source typology is not currently available in OpenQuake}
+%
+\textcolor{blue}{
 Multi-depth area sources are a generalized version of area sources. This
 source typology shares with the area sources most of the parameter 
 necessary to specify seismicity  occurrence and geometry. 
@@ -127,7 +130,7 @@ The current version of OQ doesn't support the definition
 of internal borders
 \item One (or several) combinations of the following objects:
 \begin{itemize}
-	\item A discrete Frequency-Magnitude Distribution (FMD)
+	\item A discrete \gls{acr:fmd}
 	\item (optional) Strike, dip, and rake angles characterizing the 
 	seismicity in the corresponding FMD.
 \end{itemize}
@@ -137,9 +140,12 @@ occurrence within an area by explicitly taking into account the existing
 faulting trends. 
 %
 \item An array specifying the depth to the top of rupture dependency on 
-magnitude. \textcolor{red}{The array contains xx columns and one or many $<$depth, magnitude$>$ 
-tuples. Each tuple defines the depth to the top of rupture for magnitudes 
-equal or greater than the corresponding value.}
+magnitude. The array contains $n$ columns - corresponding to the number of 
+magnitude intervals considered - and $m$ rows equating the number of depth
+intervals. The following constraint holds:
+\[\sum_{i=1}^{m}w_{i,1}=1\]
+See the example table \ref{tab:multi-depth_example}.
+\input{./Part_Hazard/tables/table_example_multi-depth.tex}
 %
 \item A value of magnitude representing the threshold above which rupture 
 are modelled considering their finite dimensions. The finite dimension of the 
@@ -148,6 +154,7 @@ specified in the calculation settings file (in future versions of OQ we will
 allow the user to specify for each tectonic region the corresponding 
 magnitude-scaling relationship).
 \end{itemize}
+}
 %
 %  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Grid sources}
@@ -182,7 +189,7 @@ For each grid node:
 \item Similarly to area sources, one (or many) combinations of the following 
 objects:
 	\begin{itemize}
-	\item A discrete Frequency-Magnitude Distribution (FMD)
+	\item A discrete \gls{acr:fmd}
 	\item Strike, dip, and rake angles characterizing the seismicity 
 	specified in the associated FMD. 
 	\end{itemize}
@@ -209,7 +216,7 @@ a representative dip direction.
 %
 \begin{itemize}
 \item A fault trace (usually a polyline); 
-\item A FMD;
+\item A discrete \gls{acr:fmd}
 \item A representative value of the dip angle (specified according to 
 the Aki-Richards convention; see \citet{aki2002});
 \item Rake angle (specified following the Aki-Richards convention; 

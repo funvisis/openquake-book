@@ -18,29 +18,51 @@
 % ------------------------------------------------------------------------------
 \uppertitleback{
    \textbf{Authors:} \\
-   Helen Crowley$^1$, Damiano Monelli$^3$, 
-   Marco Pagani$^1$, Vitor Silva$^2$, Graeme Weatherill$^2$ \\ \hfill \\
+   Helen Crowley$^1$, Damiano Monelli$^2$, 
+   Marco Pagani$^1$, Vitor Silva$^3$, Graeme Weatherill$^3$ \\ \hfill \\
    \small
    $^1$ GEM Foundation\\
    via Ferrata, 1 \\ 
    20133 Pavia \\
    Italy \\
    \hfill\\
-   $^2$ GEM Model Facility\hfill\\
-   via Ferrata, 1\hfill\\ 
-   20133 Pavia\hfill\\
-   Italy\hfill\\
-   \hfill\\
-   $^3$ GEM Model Facility\hfill\\
+   $^1$ GEM Model Facility\hfill\\
    SED - ETHZ\hfill\\ 
    Sonneggstrasse, 5\\
    CH-8092 Zurich\hfill\\
    Switzerland \hfill\\ 
    \hfill\\
+   $^3$ GEM Model Facility\hfill\\
+   via Ferrata, 1\hfill\\ 
+   20133 Pavia\hfill\\
+   Italy\hfill\\
+   \hfill\\
+
    Email address (for all the authors):\hfill\\
    $<$name.surname$>$@globalquakemodel.org
    \normalsize
+   %
+   \vspace{5cm} \hfill \\
+   {\bf{Disclaimer}} \hfill \\
+   
+   %
+   \hfill \\
+   {\bf{License}} \hfill \\
+   This Book is distributed under a the Creative Common License 
+   Attribution-NonCommercial-ShareAlike CC BY-NC-SA (see link below). You can 
+   download this Book and share it with others as long as you provide proper 
+   credit you, but you can’t change it in any way or use it commercially 
+   \hfill \\
+   \href{http://creativecommons.org/licenses/by-nc-nd/3.0/}
+   {http://creativecommons.org/licenses/by-nc-nd/3.0/}
+   
+   %
+   \hfill \\
+   {\bf{Credit}} \hfill \\
+   Crowley, H., D. Monelli, M. Pagani, V. Silva, G. Weatherill (2011). 
+   OpenQuake Book. The GEM Foundation, Pavia, Italy.   
 }  
+
 
 %
 % =============================================================== BEGIN DOCUMENT
@@ -89,6 +111,10 @@
 \end{titlepage}
 \pagestyle{scrheadings}
 \maketitle
+%
+\input{./Part_Introduction/acknowledgements.tex}
+\cleardoublepage
+% 
 \tableofcontents
 %
 % --------------------------------------------------------- Symbols and acronyms
@@ -99,10 +125,7 @@
 \thispagestyle{empty}
 \part{Introduction}
 % ------------------------------------------------------------------------------
-\chapter{Brief description of the OpenQuake IT architecture}
-	\input{./Part_Introduction/it.tex}
-% ------------------------------------------------------------------------------
-\chapter{OpenQuake background}
+\chapter{Motivation and the basics of OpenQuake}
 	\input{./Part_Introduction/introduction.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
@@ -129,9 +152,6 @@
 	\input{./Part_Hazard/kernel/event_based_PSHA.tex}
 	\input{./Part_Hazard/kernel/disaggregation.tex}
 % ------------------------------------------------------------------------------
-%\chapter{Stochastic event set and ground motion field calculators}
-%	\input{./Part_Hazard/kernel_Stochastic_PSHA.tex}
-% ------------------------------------------------------------------------------
 %\chapter{Wesson et al. [2009] risk calculation implementation}
 %	\input{./Part_Hazard/wessonMethod.tex}
 % ==============================================================================
@@ -143,15 +163,19 @@
 	\input{./Part_Risk/introduction.tex}
 % ------------------------------------------------------------------------------
 \chapter{OpenQuake Input Description}
+	\label{chap:riskinput}
 	\input{./Part_Risk/Risk_Input_Description.tex}
 % ------------------------------------------------------------------------------
 \chapter{Deterministic Event-Based Risk Calculator}
+	\label{chap:risk_deterministic}
 	\input{./Part_Risk/Deterministic_Event_Based.tex}
 % ------------------------------------------------------------------------------
 \chapter{Probabilistic Event-Based Risk Calculator}
+	\label{chap:risk_prob_event_based}
 	\input{./Part_Risk/Probabilistic_Event_Based.tex}
 % ------------------------------------------------------------------------------
 \chapter{Classical PSHA-Based Risk Calculator}
+	\label{chap:risk_psha_based}
 	\input{./Part_Risk/Classical_PSHA_Based.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------- Part

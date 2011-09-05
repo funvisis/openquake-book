@@ -57,6 +57,12 @@
 	in OpenQuake
 	}
 }
+\newglossaryentry{complexfaultsource}{
+	name = complex fault source,
+	description={
+	A source typology usually adopted to model subduction interface faults
+	}
+}
 %
 % ------- D
 \newglossaryentry{seismichazarddisaggregation}{
@@ -110,20 +116,20 @@
 \newglossaryentry{frequencymagnitudedistribution}{
 	name =  frequency-magnitude distribution,
 	description = {
-	This can can be continuonus or discrete. One frequency-magnitude 
+	This distribution describes the density of earthquakes with a specific 
+	magnitude occourcan can be continuonus or discrete. One frequency-magnitude 
 	distribution frequently adopted in \gls{acr:psha} is the double truncated 
-	Gutenberg-Richter distribution 
-	\[
-	N(m)
-	\]
+	Gutenberg-Richter distribution.
 	}
 }
 %
 % ------- G
+\newacronym{acr:gem}{GEM}{Global Earthquake Model}
 \newacronym{acr:gmpe}{GMPE}{Ground Motion Prediction Equation}
 \newglossaryentry{gridsource}{
 	name = grid source,
-	description={PSHA source typology usually adopted to model distributed 
+	description={
+	PSHA source typology usually adopted to model distributed 
 	seismicity. It's usually produced by a seismicity smoothing algorithm 
 	(one of the most famous algorithm is the one proposed by 
 	\citet{frankel1995})}
@@ -200,15 +206,15 @@
 	many realisations of a \gls{seismicsourcemodel} and of a 
 	\gls{groundmotionmodel}}
 } 
-\newacronym{acr:ltmcs}{LTMCS}{Logic Tree Monte Carlo Sampler }
+\newacronym{acr:ltmcs}{LTMCS}{Logic Tree Monte Carlo Sampler}
 %
 % ------- O
 \newglossaryentry{opensha}{
 	name = OpenSHA,
 	description = {OpenSHA is an open-source, advanced Java-based 
 	platform for conducting Seismic Hazard Analysis - 
-	\href{http://opensha.org}{OpenSHA}. OQ-hazard relies on a distilled
-	version of OpenSHA.}
+	(see \href{http://opensha.org}{OpenSHA website}). \gls{acr:oq}-hazard 
+	relies on a distilled version of OpenSHA}
 }
 \newacronym{acr:oq}{OQ}{OpenQuake}
 %
@@ -277,6 +283,7 @@
 	name = seismic source model,
 	description={An object containing a list of \gls{seismicsourcedata}}
 }
+\newacronym{acr:scec}{SCEC}{Southern California Earthquake Center}
 \newglossaryentry{seismicsourcesystem}{
 	name = seismic source system,
 	description={An object containing a list of \glspl{initialseismicsourcemodel}
@@ -285,8 +292,8 @@
 \newglossaryentry{simplefaultsource}{
 	name = simple fault source,
 	description={
-	A source typology usually adopted to model shallow structure with an
-	uncomplicated geometry.
+	A source typology usually adopted to model shallow structures with an
+	uncomplicated geometry
 	}
 }
 \newacronym{acr:ses}{SES}{Stochastic Event Set}
@@ -308,9 +315,12 @@
 \newglossaryentry{temporaloccurrencemodel}{
 	name = temporal occurrence model,
 	description = {Usually a probabilistic model giving the probability of
-	occurrence of a XXXXX
+	occurrence of an event in a specified \gls{investigationtime}
 	}
 }
+%
+% ------- U
+\newacronym{acr:usgs}{USGS}{United States Geological Survey}
 %
 % ------- V 
 \newglossaryentry{acr:vs30}{

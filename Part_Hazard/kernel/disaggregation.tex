@@ -1,8 +1,10 @@
 %
 %-------------------------------------------------------------------------------
-\clearpage\newpage
 \section{PSHA disaggregation}
 \label{sec:disaggregation}
+\marginpar{Seismic hazard disaggregation is currently not implemented in OQ}
+
+\color{blue}
 %
 Seismic hazard disaggregation - or deaggregation - 
 \citep{mcguire1995,bazzurro1999} is a procedure aimed at identifying the 
@@ -62,13 +64,13 @@ implemented.
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \subsection{Disaggregation methodology}
 From a calculation point of view, disaggregation simply consists 
-firstly on systematically collecting the contributions (i.e. conditional 
+on systematically collecting the contributions (i.e. conditional 
 probabilities of exceedance) to a selected value of hazard into a 
-multidimensional matrix (called \gls{disaggregationmatrix}) and secondly 
-to appropriately combine these contributions according to user 
-instructions.
-Usually a fraction of the ruptures included 
-in an \gls{acr:erf} located at close distance to the reference site
+multidimensional matrix (called \gls{disaggregationmatrix}) and  
+later to appropriately combine these contributions according to user 
+requirements.
+Usually only a fraction of the ruptures included 
+in an \gls{acr:erf} and located at close distance to the reference site
 provides the main contributions to the disaggregated hazard (see also 
 Figure \ref{fig:mde_disaggregation}).
 
@@ -90,16 +92,17 @@ This equation distinctly accounts for inputs to the probability of
 exceedance of $y$ coming from different $\epsilon$ intervals.
 %
 \begin{equation}
-P(GM \geq y|t,rup_{src},\epsilon,site) = 
+P(Y \geq y|t,rup_{src},\epsilon,site) = 
 	P(rup_{src}|t)\,
-	P(GM\geq y|rup_{src},\epsilon,site)
+	P(Y\geq y|rup_{src},\epsilon,site)
 \label{eq:prob_y_ex_one_rup_eps}
 \end{equation}
 %
-Equation \ref{eq:prob_y_ex_one_rup_eps} is used recursively to 
+Equation \ref{eq:prob_y_ex_one_rup_eps} is recursively used to 
 calculate (and successively store in the appropriate cell) the 
-contribution coming from all the ruptures included in 
-\gls{acr:erf}. 
+contributions coming from the ruptures included in 
+\gls{acr:erf} and giving a contribution to the hazard at the 
+investigated site. 
 %
 %
 \paragraph{Disaggregation in terms of tectonic region}
@@ -110,13 +113,13 @@ It consists on cumulating in the disaggregation matrix the probabilities
 of exceedance computed in the innermost summation contained in the 
 equation below:
 \begin{multline}
-P(GM \geq y|t,site) = \\
+P(Y \geq y|t,site) = \\
 	1-\prod\limits_{\forall\,src\,\text{in}\,ERF}^{}  
 	\left\{
 		1-\sum\limits_{\forall\,rup\,\text{in}\,src}^{}
 		\biggl[ 
 			1-\sum\limits_{\forall\,\epsilon}^{} 
-			P(GM \geq y|t,rup_{src},\epsilon,site)
+			P(Y \geq y|t,rup_{src},\epsilon,site)
 		\biggr]
 	\right\}
 \label{eq:disaggregation_kernel}
@@ -131,10 +134,27 @@ second for the seismic sources belonging to a given \gls{tectonicregion}.
 \paragraph{Disaggregation in terms of magnitude, distance and epsilon}
 The magnitude-distance-$\epsilon$ disaggregation is, probably, the 
 disaggregation typology most frequently adopted. 
+
+Figure \ref{fig:mde_disaggregation} shows an example of this disaggregation
+type. In this case it appears clearly that the main contribution to the 
+value of hazard disaggregated come from from events of moderate magnitude 
+(between 5.5 and 6.0) located at short distance from the site. 
+%
+This plot also nicely shows how the epsilon values, keeping fixed a 
+source-site distance, tends to decrease in contrast with the increase 
+of magnitude.
 %
 %. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 \subsubsection{Event based PSHA: examples of application of the 
 disaggregation methodology}
 %
-In case of the event-based PSHA methodology the disaggregation consist 
-on the cumulation of the events with specific characteristics. 
+In case of the event-based PSHA methodology the disaggregation is extremely 
+simple since it consists on the cumulation of the events with specific 
+characteristics. 
+
+\textcolor{green}{
+In future releases of the book we will provide in this section examples 
+of this disaggregation typologies and comparison with the more classical 
+one.
+}
+\color{black}
