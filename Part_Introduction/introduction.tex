@@ -1,33 +1,33 @@
-This book aims at providing a support explaining the scientific basis 
+This book aims to provide an explanation of the scientific basis 
 and the methodologies adopted in the implementation of OpenQuake, an open 
 source code for seismic hazard and risk calculation. 
 %
-The book follows the traditional openness and transparency traits of the 
-\gls{acr:gem} as clearly indicated in the development principle of 
+The book follows the traditional openness and transparency features of the 
+\gls{acr:gem} as clearly indicated in the development principles of 
 OpenQuake. 
 
-OpenQuake is a fully integrated, flexible and scalable hazard and risk 
-calculation engine whose development stays at the core of the \gls{acr:gem} 
-overall objectives.
 %
-The \gls{acr:gem} initiative, indeed, aims at establishing uniform, open 
+The \gls{acr:gem} initiative aims at establishing uniform, open 
 standards to calculate and communicate earthquake risk worldwide, by 
 developing together with the community a global, state-of-the-art and 
 dynamic earthquake risk model. 
 %
+OpenQuake is a fully integrated, flexible and scalable hazard and risk 
+calculation engine whose development is at the core of \gls{acr:gem}'s
+overall objectives.
 % ------------------------------------------------------------------------------
-\section{The basics of OpenQuake}
-The implementation of OpenQuake officially started in Summer 2010 just 
+\section{The Basics of OpenQuake}
+The implementation of OpenQuake officially started in Summer 2010 
 following the experience gained in \gls{acr:gem}'s kick-off project GEM1 
-\citep{gemfoundation2010}, during which an extensive appraisal of hazard 
-and risk codes had been performed \citep{danciu2010,crowley2010}
-and prototypes hazard and risk softwares where selected, designed and
+\citep{gemfoundation2010}, during which an extensive appraisal of existing hazard 
+and risk codes was performed \citep{danciu2010,crowley2010}
+and prototype hazard and risk software were selected, designed and
 implemented \citep{pagani2010,crowley2010a}.
 
-At present time OpenQuake is a blend of Java and Python code developed 
-following the most conventional paradigms currently dictating Open Source 
-software development. 
-The source code, released under an open source sofware,
+Currently OpenQuake is a blend of Java and Python code developed 
+following the most common requirements of Open Source 
+software development, such as a public repository, IRC channel and open mailing lists. 
+The source code, released under an open source software license,
 is freely and openly accessible on a web based repository 
 (see \href{http://github.com/gem}{github.com/gem}) while the 
 development process is managed so that the community can participate 
@@ -35,26 +35,26 @@ to the day by day development as well as in the mid- and long-term
 design process. 
 %
 OpenQuake development also leverages from a number of open source projects 
-such as OpenSHA, Celeryd and RabbitMQ, just to mention some of them.
+such as \href{http://www.opensha.org}{OpenSHA}, \href {http://celeryproject.org}{Celeryd} and \href{http://www.rabbitmq.com}{RabbitMQ}, just to mention a few.
 
 The hazard component of the engine, which constitutes almost entirely
 the Java part of the code, largely relies on classes belonging to 
 \gls{opensha}, a comprehensive library for performing state-or-the-art
 PSHA developed collaboratively at the \gls{acr:usgs} and at the 
 \gls{acr:scec}. New code was developed in GEM1 and in the following 
-phases to support standardized \gls{acr:erf} and logic-tree structure, 
+phases to support a standardized \gls{acr:erf} and logic-tree structure, 
 event-based PSHA and, seismic hazard disaggregation.
 %
-The Risk component of the engine is novel code developed in GEM1 and 
-later by the newly formed OpenQuake team operating at the \gls{acr:gem} 
-Model Facility, 
+The Risk component of the engine was designed in GEM1, prototyped in Java and eventually
+coded in Python by the OpenQuake team operating at the \gls{acr:gem} 
+Model Facility.
 
-An OpenQuake schematic evidencing its actual structure is 
-represented in Figure \ref{fig:openquake_schema}; the schematic contains:
+A schema that illustrates OpenQuake's structure is 
+represented in Figure \ref{fig:openquake_schema}; the schema contains:
 purple boxes representing the main modules of the hazard component, 
 green boxes showing the modules of the risk component, white boxes
 with main outputs computed by the distinct modules and orange rectangles
-displaying the main input information entering the calculation engine. 
+displaying the main input information that should be entered into the calculation engine. 
 %
 % ------------------------------------------------------------------------------
 %\subsection{Brief description of the OpenQuake IT architecture}
@@ -63,10 +63,10 @@ displaying the main input information entering the calculation engine.
 %
 % ------------------------------------------------------------------------------
 \section{Book structure}
-The OpenQuake book is organized into three parts; in the first one we give
+The OpenQuake book is organized into three parts; in the first we give
 a broad introduction to OpenQuake and the Book, in the second we 
-describe the the science behind the hazard component of the engine
-while in the third one we illustrate the theory of the risk calculators
+describe the science behind the hazard component of the engine
+whilst in the third we illustrate the theory of the risk calculators
 incorporated into OpenQuake.
 
 \hfill \\
@@ -92,18 +92,18 @@ the event-based calculator and the disaggregation calculator.
 \end{itemize}
 \emph{Part III: Risk}
 \begin{itemize}
-\item Chapter \ref{chap:intrisk} introduces the main risk concepts. 
+\item Chapter \ref{chap:intrisk} introduces the main risk concepts and workflows. 
 \item Chapter \ref{chap:riskinput} contains an explanation of the exposure, 
 physical vulnerability and fragility concepts.
-\item Chapter \ref{chap:risk_deterministic} describes the deterministic risk 
+\item Chapter \ref{chap:risk_deterministic} describes the deterministic event-based risk 
 methodology implemented in \gls{acr:oq}.
 \item Chapter \ref{chap:risk_prob_event_based} provides an overview of the 
-event-based risk calculation methodology.
-\item Chapter \ref{chap:risk_psha_based} illustrates risk calculation based on 
-the hazard curves, the most classical PSHA result typology.
+probabilistic event-based risk calculation methodology.
+\item Chapter \ref{chap:risk_psha_based} illustrates risk calculations based on 
+the hazard curves from classical PSHA.
 \end{itemize}
 %
-In the closing part, the Book contains a glossary functional to define a 
+In the closing part, the Book contains a glossary that aims to define a 
 clear and unique terminology.
 %
 % . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . > Figure
@@ -112,7 +112,7 @@ clear and unique terminology.
 \includegraphics[width=20cm,angle=0]{./Figures/Part_Introduction/engine9_20110130.eps}
 \caption{OpenQuake schema. Purple boxes are the calculators included in the  
 the hazard part of OQ; green boxes are the risk calculators. The method of 
-\citet{wesson2009} is represented in a separate box since it incorporates 
+\citet{wesson2009} (not currently supported) is represented in a separate box since it incorporates 
 hazard and risk calculations.}
 \label{fig:openquake_schema}
 \end{figure}

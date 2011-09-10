@@ -34,6 +34,7 @@ In the current version of OpenQuake (V0.4) discrete vulnerability functions are 
 
 \subsubsection{Continuous Vulnerability Functions}
 \index{Physical Vulnerability!Continuous Functions}
+\marginpar{Continuous vulnerability functions are not currently implemented in OQ}
 Continuous vulnerability functions will be implemented in future versions of OpenQuake. Continuous vulnerability functions will probably be described by continuous distributions of mean loss ratio and other fractiles of loss ratio, with ground motion intensity. Figure \ref{fig:VFContinuous} illustrates this type of function, showing the distribution of mean loss and the 10 percent and 90 percent fractiles.
 
 \begin{figure}[ht]
@@ -45,6 +46,7 @@ Continuous vulnerability functions will be implemented in future versions of Ope
 
 \subsection{Fragility Functions}
 \index{Fragility}
+\marginpar{Fragility functions are not currently implemented in OQ}
 Fragility functions describe the probability of exceeding a set of limit states, given an intensity measure level. When the asset category concerns structures (e.g. buildings), the intensity measure can either be structure-independent or structure-dependent. The former can be calculated directly from recorded measurements of ground shaking (e.g. peak ground acceleration, peak ground velocity, spectral acceleration at a given period of vibration, or even macroseismic intensity). The latter requires information on the characteristics of the structures in order to be calculated, for example spectral acceleration at the fundamental period of vibration, or spectral displacement at the limit state period of vibration. The calculation of these structural characteristics might be through a simple formula (e.g. a yield period-height equation, see e.g. \citet{CrowleyPinho2004} ) or through so-called non-linear static methods, which are needed when the intensity measure is a non-linear response quantity such as spectral displacement at the limit state period of vibration (see e.g. \citet{FEMA440ATC2005}).
 Discrete and continuous fragility functions with structure-independent and structure dependent intensity measures (and the methods necessary to calculate them) are not currently supported, but they will be implemented in future versions of OpenQuake. 
 
@@ -83,6 +85,7 @@ The uncertainty in continuous fragility functions will also be accounted for in 
 
 \subsection{Consequence Functions}
 \index{Consequence Functions}
+\marginpar{Consequence functions are not currently implemented in OQ}
 Consequence functions describe the probability distribution of loss, given a performance level. For example, if the asset category is buildings and the performance level is significant damage, the consequence function will describe the mean loss ratio, coefficient of variation and probability distribution for that level of damage. Figure \ref{fig:ConsequenceFunctions} presents the mean damage ratios for a set of performance levels proposed by two different sources. 
 
 \begin{figure}[Ht]
