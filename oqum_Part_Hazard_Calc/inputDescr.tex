@@ -114,7 +114,7 @@ In the nrML format, each source is therefore defined as follows:
 \end{itemize}
 \subsubsection{Area source definition}
 An area source can be utilized to describe a polygonal geographical region where seismicity is assumed to be uniform.
-The geographic region is defined by the \Verb+areaBoundary+ element:
+The geographic region is defined by the \Verb+areaBoundary+ element. More specifically the area boundary is defined by a list of vertices coordinates (longitude, latitude) in a \Verb+LinearRing+ element defining the exterior boundary of a \Verb+Polygon+ element:
 \begin{Verbatim}[frame=single]
     ...
       <areaBoundary>
