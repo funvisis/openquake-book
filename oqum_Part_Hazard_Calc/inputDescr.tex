@@ -1,3 +1,179 @@
+OpenQuake offers the possibility to perform different types of analysis/calculations for seismic hazard assessment:
+\begin{itemize}
+\item Classical (Cornell-type) PSHA
+\item Event based PSHA
+\item Disaggregation analysis
+\item Uniform Hazard Spectra calculation
+\item Deterministic (single earthquake scenario) SHA
+\end{itemize}
+
+The different types of analysis can be selected inside the \Verb+[general]+ section of the configuration file, by setting  the \Verb+CALCULATION_MODE+ key:
+\begin{Verbatim}[frame=single]
+[general]
+
+CALCULATION_MODE =
+\end{Verbatim}
+
+Valid values are: 
+\begin{itemize}
+\item \Verb+Classical+ (for Classical PSHA)
+\item \Verb+Event Based+ (for Event Based PSHA)
+\item \Verb+Disaggregation+ (for Disaggregation analysis)
+\item \Verb+UHS+ (for Uniform Hazard Spectra calculation)
+\item \Verb+Deterministic+ ( for Deterministic SHA)
+\end{itemize}
+
+Each hazard analysis is performed over a set of geographical locations, that can be defined as grid points in a geographical region:
+
+\begin{Verbatim}[frame=single]
+REGION_VERTEX = LAT_1, LON_1, LAT_2, LON_2, ..., LAT_N, LON_N
+REGION_GRID_SPACING = DELTA_GRID
+\end{Verbatim}
+
+where \Verb+REGION_VERTEX+ is a list of vertices coordinates (latitude, longitude) defining a polygonal region. The list of vertices can be defined in clock or counter-clock wise order. \Verb+REGION_GRID_SPACING+ defines the discretization step utilized for the grid construction. No restrictions are given in the number of vertices in the polygon definition.
+
+A second option is to define a list of independent geographical locations:
+\begin{Verbatim}[frame=single]
+SITES = LAT_1, LON_1, LAT_2, LON_2,..., LAT_N, LON_N
+\end{Verbatim}
+each location being defined by latitude and longitude. Again no restrictions are given in the number of locations.
+
+Once the \Verb+CALCULATION_MODE+ and the locations of interest have been defined, the user is required to define the input data and the calculation parameters for the requested analysis.
+
+\section{Input Data definition for Classical, Event Based, Disaggregation and UHS analysis}
+Input data for probabilistic based seismic hazard analysis (Classical, Event based, Disaggregation, and UHS) are structured in terms of a:
+\begin{itemize}
+\item file describing the \gls{seismicsourcesystem}
+\item file describing the \glspl{groundmotionsystem}
+\end{itemize}
+The paths to the \gls{seismicsourcesystem} and  \glspl{groundmotionsystem} are given in the 
+\Verb+SOURCE_MODEL_LOGIC_TREE_FILE+ and \Verb
++GMPE_LOGIC_TREE_FILE+ keys, respectively.
+
+\subsection{The Seismic Source System definition}
+
+\subsubsection{Seismic source definition in nrML format}
+Four source typologies can be currently defined:
+\begin{itemize}
+\item Area
+\item Point
+\item Simple Fault
+\item Complex Fault
+\end{itemize}
+Each source typology is identified by a specific element name in the nrML format:
+\begin{itemize}
+\item \Verb+areaSource+ (for Area)
+\item \Verb+pointSource+ (for Point)
+\item \Verb+simpleFaultSource+ (for Simple Fault)
+\item \Verb+complexFaultSource+ (for Complex Fault)
+\end{itemize}
+and is characterized by three common attributes:
+\begin{itemize}
+\item ID: unique identifier 
+\item name: source name
+\item tectonic region type: tectonic region the source belongs to. 
+\end{itemize}
+The tectonic region type can be one of five typologies:
+\begin{itemize}
+\item \Verb+Active Shallow Crust+
+\item \Verb+Stable Shallow Crust+
+\item \Verb+Subduction Interface+
+\item \Verb+Subduction IntraSlab+
+\item \Verb+Volcanic+
+\end{itemize}
+In the nrML format, each source is therefore defined as follows:
+\begin{itemize}
+\item area:
+\begin{Verbatim}[frame=single]
+    <areaSource gml:id="SOURCE_ID">
+      <gml:name>SOURCE_NAME</gml:name>
+      <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
+      ...
+\end{Verbatim}
+\item point:
+\begin{Verbatim}[frame=single]
+    <pointSource gml:id="SOURCE_ID">
+      <gml:name>SOURCE_NAME</gml:name>
+      <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
+      ...
+\end{Verbatim}
+\item simple fault:
+\begin{Verbatim}[frame=single]
+    <simpleFaultSource gml:id="SOURCE_ID">
+      <gml:name>SOURCE_NAME</gml:name>
+      <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
+      ...
+\end{Verbatim}
+\item complex fault:
+\begin{Verbatim}[frame=single]
+    <complexFaultSource gml:id="SOURCE_ID">
+      <gml:name>SOURCE_NAME</gml:name>
+      <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
+      ...
+\end{Verbatim}
+\end{itemize}
+\subsubsection{Area source definition}
+An area source can be utilized to describe a polygonal geographical region where seismicity is assumed to be uniform.
+The geographic region is defined by the \Verb+areaBoundary+ element:
+\begin{Verbatim}[frame=single]
+    ...
+      <areaBoundary>
+        <gml:Polygon>
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>LON_1  LAT_1 LON_2 LAT_2 ... LON_N LAT_N</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </areaBoundary>
+     ...
+\end{Verbatim}
+\begin{Verbatim}[frame=single]
+    <areaSource gml:id="src_1">
+      <gml:name>Source 8.CH.3</gml:name>
+      <tectonicRegion>Active Shallow Crust</tectonicRegion>
+      <areaBoundary>
+        <gml:Polygon>
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>-0.5 -0.5 -0.5 0.5 0.5 0.5 0.5 -0.5</gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </areaBoundary>
+      <ruptureRateModel>
+        <truncatedGutenbergRichter>
+          <aValueCumulative>2.5</aValueCumulative>
+          <bValue>0.7318999871612379</bValue>
+          <minMagnitude>5.0</minMagnitude>
+          <maxMagnitude>8.0</maxMagnitude>
+        </truncatedGutenbergRichter>
+        <focalMechanism publicID="smi:fm1/0">
+          <qml:nodalPlanes>
+            <qml:nodalPlane1>
+              <qml:strike>
+                <qml:value>0.0</qml:value>
+              </qml:strike>
+              <qml:dip>
+                <qml:value>90.0</qml:value>
+              </qml:dip>
+              <qml:rake>
+                <qml:value>0.0</qml:value>
+              </qml:rake>
+            </qml:nodalPlane1>
+          </qml:nodalPlanes>
+        </focalMechanism>
+      </ruptureRateModel>
+      <ruptureDepthDistribution>
+        <magnitude>6.5 7.5</magnitude>
+        <depth>2.5 0.0</depth>
+      </ruptureDepthDistribution>
+      <hypocentralDepth>5.0</hypocentralDepth>
+    </areaSource>
+\end{Verbatim}
+
+\subsection{The Ground Motion System definition}
+\begin{comment}
 In this Chapter we provide with the reader a description of the input 
 files containing the information necessary to completely describe a 
 \gls{pshainputmodel} following a format compatible with \gls{acr:oq}. 
@@ -162,3 +338,4 @@ since it contains a single area source.
 %
 % ============================================================================== 
 \section{Ground-motion system file description}
+\end{comment}
