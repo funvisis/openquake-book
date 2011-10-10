@@ -7,6 +7,14 @@ OpenQuake offers the possibility to perform different types of analysis/calculat
 \item Deterministic (single earthquake scenario) SHA
 \end{itemize}
 
+and for seismic risk assessment:
+\begin{itemize}
+\item ...
+\item ...
+\end{itemize}
+
+For each type of analysis, a configuration file (consisting of statements in the format \Verb+key=value+) and one or more input data files in nrML format (an XML based format) are required.
+
 The different types of analysis can be selected inside the \Verb+[general]+ section of the configuration file, by setting  the \Verb+CALCULATION_MODE+ key:
 \begin{Verbatim}[frame=single]
 [general]
@@ -21,9 +29,10 @@ Valid values are:
 \item \Verb+Disaggregation+ (for Disaggregation analysis)
 \item \Verb+UHS+ (for Uniform Hazard Spectra calculation)
 \item \Verb+Deterministic+ ( for Deterministic SHA)
+\item ...
 \end{itemize}
 
-Each hazard analysis is performed over a set of geographical locations, that can be defined as grid points in a geographical region:
+Each analysis is performed over a set of geographical locations, that can be defined as grid points in a geographical region:
 
 \begin{Verbatim}[frame=single]
 REGION_VERTEX = LAT_1, LON_1, LAT_2, LON_2, ..., LAT_N, LON_N
@@ -38,21 +47,116 @@ SITES = LAT_1, LON_1, LAT_2, LON_2,..., LAT_N, LON_N
 \end{Verbatim}
 each location being defined by latitude and longitude. Again no restrictions are given in the number of locations.
 
-Once the \Verb+CALCULATION_MODE+ and the locations of interest have been defined, the user is required to define the input data and the calculation parameters for the requested analysis.
+In case of risk analysis, a third option allows to perform calculations on the geographical locations defined in the exposure model. To select this option, the key \Verb+COMPUTE_HAZARD_AT_ASSETS_LOCATIONS+ must be set to \Verb+true+ in the \Verb+[RISK]+ section of the configuration file.
 
-\section{Input Data definition for Classical, Event Based, Disaggregation and UHS analysis}
+Once the \Verb+CALCULATION_MODE+ and the locations of interest have been defined, the user is required to define the input data (in nrML format) and the calculation parameters (in the configuration file) for the requested analysis.
+
+\section{Input Data definition for Classical, Event Based, Disaggregation and UHS hazard analysis}
 Input data for probabilistic based seismic hazard analysis (Classical, Event based, Disaggregation, and UHS) are structured in terms of a:
 \begin{itemize}
-\item file describing the \gls{seismicsourcesystem}
-\item file describing the \glspl{groundmotionsystem}
+\item file describing the \gls{seismicsourcesystem}. That is the set of initial source models and associated epistemic uncertainties needed to model the seismic activity in the region of interest.
+\item file describing the \glspl{groundmotionsystem}. That is the set of ground motion prediction equations, per tectonic region type, needed to model the ground motion shaking in the region of interest.
 \end{itemize}
-The paths to the \gls{seismicsourcesystem} and  \glspl{groundmotionsystem} are given in the 
+The paths to the \gls{seismicsourcesystem} and  \glspl{groundmotionsystem} files are given in the 
 \Verb+SOURCE_MODEL_LOGIC_TREE_FILE+ and \Verb
-+GMPE_LOGIC_TREE_FILE+ keys, respectively.
++GMPE_LOGIC_TREE_FILE+ keys, respectively, both defined in the \Verb+[HAZARD]+ section of the configuration file.
 
-\subsection{The Seismic Source System definition}
+\subsection{The Seismic Source and Ground Motion System definition}
+The information required to define both the Seismic Source and Ground Motion Systems is stored in a \Verb+logicTree+ element: 
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+<\textcolor{red}{logicTree} logicTreeID="ID">
+...
+</\textcolor{red}{logicTree}>
+\end{Verbatim}
+A \Verb+logicTree+ is defined as a sequence of \Verb+logicTreeBranchingLevel+ elements. The position in the sequence specifies in which level of the tree the branching level is located. That is, the first logicTreeBranchingLevel element in the sequence represents the first level in the tree, the second element the second level in the tree, and so on.
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+<\textcolor{red}{logicTree} logicTreeID="ID">
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID_1">
+		...
+	</\textcolor{green}{logicTreeBranchingLevel}>
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID_2">
+		...
+	</\textcolor{green}{logicTreeBranchingLevel}>
+	....
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID_N">
+		...
+	</\textcolor{green}{logicTreeBranchingLevel}>
+</\textcolor{red}{logicTree}>
+\end{Verbatim}
+No restrictions are present on the number of tree levels that can be defined.\\
+A \Verb+logicTreeBranchingLevel+ is defined as a sequence of \Verb+logicTreeBranchSet+ elements. Each \Verb+logicTreeBranchSet+ defines a particular epistemic uncertainty inside a branching level. A branch set has two required attributes (\Verb+branchingLevelID+ and \Verb+uncertaintyType+ (defining the type of epistemic uncertainty the branch set is defining))
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+<\textcolor{red}{logicTree} logicTreeID="ID">
+...
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID_#">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID_1"
+			uncertaintyType="UNCERTAINTY_TYPE">
+			...
+		</\textcolor{blue}{logicTreeBranchSet}>
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID_2"
+			uncertaintyType="UNCERTAINTY_TYPE">
+			...
+		</\textcolor{blue}{logicTreeBranchSet}>
+		...
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID_N"
+			uncertaintyType="UNCERTAINTY_TYPE">
+			...
+		</\textcolor{blue}{logicTreeBranchSet}>
+	</\textcolor{green}{logicTreeBranchingLevel}>
+...
+</\textcolor{red}{logicTree}>
+\end{Verbatim}
+Possible values for the \Verb+uncertaintyType+ attribute are:
+\begin{itemize}
+\item \Verb+gmpeModel+: identifying epistemic uncertainties on ground motion prediction equations
+\item \Verb+sourceModel+: identifying epistemic uncertainties on source models
+\item \Verb+maxMagGRRelative+: identifying epistemic uncertainties (relative: that is increments) to be added (or subtracted, depending on the sign of the increment) to the Gutenberg-Richter maximum magnitude value.
+\item \Verb+bGRRelative+: identifying epistemic uncertainties (relative) to be applied to the Gutenberg-Richter b value.
+\item \Verb+abGRAbsolute+:identifying epistemic uncertainties (absolute: that is new values used to replace original values) on the Gutenberg-Richter a and b values.
+\item \Verb+maxMagGRAbsolute+: identifying epistemic uncertainties (absolute) on the Gutenberg-Richter maximum magnitude.
+\end{itemize}
+No restrictions are given on the number of branch sets that can be defined inside a branching level.\\
+A \Verb+branchSet+ is defined as a sequence of  \Verb+logicTreeBranch+ elements, each defined by an \Verb+uncertainityModel+ element (a string identifying an uncertainty model; the content of the string varies with the uncertaintyType attribute value of the branchSet element) and the uncertaintyWeight element (specifying the probability/weight associated to the uncertaintyModel):
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+<\textcolor{red}{logicTree} logicTreeID="ID">
+...
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID_#">
+		...
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID_#"
+				uncertaintyType="UNCERTAINTY_TYPE">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID_1">
+				<uncertaintyModel>
+					UNCERTAINTY_MODEL
+				</uncertaintyModel>
+				<uncertaintyWeight>
+					UNCERTAINTY_WEIGHT
+				</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+			...
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID_N">
+				<uncertaintyModel>
+					UNCERTAINTY_MODEL
+				</uncertaintyModel>
+				<uncertaintyWeight>
+					UNCERTAINTY_WEIGHT
+				</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+		</\textcolor{blue}{logicTreeBranchSet}>
+		...
+	</\textcolor{green}{logicTreeBranchingLevel}>
+...
+</\textcolor{red}{logicTree}>
+\end{Verbatim}
+No restrictions are given on the number of \Verb+logicTreeBranch+ elements that can be defined in a \Verb+logicTreeBranchSet+, as long as the uncertainty weights sum to 1.0.\\
+The \Verb+logicTreeBranchSet+ element offers also a number of optional attributes allowing for complex tree definitions:
+\begin{itemize}
+\item \Verb+applyToBranches+: specifies to which \Verb+logicTreeBranch+ elements (one or more), in the previous branching level, the branch set is linked to. The default is the keyword ALL, which means that a branch set is by default linked to all branches in the previous branching level. By specifying one or more branches to which the branch set links to, non-symmetric logic trees can be defined.
+\item \Verb+applyToSources+: specifyies to which source in a source model the uncertainty applies to.
+\item \Verb+applyToSourceType+: specifies to which source type the uncertainty applies to.
+\item \Verb+applyToTectonicRegionType+: specifies to which tectonic region type the uncertainty applies to.
+\end{itemize}
 
-\subsubsection{Seismic source definition in nrML format}
+\subsubsection{Seismic source definition in nrML format}\label{seismicSourceNrml}
 Four source typologies can be currently defined:
 \begin{itemize}
 \item Area
@@ -85,49 +189,114 @@ In the nrML format, each source is therefore defined as follows:
 \begin{itemize}
 \item area:
 \begin{Verbatim}[frame=single]
-    <areaSource gml:id="SOURCE_ID">
-      <gml:name>SOURCE_NAME</gml:name>
-      <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
+ <areaSource gml:id="SOURCE_ID">
+    <gml:name>SOURCE_NAME</gml:name>
+     <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
       ...
 \end{Verbatim}
 \item point:
 \begin{Verbatim}[frame=single]
-    <pointSource gml:id="SOURCE_ID">
-      <gml:name>SOURCE_NAME</gml:name>
-      <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
-      ...
+<pointSource gml:id="SOURCE_ID">
+    <gml:name>SOURCE_NAME</gml:name>
+    <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
+     ...
 \end{Verbatim}
 \item simple fault:
 \begin{Verbatim}[frame=single]
-    <simpleFaultSource gml:id="SOURCE_ID">
-      <gml:name>SOURCE_NAME</gml:name>
-      <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
-      ...
+<simpleFaultSource gml:id="SOURCE_ID">
+   <gml:name>SOURCE_NAME</gml:name>
+   <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
+    ...
 \end{Verbatim}
 \item complex fault:
 \begin{Verbatim}[frame=single]
-    <complexFaultSource gml:id="SOURCE_ID">
-      <gml:name>SOURCE_NAME</gml:name>
-      <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
-      ...
+<complexFaultSource gml:id="SOURCE_ID">
+   <gml:name>SOURCE_NAME</gml:name>
+   <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
+    ...
 \end{Verbatim}
 \end{itemize}
 \subsubsection{Area source definition}
 An area source can be utilized to describe a polygonal geographical region where seismicity is assumed to be uniform.
 The geographic region is defined by the \Verb+areaBoundary+ element. More specifically the area boundary is defined by a list of vertices coordinates (longitude, latitude) in a \Verb+LinearRing+ element defining the exterior boundary of a \Verb+Polygon+ element:
 \begin{Verbatim}[frame=single]
-    ...
-      <areaBoundary>
-        <gml:Polygon>
-          <gml:exterior>
-            <gml:LinearRing>
-              <gml:posList>LON_1  LAT_1 LON_2 LAT_2 ... LON_N LAT_N</gml:posList>
-            </gml:LinearRing>
-          </gml:exterior>
-        </gml:Polygon>
-      </areaBoundary>
-     ...
+ <areaBoundary>
+    <gml:Polygon>
+      <gml:exterior>
+        <gml:LinearRing>
+           <gml:posList>
+             LON_1 LAT_1
+             LON_2 LAT_2
+             ...			
+             LON_N LAT_N
+           </gml:posList>
+         </gml:LinearRing>
+        </gml:exterior>
+      </gml:Polygon>
+</areaBoundary>
 \end{Verbatim}
+The occurrence rates are specified in the \Verb+ruptureRateModel+ element, which contains the definition of a magnitude frequency distribution (\Verb+truncatedGutenbergRichter+ or \Verb+evenlyDiscretizedIncrementalMFD+) and a focal mechanism (\Verb+focalMechanism+).
+\begin{Verbatim}[frame=single]
+<ruptureRateModel>
+   <truncatedGutenbergRichter> or <evenlyDiscretizedIncrementalMFD>
+	...
+   <focalMechanism>
+	...
+</ruptureRateModel>
+\end{Verbatim}
+A truncated Gutenberg-Richter magnitude frequency distribution is defined as follows:
+\begin{Verbatim}[frame=single]
+<truncatedGutenbergRichter>
+   <aValueCumulative>CUMULATIVE_A_VALUE</aValueCumulative>
+   <bValue>B_VALUE</bValue>
+   <minMagnitude>MINIMUM_MAGNITUDE</minMagnitude>
+   <maxMagnitude>MAXIMUM_MAGNITUDE</maxMagnitude>
+</truncatedGutenbergRichter>
+\end{Verbatim}
+A generic evenly-discretized magnitude frequency distribution is defined instead as:
+\begin{Verbatim}[frame=single]
+<evenlyDiscretizedIncrementalMFD binSize="BIN_SIZE"
+ 	 minVal="MINIMUM_VALUE">
+              RATE_1
+              RATE_2
+              ...
+              RATE_N
+</evenlyDiscretizedIncrementalMFD>
+\end{Verbatim}
+where \Verb+BIN_SIZE+ represents the discretization interval of the magnitude-frequency distribution, and \Verb+MINIMUM_VALUE+ represents the minimum value in the distribution (interpreted as the middle-point value of the first bin in the distribution).
+A focal mechanism is defined in terms of a strike, dip and rake values:
+\begin{Verbatim}[frame=single]
+        <focalMechanism publicID="smi:fm1/0">
+          <qml:nodalPlanes>
+            <qml:nodalPlane1>
+              <qml:strike>
+                <qml:value>STRIKE_VALUE</qml:value>
+              </qml:strike>
+              <qml:dip>
+                <qml:value>DIP_VALUE</qml:value>
+              </qml:dip>
+              <qml:rake>
+                <qml:value>RAKE_VALUE</qml:value>
+              </qml:rake>
+            </qml:nodalPlane1>
+          </qml:nodalPlanes>
+        </focalMechanism>
+ \end{Verbatim}
+where $ 0^{\circ} \leq STRIKE_VALUE  \leq 360 ^{\circ}$
+In a single area source definition, one or more \Verb+ruptureRateModel+ elements can be defined, so that multiple focal mechanisms (each having a specific magnitude-frequency distribution) can be defined:
+\begin{Verbatim}[frame=single]
+ <areaSource gml:id="SOURCE_ID">
+ ...
+ 	<ruptureRateModel>
+ 	...
+	 </ruptureRateModel>
+	 <ruptureRateModel>
+ 	...
+ 	</ruptureRateModel>
+...
+ </areaSource>
+\end{Verbatim}
+\begin{comment}
 \begin{Verbatim}[frame=single]
     <areaSource gml:id="src_1">
       <gml:name>Source 8.CH.3</gml:name>
@@ -171,7 +340,7 @@ The geographic region is defined by the \Verb+areaBoundary+ element. More specif
       <hypocentralDepth>5.0</hypocentralDepth>
     </areaSource>
 \end{Verbatim}
-
+\end{comment}
 \subsection{The Ground Motion System definition}
 \begin{comment}
 In this Chapter we provide with the reader a description of the input 
