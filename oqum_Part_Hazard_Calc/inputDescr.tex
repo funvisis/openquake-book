@@ -68,7 +68,7 @@ The information required to define both the Seismic Source and Ground Motion Sys
 ...
 </\textcolor{red}{logicTree}>
 \end{Verbatim}
-A \Verb+logicTree+ is defined as a sequence of \Verb+logicTreeBranchingLevel+ elements. The position in the sequence specifies in which level of the tree the branching level is located. That is, the first logicTreeBranchingLevel element in the sequence represents the first level in the tree, the second element the second level in the tree, and so on.
+A \Verb+logicTree+ is defined as a sequence of \Verb+logicTreeBranchingLevel+ elements. The position in the sequence specifies in which level of the tree the branching is located. That is, the first logicTreeBranchingLevel element in the sequence represents the first level in the tree, the second element the second level in the tree, and so on.
 \begin{Verbatim}[frame=single, commandchars=\\\{\}]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID_1">
@@ -151,10 +151,22 @@ No restrictions are given on the number of \Verb+logicTreeBranch+ elements that 
 The \Verb+logicTreeBranchSet+ element offers also a number of optional attributes allowing for complex tree definitions:
 \begin{itemize}
 \item \Verb+applyToBranches+: specifies to which \Verb+logicTreeBranch+ elements (one or more), in the previous branching level, the branch set is linked to. The default is the keyword ALL, which means that a branch set is by default linked to all branches in the previous branching level. By specifying one or more branches to which the branch set links to, non-symmetric logic trees can be defined.
-\item \Verb+applyToSources+: specifyies to which source in a source model the uncertainty applies to.
+\item \Verb+applyToSources+: specifies to which source in a source model the uncertainty applies to.
 \item \Verb+applyToSourceType+: specifies to which source type the uncertainty applies to.
 \item \Verb+applyToTectonicRegionType+: specifies to which tectonic region type the uncertainty applies to.
 \end{itemize}
+
+\subsubsection{The Seismic Source System definition}
+The Seismic Source System is defined in a \Verb+logicTreeElement+ with the following constrains:
+\begin{itemize}
+\item The first branching level can contain only one branch set. This branch set must define uncertainties in the source model (that is \Verb+uncertaintyType="sourceModel"+)
+\item Subsequent branching levels can define uncertainties of type: \Verb+maxMagGRRelative+, \Verb+bGRRelative+, \Verb+abGRAbsolute+, \Verb+maxMagGRAbsolute+.
+\item In all branching levels but the first, only one optional attribute (\Verb+applyToSources+, \Verb+applyToSourceType+, \Verb+applyToTectonicRegionType+) can be defined. The first branching level does not require any optional attribute.
+\item If in a branching level, a branch set has \Verb+applyToBranches="ALL"+, then this branch set must be unique in the branching level. In other words, only one branch set with \Verb+applyToBranches="ALL"+ is allowed per branching level.
+\item If in a branching level, more than one branch sets are defined, the attribute \Verb+applyToBranches+ must contain one or more branch IDs referring to branches that are only in the previous branching level and that are not already linked to other branch sets (in other words there cannot be two branch sets that link to the same branch).
+\item In all branch sets, branch weights must sum to 1.
+\end{itemize}
+The following example shows a Seismic Source System consisting of three initial source models (each stored in a different file: \Verb+source_model_1.xml+,\Verb+source_model_2.xml+, \Verb+source_model_3.xml+) defined in the first branching level. In the second branching level, absolute uncertainties on Gutenberg-Richter a and b values are defined for source models 1 and 2 (the  \Verb+applyToBranches=+ attribute contains the IDs of the source model 1 and 2 branches in the first branching level, that is \Verb+"_11"+ and \Verb+"_12"). These uncertainties apply only to \Verb+area+ sources (applyToSourceType="area"). Same type of uncertainties are defined also for source model 3 (applyToBranches="_13") but apply only to sources with IDs equal to \Verb+"2"+ and \Verb+"3"+ (applyToSources="_2 _3").  Gutenberg-Richter a and b uncertainties are defined as pairs of values (\Verb+<uncertaintyModel>aValue bValue</uncertaintyModel>+) where the first value is interpreted as the a value, while the second is the b value. Some source typologies may have more then one Gutenberg-Richter magnitude frequency distributions, and in this case multiple a and b pairs must be defined (e.g. (\Verb+<uncertaintyModel>a_1 b_1 a_2 b_2 ...a_n b_n</uncertaintyModel>+) ). In the third branching level, absolute uncertainties on Gutenberg-Richter maximum magnitude are defined (\Verb+uncertaintyType="maxMagGRAbsolute"+). These uncertainties apply to all branches in the previous branching level (the attribute \Verb+applyToBranches+ is absent, the default value \Verb+"ALL" is taken). These uncertainties apply however only to those sources that belongs to active shallow crust (\Verb+applyToTectonicRegionType="Active Shallow Crust"+)
 
 \subsubsection{Seismic source definition in nrML format}\label{seismicSourceNrml}
 Four source typologies can be currently defined:
