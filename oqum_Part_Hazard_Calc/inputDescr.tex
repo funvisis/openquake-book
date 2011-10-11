@@ -51,24 +51,22 @@ In case of risk analysis, a third option allows to perform calculations on the g
 
 Once the \Verb+CALCULATION_MODE+ and the locations of interest have been defined, the user is required to define the input data (in nrML format) and the calculation parameters (in the configuration file) for the requested analysis.
 
-\section{Input Data definition for Classical, Event Based, Disaggregation and UHS hazard analysis}
+\section{Input Data definition for Classical, Event Based, Disaggregation and UHS}
 Input data for probabilistic based seismic hazard analysis (Classical, Event based, Disaggregation, and UHS) are structured in terms of a:
 \begin{itemize}
-\item file describing the \gls{seismicsourcesystem}. That is the set of initial source models and associated epistemic uncertainties needed to model the seismic activity in the region of interest.
-\item file describing the \glspl{groundmotionsystem}. That is the set of ground motion prediction equations, per tectonic region type, needed to model the ground motion shaking in the region of interest.
+\item file describing the Seismic Source System, that is the set of initial source models and associated epistemic uncertainties needed to model the seismic activity in the region of interest.
+\item file describing the Ground Motion System, that is the set of ground motion prediction equations, per tectonic region type, needed to model the ground motion shaking in the region of interest.
 \end{itemize}
-The paths to the \gls{seismicsourcesystem} and  \glspl{groundmotionsystem} files are given in the 
+The paths to the Seismic Source and Ground Motion System files are given in the 
 \Verb+SOURCE_MODEL_LOGIC_TREE_FILE+ and \Verb
-+GMPE_LOGIC_TREE_FILE+ keys, respectively, both defined in the \Verb+[HAZARD]+ section of the configuration file.
-
-\subsection{The Seismic Source and Ground Motion System definition}
++GMPE_LOGIC_TREE_FILE+ keys, respectively, both defined in the \Verb+[HAZARD]+ section of the configuration file.\\
 The information required to define both the Seismic Source and Ground Motion Systems is stored in a \Verb+logicTree+ element: 
 \begin{Verbatim}[frame=single, commandchars=\\\{\}]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 ...
 </\textcolor{red}{logicTree}>
 \end{Verbatim}
-A \Verb+logicTree+ is defined as a sequence of \Verb+logicTreeBranchingLevel+ elements. The position in the sequence specifies in which level of the tree the branching is located. That is, the first logicTreeBranchingLevel element in the sequence represents the first level in the tree, the second element the second level in the tree, and so on.
+A \Verb+logicTree+ is defined as a sequence of \Verb+logicTreeBranchingLevel+ elements. The position in the sequence specifies in which level of the tree the branching level is located. That is, the first logicTreeBranchingLevel element in the sequence represents the first level in the tree, the second element the second level in the tree, and so on.
 \begin{Verbatim}[frame=single, commandchars=\\\{\}]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID_1">
@@ -116,7 +114,7 @@ Possible values for the \Verb+uncertaintyType+ attribute are:
 \item \Verb+maxMagGRAbsolute+: identifying epistemic uncertainties (absolute) on the Gutenberg-Richter maximum magnitude.
 \end{itemize}
 No restrictions are given on the number of branch sets that can be defined inside a branching level.\\
-A \Verb+branchSet+ is defined as a sequence of  \Verb+logicTreeBranch+ elements, each defined by an \Verb+uncertainityModel+ element (a string identifying an uncertainty model; the content of the string varies with the uncertaintyType attribute value of the branchSet element) and the uncertaintyWeight element (specifying the probability/weight associated to the uncertaintyModel):
+A \Verb+branchSet+ is defined as a sequence of  \Verb+logicTreeBranch+ elements, each defined by an \Verb+uncertaintyModel+ element (a string identifying an uncertainty model; the content of the string varies with the uncertaintyType attribute value of the branchSet element) and the uncertaintyWeight element (specifying the probability/weight associated to the uncertaintyModel):
 \begin{Verbatim}[frame=single, commandchars=\\\{\}]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 ...
@@ -126,19 +124,19 @@ A \Verb+branchSet+ is defined as a sequence of  \Verb+logicTreeBranch+ elements,
 				uncertaintyType="UNCERTAINTY_TYPE">
 			<\textcolor{magenta}{logicTreeBranch} branchID="ID_1">
 				<uncertaintyModel>
-					UNCERTAINTY_MODEL
+				UNCERTAINTY_MODEL
 				</uncertaintyModel>
 				<uncertaintyWeight>
-					UNCERTAINTY_WEIGHT
+				UNCERTAINTY_WEIGHT
 				</uncertaintyWeight>
 			</\textcolor{magenta}{logicTreeBranch}>
 			...
 			<\textcolor{magenta}{logicTreeBranch} branchID="ID_N">
 				<uncertaintyModel>
-					UNCERTAINTY_MODEL
+				UNCERTAINTY_MODEL
 				</uncertaintyModel>
 				<uncertaintyWeight>
-					UNCERTAINTY_WEIGHT
+				UNCERTAINTY_WEIGHT
 				</uncertaintyWeight>
 			</\textcolor{magenta}{logicTreeBranch}>
 		</\textcolor{blue}{logicTreeBranchSet}>
@@ -147,6 +145,41 @@ A \Verb+branchSet+ is defined as a sequence of  \Verb+logicTreeBranch+ elements,
 ...
 </\textcolor{red}{logicTree}>
 \end{Verbatim}
+Depending on the \Verb+uncertaintyType+ the content of the \Verb+<uncertaintyModel>+ element changes:
+\begin{itemize}
+\item if \Verb+uncertaintyType="gmpeModel"+, the uncertainty model contains the name of a ground motion prediction equation (a list of available GMPEs are given in appendix A), e.g.:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+\end{Verbatim}
+\item if \Verb+uncertaintyType="sourceModel"+, the uncertainty model contains the paths to a source model file, e.g.:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+<uncertaintyModel>SOURCE_MODEL_FILE_PATH</uncertaintyModel>
+\end{Verbatim}
+\item if \Verb+uncertaintyType="maxMagGRRelative"+, the uncertainty model contains the increment to be added (or subtracted, depending on the sign) to the Gutenberg-Richter maximum magnitude:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+<uncertaintyModel>MAX_MAGNITUDE_INCREMENT</uncertaintyModel>
+\end{Verbatim}
+\item if \Verb+uncertaintyType="bGRRelative"+, the uncertainty model contains the increment to be added (or subtracted, depending on the sign) to the Gutenberg-Richter b value:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+<uncertaintyModel>B_VALUE_INCREMENT</uncertaintyModel>
+\end{Verbatim}
+\item if \Verb+uncertaintyType="abGRAbsolute"+, the uncertainty model contains one (if the uncertainty apply to a source with only one Gutenberg-Richter magnitude frequency distribution) or more (if the source has more than one magnitude frequency distributions) a and b pairs:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+<uncertaintyModel>
+A_VALUE_1 B_VALUE_1
+ ... 
+A_VALUE_N B_VALUE_N
+</uncertaintyModel>
+\end{Verbatim}
+\item if \Verb+uncertaintyType="maxMagGRAbsolute"+, the uncertainty model contains one or more (depending on the number of magnitude frequency distributions in the source) Gutenberg-Richter maximum magnitude values:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+<uncertaintyModel>
+MAX_MAGNITUDE_1
+ ... 
+MAX_MAGNITUDE_N
+</uncertaintyModel>
+\end{Verbatim}
+\end{itemize}
 No restrictions are given on the number of \Verb+logicTreeBranch+ elements that can be defined in a \Verb+logicTreeBranchSet+, as long as the uncertainty weights sum to 1.0.\\
 The \Verb+logicTreeBranchSet+ element offers also a number of optional attributes allowing for complex tree definitions:
 \begin{itemize}
@@ -156,19 +189,160 @@ The \Verb+logicTreeBranchSet+ element offers also a number of optional attribute
 \item \Verb+applyToTectonicRegionType+: specifies to which tectonic region type the uncertainty applies to.
 \end{itemize}
 
-\subsubsection{The Seismic Source System definition}
+\subsection{The Seismic Source System definition}
 The Seismic Source System is defined in a \Verb+logicTreeElement+ with the following constrains:
 \begin{itemize}
 \item The first branching level can contain only one branch set. This branch set must define uncertainties in the source model (that is \Verb+uncertaintyType="sourceModel"+)
-\item Subsequent branching levels can define uncertainties of type: \Verb+maxMagGRRelative+, \Verb+bGRRelative+, \Verb+abGRAbsolute+, \Verb+maxMagGRAbsolute+.
-\item In all branching levels but the first, only one optional attribute (\Verb+applyToSources+, \Verb+applyToSourceType+, \Verb+applyToTectonicRegionType+) can be defined. The first branching level does not require any optional attribute.
+\item Subsequent branching levels can define uncertainties of type: \Verb+maxMagGRRelative+, \Verb+bGRRelative+, \Verb+abGRAbsolute+, \Verb+maxMagGRAbsolute+. Relative uncertainties are applied assuming conservation of total moment rate.
+\item In all branching levels but the first, only one optional attribute (\Verb+applyToSources+, \Verb+applyToSourceType+, \Verb+applyToTectonicRegionType+) can be defined. The first branching level does not accept any optional attribute.
 \item If in a branching level, a branch set has \Verb+applyToBranches="ALL"+, then this branch set must be unique in the branching level. In other words, only one branch set with \Verb+applyToBranches="ALL"+ is allowed per branching level.
 \item If in a branching level, more than one branch sets are defined, the attribute \Verb+applyToBranches+ must contain one or more branch IDs referring to branches that are only in the previous branching level and that are not already linked to other branch sets (in other words there cannot be two branch sets that link to the same branch).
 \item In all branch sets, branch weights must sum to 1.
 \end{itemize}
-The following example shows a Seismic Source System consisting of three initial source models (each stored in a different file: \Verb+source_model_1.xml+,\Verb+source_model_2.xml+, \Verb+source_model_3.xml+) defined in the first branching level. In the second branching level, absolute uncertainties on Gutenberg-Richter a and b values are defined for source models 1 and 2 (the  \Verb+applyToBranches=+ attribute contains the IDs of the source model 1 and 2 branches in the first branching level, that is \Verb+"_11"+ and \Verb+"_12"). These uncertainties apply only to \Verb+area+ sources (applyToSourceType="area"). Same type of uncertainties are defined also for source model 3 (applyToBranches="_13") but apply only to sources with IDs equal to \Verb+"2"+ and \Verb+"3"+ (applyToSources="_2 _3").  Gutenberg-Richter a and b uncertainties are defined as pairs of values (\Verb+<uncertaintyModel>aValue bValue</uncertaintyModel>+) where the first value is interpreted as the a value, while the second is the b value. Some source typologies may have more then one Gutenberg-Richter magnitude frequency distributions, and in this case multiple a and b pairs must be defined (e.g. (\Verb+<uncertaintyModel>a_1 b_1 a_2 b_2 ...a_n b_n</uncertaintyModel>+) ). In the third branching level, absolute uncertainties on Gutenberg-Richter maximum magnitude are defined (\Verb+uncertaintyType="maxMagGRAbsolute"+). These uncertainties apply to all branches in the previous branching level (the attribute \Verb+applyToBranches+ is absent, the default value \Verb+"ALL" is taken). These uncertainties apply however only to those sources that belongs to active shallow crust (\Verb+applyToTectonicRegionType="Active Shallow Crust"+)
+Figure \ref{lt1} shows an example of Seismic Source System consisting of two initial source models defined in the first branching level. In the second branching level, absolute uncertainties on Gutenberg-Richter a and b values are defined for source model 1 (the  \Verb+applyToBranches="_11"). These uncertainties apply only to \Verb+area+ sources (applyToSourceType="area"). Same type of uncertainties are defined also for source model 2 (\Verb+applyToBranches="_12"+) but apply only to sources with IDs equal to \Verb+"_2"+ and \Verb+"_3"+ (\Verb+applyToSources="_2 _3"+). In the third branching level, absolute uncertainties on Gutenberg-Richter maximum magnitude are defined. These uncertainties apply to all source models in the previous branching level (the attribute \Verb+applyToBranches+ is absent, the default value \Verb+"ALL"+ is therefore assumed) but only to those sources that belongs to active shallow crust\\ (\Verb+applyToTectonicRegionType="Active Shallow Crust"+).
+\begin{figure}[htbp]
+\begin{center}
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\scriptsize, samepage=true]
+<\textcolor{red}{logicTree} logicTreeID="ID">
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID"
+		  uncertaintyType="\textcolor{orange}{sourceModel}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="_11">
+			   <uncertaintyModel>SOURCE_MODEL_FILE_PATH</uncertaintyModel>
+			   <uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			 </\textcolor{magenta}{logicTreeBranch}> 
+			<\textcolor{magenta}{logicTreeBranch} branchID="_12">
+			  <uncertaintyModel>SOURCE_MODEL_FILE_PATH</uncertaintyModel>
+			  <uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+		</\textcolor{blue}{logicTreeBranchSet}>
+	</\textcolor{green}{logicTreeBranchingLevel}>
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" 
+		    uncertaintyType="\textcolor{orange}{abGRAbsolute}"
+		    applyToBranches="_11" 
+		    applyToSourceType="area">
+			<\textcolor{magenta}{logicTreeBranch} branchID="_11_12_21">
+			   <uncertaintyModel>A_VALUE B_VALUE</uncertaintyModel>
+			   <uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+			<\textcolor{magenta}{logicTreeBranch} branchID="_11_12_22">
+			   <uncertaintyModel>A_VALUE B_VALUE</uncertaintyModel>
+			   <uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>  
+		</\textcolor{blue}{logicTreeBranchSet}>
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" 
+		   uncertaintyType="\textcolor{orange}{abGRAbsolute}"
+	            applyToBranches="_12" 
+		   applyToSources="_2 _3">
+			<\textcolor{magenta}{logicTreeBranch} branchID="_13_21">
+			   <uncertaintyModel>A_VALUE B_VALUE</uncertaintyModel>
+			   <uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			   </\textcolor{magenta}{logicTreeBranch}>
+			<\textcolor{magenta}{logicTreeBranch} branchID="_13_22">
+			   <uncertaintyModel>A_VALUE B_VALUE</uncertaintyModel>
+			   <uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+		</\textcolor{blue}{logicTreeBranchSet}>
+	</\textcolor{green}{logicTreeBranchingLevel}>
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" 
+		   uncertaintyType="\textcolor{orange}{maxMagGRAbsolute}" 
+		   applyToTectonicRegionType="Active Shallow Crust">
+			<\textcolor{magenta}{logicTreeBranch} branchID="_31">
+			   <uncertaintyModel>MAXIMUM_MAGNITUDE</uncertaintyModel>
+			   <uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+			<\textcolor{magenta}{logicTreeBranch} branchID="_32">
+			   <uncertaintyModel>MAXIMUM_MAGNITUDE</uncertaintyModel>
+			   <uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+		</\textcolor{blue}{logicTreeBranchSet}>
+	</\textcolor{green}{logicTreeBranchingLevel}>
+</\textcolor{red}{logicTree}>
+\end{Verbatim}
+\caption{Example of Seismic Source System definition. Two source models are considered, and epistemic uncertainties (absolute) on Gutenberg-Richter a and b, and maximum magnitude are defined.}
+\label{lt1}
+\end{center}
+\end{figure}
+\subsection{The Ground Motion System definition}
+The Ground Motion System is defined in a \Verb+logicTree+ element with the following constrains:
+\begin{itemize}
+\item Only one branch set can be defined per branching level.
+\item Each branch set must define uncertainties of type \Verb+gmpeModel+.
+\item All branch sets must define the applyToTectonicRegionType attribute. This is the only attribute allowed.
+\item Each branch set must refer to a different tectonic region type.
+\item In all branch sets, branch weights must sum to 1.
+\end{itemize}
+\begin{figure}[htbp]
+\begin{center}
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\scriptsize, samepage=true]
+<\textcolor{red}{logicTree} logicTreeID="ID">       
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
+		applyToTectonicRegionType="\textcolor{orange}{Active Shallow Crust}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>                
+		</\textcolor{blue}{logicTreeBranchSet}>       
+	</\textcolor{green}{logicTreeBranchingLevel}>
+		<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
+		applyToTectonicRegionType="\textcolor{orange}{Stable Shallow Crust}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>                
+		</\textcolor{blue}{logicTreeBranchSet}>       
+	</\textcolor{green}{logicTreeBranchingLevel}>
+		<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
+		applyToTectonicRegionType="\textcolor{orange}{Subduction IntraSlab}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>                
+		</\textcolor{blue}{logicTreeBranchSet}>       
+	</\textcolor{green}{logicTreeBranchingLevel}>
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
+		applyToTectonicRegionType="\textcolor{orange}{Subduction Interface}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>                
+		</\textcolor{blue}{logicTreeBranchSet}>
+	</\textcolor{green}{logicTreeBranchingLevel}>
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
+		applyToTectonicRegionType="\textcolor{orange}{Volcanic}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>                
+		</\textcolor{blue}{logicTreeBranchSet}>
+	</\textcolor{green}{logicTreeBranchingLevel}>           
+</\textcolor{red}{logicTree}>
+\end{Verbatim}
+\caption{Example of Ground Motion System definition. GMPEs are defined for the tectonic region types currently supported by OpenQuake.}
+\label{lt2}
+\end{center}
+\end{figure}
 
-\subsubsection{Seismic source definition in nrML format}\label{seismicSourceNrml}
+\subsection{Seismic source definition in nrML format}\label{seismicSourceNrml}
 Four source typologies can be currently defined:
 \begin{itemize}
 \item Area
