@@ -183,10 +183,24 @@ MAX_MAGNITUDE_N
 No restrictions are given on the number of \Verb+logicTreeBranch+ elements that can be defined in a \Verb+logicTreeBranchSet+, as long as the uncertainty weights sum to 1.0.\\
 The \Verb+logicTreeBranchSet+ element offers also a number of optional attributes allowing for complex tree definitions:
 \begin{itemize}
-\item \Verb+applyToBranches+: specifies to which \Verb+logicTreeBranch+ elements (one or more), in the previous branching level, the branch set is linked to. The default is the keyword ALL, which means that a branch set is by default linked to all branches in the previous branching level. By specifying one or more branches to which the branch set links to, non-symmetric logic trees can be defined.
-\item \Verb+applyToSources+: specifies to which source in a source model the uncertainty applies to.
+\item \Verb+applyToBranches+: specifies to which \Verb+logicTreeBranch+ elements (one or more), in the previous branching level, the branch set is linked to. The linking is established by defining the IDs of the branches to link to:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+applyToBranches="logicTreeBranchID1 logicTreeBranchID2 .... logicTreeBranchIDN"
+\end{Verbatim}
+The default is the keyword ALL, which means that a branch set is by default linked to all branches in the previous branching level. By specifying one or more branches to which the branch set links to, non-symmetric logic trees can be defined.
+\item \Verb+applyToSources+: specifies to which source in a source model the uncertainty applies to. Sources are specified in terms of their IDs:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+applyToSources="srcID1 srcID2 .... srcIDN"
+\end{Verbatim}
 \item \Verb+applyToSourceType+: specifies to which source type the uncertainty applies to.
-\item \Verb+applyToTectonicRegionType+: specifies to which tectonic region type the uncertainty applies to.
+Only one source typology can be defined (\Verb+area+, \Verb+point+, \Verb+simpleFault+, \Verb+complexFault+), e.g.:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+applyToSources="area"
+\end{Verbatim}
+\item \Verb+applyToTectonicRegionType+: specifies to which tectonic region type the uncertainty applies to. Only one tectonic region type can be defined (\Verb+Active Shallow Crust+, \Verb+Stable Shallow Crust+,  \Verb+Subduction Interface+, \Verb+Subduction IntraSlab+, \Verb+Volcanic+), e.g.:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+applyToTectonicRegionType="Active Shallow Crust"
+\end{Verbatim}
 \end{itemize}
 
 \subsection{The Seismic Source System definition}
@@ -199,7 +213,7 @@ The Seismic Source System is defined in a \Verb+logicTreeElement+ with the follo
 \item If in a branching level, more than one branch sets are defined, the attribute \Verb+applyToBranches+ must contain one or more branch IDs referring to branches that are only in the previous branching level and that are not already linked to other branch sets (in other words there cannot be two branch sets that link to the same branch).
 \item In all branch sets, branch weights must sum to 1.
 \end{itemize}
-Figure \ref{lt1} shows an example of Seismic Source System consisting of two initial source models defined in the first branching level. In the second branching level, absolute uncertainties on Gutenberg-Richter a and b values are defined for source model 1 (the  \Verb+applyToBranches="_11"). These uncertainties apply only to \Verb+area+ sources (applyToSourceType="area"). Same type of uncertainties are defined also for source model 2 (\Verb+applyToBranches="_12"+) but apply only to sources with IDs equal to \Verb+"_2"+ and \Verb+"_3"+ (\Verb+applyToSources="_2 _3"+). In the third branching level, absolute uncertainties on Gutenberg-Richter maximum magnitude are defined. These uncertainties apply to all source models in the previous branching level (the attribute \Verb+applyToBranches+ is absent, the default value \Verb+"ALL"+ is therefore assumed) but only to those sources that belongs to active shallow crust\\ (\Verb+applyToTectonicRegionType="Active Shallow Crust"+).
+Figure \ref{lt1} shows an example of Seismic Source System consisting of two initial source models defined in the first branching level. In the second branching level, absolute uncertainties on Gutenberg-Richter a and b values are defined for source model 1 (\Verb+applyToBranches="_11"+). These uncertainties apply only to \Verb+area+ sources (applyToSourceType="area"). Same type of uncertainties are defined also for source model 2 (\Verb+applyToBranches="_12"+) but apply only to sources with IDs equal to \Verb+"_2"+ and \Verb+"_3"+ (\Verb+applyToSources="_2 _3"+). In the third branching level, absolute uncertainties on Gutenberg-Richter maximum magnitude are defined. These uncertainties apply to all source models in the previous branching level (the attribute \Verb+applyToBranches+ is absent, the default value \Verb+"ALL"+ is therefore assumed) but only to those sources that belongs to active shallow crust\\ (\Verb+applyToTectonicRegionType="Active Shallow Crust"+).
 \begin{figure}[htbp]
 \begin{center}
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\scriptsize, samepage=true]
@@ -265,6 +279,231 @@ Figure \ref{lt1} shows an example of Seismic Source System consisting of two ini
 \label{lt1}
 \end{center}
 \end{figure}
+
+\subsection{The Seismic Source Model definition}\label{seismicSourceNrml}
+A Seismic Source Model is defined as a collection of seismic sources. Four source typologies can be currently defined:
+\begin{itemize}
+\item Area
+\item Point
+\item Simple Fault
+\item Complex Fault
+\end{itemize}
+Each source typology is identified by a specific element name in the nrML format:
+\begin{itemize}
+\item \Verb+areaSource+ (for Area)
+\item \Verb+pointSource+ (for Point)
+\item \Verb+simpleFaultSource+ (for Simple Fault)
+\item \Verb+complexFaultSource+ (for Complex Fault)
+\end{itemize}
+Regardless of the source typology three common attributes must be defined:
+\begin{itemize}
+\item ID
+\item name
+\item tectonic region type 
+\end{itemize}
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{sourceModel} gml:id="ID">
+	...
+	<\textcolor{green}{areaSource} gml:id="SOURCE_ID">
+		<gml:name>SOURCE_NAME</gml:name>
+		<tectonicRegion>TECT_REGION_TYPE</tectonicRegion>
+		...
+	</\textcolor{green}{areaSource}>
+	...
+	<\textcolor{green}{pointSource} gml:id="SOURCE_ID">
+		<gml:name>SOURCE_NAME</gml:name>
+		<tectonicRegion>TECT_REGION_TYPE</tectonicRegion>
+		...
+	</\textcolor{green}{pointSource}>
+	...
+	<\textcolor{green}{simpleFaultSource} gml:id="SOURCE_ID">
+		<gml:name>SOURCE_NAME</gml:name>
+		<tectonicRegion>TECT_REGION_TYPE</tectonicRegion>
+		...
+	</\textcolor{green}{simpleFaultSource}>
+	...
+	<\textcolor{green}{complexFaultSource} gml:id="SOURCE_ID">
+		<gml:name>SOURCE_NAME</gml:name>
+		<tectonicRegion>TECT_REGION_TYPE</tectonicRegion>
+		...
+	</\textcolor{green}{complexFaultSource}>
+	...
+</\textcolor{red}{sourceModel}>
+\end{Verbatim}
+A single source model can therefore contain sources of different typologies, and no constrains are given on the number of sources that can be defined in a source model.
+
+\subsubsection{Area source definition}
+An area source can be utilized to describe a polygonal geographical region where seismicity is assumed to be uniform. The area source-specific elements are:
+\begin{itemize}
+\item \Verb+areaBoundary+: defines the area boundary.
+\item \Verb+ruptureRateModel+: defines a MFD-Focal Mechanism pair.
+\item \Verb+ruptureDepthDistribution+: defines the (top of) rupture depth distribution versus magnitude.
+\item \Verb+hypocentralDepth+: defines ruptures' hypocentral depth.
+\end{itemize}
+More then one \Verb+ruptureRateModels+ can be defined in a single area source (giving the possibility to define specific MFDs for specific focal mechanisms).
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{areaSource} gml:id="ID">
+	<gml:name>NAME</gml:name>
+	<tectonicRegion>TECT_REG_TYPE</tectonicRegion>
+	<\textcolor{green}{areaBoundary}>
+		...
+	</\textcolor{green}{areaBoundary}>
+	<\textcolor{blue}{ruptureRateModel}>
+		...
+	</\textcolor{blue}{ruptureRateModel}>
+	<\textcolor{blue}{ruptureRateModel}>
+		...
+	</\textcolor{blue}{ruptureRateModel}>
+	...
+	...
+	<\textcolor{blue}{ruptureRateModel}>
+		...
+	</\textcolor{blue}{ruptureRateModel}>
+	<\textcolor{magenta}{ruptureDepthDistribution}>
+		...
+	</\textcolor{magenta}{ruptureDepthDistribution}>
+	<\textcolor{orange}{hypocentralDepth}>
+		...	
+	</\textcolor{orange}{hypocentralDepth}>
+</\textcolor{red}{areaSource}>
+\end{Verbatim}
+The area boundary is defined by a list of vertices coordinates (longitude, latitude) in a \Verb+LinearRing+ element defining the exterior boundary of a \Verb+Polygon+ element:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{areaBoundary}>
+	<gml:\textcolor{green}{Polygon}>
+		<gml:\textcolor{blue}{exterior}>
+			<gml:\textcolor{magenta}{LinearRing}>
+				<gml:\textcolor{orange}{posList}>
+					LON_1 LAT_1
+					LON_2 LAT_2
+						...			
+					LON_N LAT_N
+				</gml:\textcolor{orange}{posList}>
+			</gml:\textcolor{magenta}{LinearRing}>
+		</gml:\textcolor{blue}{exterior}>
+	</gml:\textcolor{green}{Polygon}>
+</\textcolor{red}{areaBoundary}>
+\end{Verbatim}
+The \Verb+ruptureRateModel+ element contains the definition of a magnitude frequency distribution (\Verb+truncatedGutenbergRichter+ or \Verb+evenlyDiscretizedIncrementalMFD+) and a focal mechanism (\Verb+focalMechanism+). That is:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{ruptureRateModel}>
+	<\textcolor{green}{truncatedGutenbergRichter}>
+		...
+	</\textcolor{green}{truncatedGutenbergRichter}>
+	<\textcolor{blue}{focalMechanism}>
+		...
+	</\textcolor{blue}{focalMechanism}>
+</\textcolor{red}{ruptureRateModel}>
+\end{Verbatim}
+or:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{ruptureRateModel}>
+	<\textcolor{green}{evenlyDiscretizedIncrementalMFD}>
+		...
+	</\textcolor{green}{evenlyDiscretizedIncrementalMFD}>
+	<\textcolor{blue}{focalMechanism}>
+		...
+	</\textcolor{blue}{focalMechanism}>
+</\textcolor{red}{ruptureRateModel}>
+\end{Verbatim}
+A truncated Gutenberg-Richter magnitude frequency distribution is defined in terms of minimum and maximum magnitudes, cumulative a value, and b value:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{truncatedGutenbergRichter}>
+	<\textcolor{green}{aValueCumulative}>CUMULATIVE_A_VALUE</\textcolor{green}{aValueCumulative}>
+	<\textcolor{blue}{bValue}>B_VALUE</\textcolor{blue}{bValue}>
+	<\textcolor{magenta}{minMagnitude}>MINIMUM_MAGNITUDE</\textcolor{magenta}{minMagnitude}>
+	<\textcolor{orange}{maxMagnitude}>MAXIMUM_MAGNITUDE</\textcolor{orange}{maxMagnitude}>
+</\textcolor{red}{truncatedGutenbergRichter}>
+\end{Verbatim}
+The incremental evenly-discretized magnitude frequency distribution is defined instead as:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{evenlyDiscretizedIncrementalMFD} \textcolor{green}{binSize}="BIN_SIZE"
+ 	 \textcolor{blue}{minVal}="MINIMUM_VALUE">
+              RATE_1
+              RATE_2
+              ...
+              RATE_N
+</\textcolor{red}{evenlyDiscretizedIncrementalMFD}>
+\end{Verbatim}
+where \Verb+BIN_SIZE+ represents the discretization interval of the magnitude-frequency distribution, and \Verb+MINIMUM_VALUE+ represents the minimum value in the distribution (interpreted as the middle-point value of the first bin in the distribution).\\
+The focal mechanism is defined in terms of strike, dip and rake values:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{focalMechanism} publicID="ID">
+	<qml:\textcolor{green}{nodalPlanes}>
+		<qml:\textcolor{blue}{nodalPlane1}>
+			<qml:\textcolor{magenta}{strike}>
+			<qml:value>STRIKE_VALUE</qml:value>
+			</qml:\textcolor{magenta}{strike}>
+			<qml:\textcolor{orange}{dip}>
+			<qml:value>DIP_VALUE</qml:value>
+			</qml:\textcolor{orange}{dip}>
+			<qml:\textcolor{violet}{rake}>
+			<qml:value>RAKE_VALUE</qml:value>
+			</qml:\textcolor{violet}{rake}>
+		</qml:\textcolor{blue}{nodalPlane1}>
+	</qml:\textcolor{green}{nodalPlanes}>
+</\textcolor{red}{focalMechanism}>
+ \end{Verbatim}
+where
+\begin{alltt} \(0\degree \leq\) STRIKE_VALUE \(\leq 360\degree\) \end{alltt}
+\begin{alltt} \(0\degree \leq\) DIP_VALUE \(\leq 90\degree\) \end{alltt}
+\begin{alltt} \(-180\degree \leq\) RAKE_VALUE \(\leq +180\degree\) \end{alltt}
+The \Verb+ruptureDepthDistribution+ contains a list of magnitude and depth values:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{ruptureDepthDistribution}>
+	<\textcolor{green}{magnitude}>MAG_1 MAG_2 ... MAG_N</\textcolor{green}{magnitude}>
+	<\textcolor{blue}{depth}>DEPTH_1 DEPTH_2 ... DEPTH_N</\textcolor{blue}{depth}>
+</\textcolor{red}{ruptureDepthDistribution}>
+\end{Verbatim}
+The last element needed to define an area source is the hypocentral depth:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{hypocentralDepth}>HYPOCENTRAL_DEPTH</\textcolor{red}{hypocentralDepth}>
+\end{Verbatim}
+that is expressed by a single value.
+
+\subsubsection{Point source definition}
+The point source definition follows the same schema of the area source definition, the only
+difference being the absence of the \Verb+areaBoundary+ element, that is replaced by a
+\Verb+location+ element defining the coordinates of a single geographic site:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{pointSource} gml:id="ID">
+	<gml:name>NAME</gml:name>
+	<tectonicRegion>TECT_REG_TYPE</tectonicRegion>
+	<\textcolor{green}{location}>
+		...
+	</\textcolor{green}{location}>
+	<\textcolor{blue}{ruptureRateModel}>
+		...
+	</\textcolor{blue}{ruptureRateModel}>
+	<\textcolor{blue}{ruptureRateModel}>
+		...
+	</\textcolor{blue}{ruptureRateModel}>
+	...
+	...
+	<\textcolor{blue}{ruptureRateModel}>
+		...
+	</\textcolor{blue}{ruptureRateModel}>
+	<\textcolor{magenta}{ruptureDepthDistribution}>
+		...
+	</\textcolor{magenta}{ruptureDepthDistribution}>
+	<\textcolor{orange}{hypocentralDepth}>
+		...	
+	</\textcolor{orange}{hypocentralDepth}>
+</\textcolor{red}{areaSource}>
+\end{Verbatim}
+where the \Verb+location+ element is defined as follows:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{location}>
+	<gml:\textcolor{green}{Point}>
+	<gml:pos>LON LAT</gml:pos>
+	</gml:\textcolor{green}{Point}>
+</\textcolor{red}{location}>
+\end{Verbatim}
+
+\subsubsection{Simple fault source definition}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Ground Motion System definition}
 The Ground Motion System is defined in a \Verb+logicTree+ element with the following constrains:
 \begin{itemize}
@@ -274,6 +513,7 @@ The Ground Motion System is defined in a \Verb+logicTree+ element with the follo
 \item Each branch set must refer to a different tectonic region type.
 \item In all branch sets, branch weights must sum to 1.
 \end{itemize}
+Figure \ref{lt2} shows an example of Ground Motion System as defined in a \Verb+logicTreeElement+. Each branching level contains only one \Verb+branchSet+, each referring to a different tectonic region type. Each branch set can contain a variable number of GMPEs.
 \begin{figure}[htbp]
 \begin{center}
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\scriptsize, samepage=true]
@@ -342,192 +582,7 @@ The Ground Motion System is defined in a \Verb+logicTree+ element with the follo
 \end{center}
 \end{figure}
 
-\subsection{Seismic source definition in nrML format}\label{seismicSourceNrml}
-Four source typologies can be currently defined:
-\begin{itemize}
-\item Area
-\item Point
-\item Simple Fault
-\item Complex Fault
-\end{itemize}
-Each source typology is identified by a specific element name in the nrML format:
-\begin{itemize}
-\item \Verb+areaSource+ (for Area)
-\item \Verb+pointSource+ (for Point)
-\item \Verb+simpleFaultSource+ (for Simple Fault)
-\item \Verb+complexFaultSource+ (for Complex Fault)
-\end{itemize}
-and is characterized by three common attributes:
-\begin{itemize}
-\item ID: unique identifier 
-\item name: source name
-\item tectonic region type: tectonic region the source belongs to. 
-\end{itemize}
-The tectonic region type can be one of five typologies:
-\begin{itemize}
-\item \Verb+Active Shallow Crust+
-\item \Verb+Stable Shallow Crust+
-\item \Verb+Subduction Interface+
-\item \Verb+Subduction IntraSlab+
-\item \Verb+Volcanic+
-\end{itemize}
-In the nrML format, each source is therefore defined as follows:
-\begin{itemize}
-\item area:
-\begin{Verbatim}[frame=single]
- <areaSource gml:id="SOURCE_ID">
-    <gml:name>SOURCE_NAME</gml:name>
-     <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
-      ...
-\end{Verbatim}
-\item point:
-\begin{Verbatim}[frame=single]
-<pointSource gml:id="SOURCE_ID">
-    <gml:name>SOURCE_NAME</gml:name>
-    <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
-     ...
-\end{Verbatim}
-\item simple fault:
-\begin{Verbatim}[frame=single]
-<simpleFaultSource gml:id="SOURCE_ID">
-   <gml:name>SOURCE_NAME</gml:name>
-   <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
-    ...
-\end{Verbatim}
-\item complex fault:
-\begin{Verbatim}[frame=single]
-<complexFaultSource gml:id="SOURCE_ID">
-   <gml:name>SOURCE_NAME</gml:name>
-   <tectonicRegion>TECTONIC_REGION_TYPE</tectonicRegion>
-    ...
-\end{Verbatim}
-\end{itemize}
-\subsubsection{Area source definition}
-An area source can be utilized to describe a polygonal geographical region where seismicity is assumed to be uniform.
-The geographic region is defined by the \Verb+areaBoundary+ element. More specifically the area boundary is defined by a list of vertices coordinates (longitude, latitude) in a \Verb+LinearRing+ element defining the exterior boundary of a \Verb+Polygon+ element:
-\begin{Verbatim}[frame=single]
- <areaBoundary>
-    <gml:Polygon>
-      <gml:exterior>
-        <gml:LinearRing>
-           <gml:posList>
-             LON_1 LAT_1
-             LON_2 LAT_2
-             ...			
-             LON_N LAT_N
-           </gml:posList>
-         </gml:LinearRing>
-        </gml:exterior>
-      </gml:Polygon>
-</areaBoundary>
-\end{Verbatim}
-The occurrence rates are specified in the \Verb+ruptureRateModel+ element, which contains the definition of a magnitude frequency distribution (\Verb+truncatedGutenbergRichter+ or \Verb+evenlyDiscretizedIncrementalMFD+) and a focal mechanism (\Verb+focalMechanism+).
-\begin{Verbatim}[frame=single]
-<ruptureRateModel>
-   <truncatedGutenbergRichter> or <evenlyDiscretizedIncrementalMFD>
-	...
-   <focalMechanism>
-	...
-</ruptureRateModel>
-\end{Verbatim}
-A truncated Gutenberg-Richter magnitude frequency distribution is defined as follows:
-\begin{Verbatim}[frame=single]
-<truncatedGutenbergRichter>
-   <aValueCumulative>CUMULATIVE_A_VALUE</aValueCumulative>
-   <bValue>B_VALUE</bValue>
-   <minMagnitude>MINIMUM_MAGNITUDE</minMagnitude>
-   <maxMagnitude>MAXIMUM_MAGNITUDE</maxMagnitude>
-</truncatedGutenbergRichter>
-\end{Verbatim}
-A generic evenly-discretized magnitude frequency distribution is defined instead as:
-\begin{Verbatim}[frame=single]
-<evenlyDiscretizedIncrementalMFD binSize="BIN_SIZE"
- 	 minVal="MINIMUM_VALUE">
-              RATE_1
-              RATE_2
-              ...
-              RATE_N
-</evenlyDiscretizedIncrementalMFD>
-\end{Verbatim}
-where \Verb+BIN_SIZE+ represents the discretization interval of the magnitude-frequency distribution, and \Verb+MINIMUM_VALUE+ represents the minimum value in the distribution (interpreted as the middle-point value of the first bin in the distribution).
-A focal mechanism is defined in terms of a strike, dip and rake values:
-\begin{Verbatim}[frame=single]
-        <focalMechanism publicID="smi:fm1/0">
-          <qml:nodalPlanes>
-            <qml:nodalPlane1>
-              <qml:strike>
-                <qml:value>STRIKE_VALUE</qml:value>
-              </qml:strike>
-              <qml:dip>
-                <qml:value>DIP_VALUE</qml:value>
-              </qml:dip>
-              <qml:rake>
-                <qml:value>RAKE_VALUE</qml:value>
-              </qml:rake>
-            </qml:nodalPlane1>
-          </qml:nodalPlanes>
-        </focalMechanism>
- \end{Verbatim}
-where $ 0^{\circ} \leq STRIKE_VALUE  \leq 360 ^{\circ}$
-In a single area source definition, one or more \Verb+ruptureRateModel+ elements can be defined, so that multiple focal mechanisms (each having a specific magnitude-frequency distribution) can be defined:
-\begin{Verbatim}[frame=single]
- <areaSource gml:id="SOURCE_ID">
- ...
- 	<ruptureRateModel>
- 	...
-	 </ruptureRateModel>
-	 <ruptureRateModel>
- 	...
- 	</ruptureRateModel>
-...
- </areaSource>
-\end{Verbatim}
-\begin{comment}
-\begin{Verbatim}[frame=single]
-    <areaSource gml:id="src_1">
-      <gml:name>Source 8.CH.3</gml:name>
-      <tectonicRegion>Active Shallow Crust</tectonicRegion>
-      <areaBoundary>
-        <gml:Polygon>
-          <gml:exterior>
-            <gml:LinearRing>
-              <gml:posList>-0.5 -0.5 -0.5 0.5 0.5 0.5 0.5 -0.5</gml:posList>
-            </gml:LinearRing>
-          </gml:exterior>
-        </gml:Polygon>
-      </areaBoundary>
-      <ruptureRateModel>
-        <truncatedGutenbergRichter>
-          <aValueCumulative>2.5</aValueCumulative>
-          <bValue>0.7318999871612379</bValue>
-          <minMagnitude>5.0</minMagnitude>
-          <maxMagnitude>8.0</maxMagnitude>
-        </truncatedGutenbergRichter>
-        <focalMechanism publicID="smi:fm1/0">
-          <qml:nodalPlanes>
-            <qml:nodalPlane1>
-              <qml:strike>
-                <qml:value>0.0</qml:value>
-              </qml:strike>
-              <qml:dip>
-                <qml:value>90.0</qml:value>
-              </qml:dip>
-              <qml:rake>
-                <qml:value>0.0</qml:value>
-              </qml:rake>
-            </qml:nodalPlane1>
-          </qml:nodalPlanes>
-        </focalMechanism>
-      </ruptureRateModel>
-      <ruptureDepthDistribution>
-        <magnitude>6.5 7.5</magnitude>
-        <depth>2.5 0.0</depth>
-      </ruptureDepthDistribution>
-      <hypocentralDepth>5.0</hypocentralDepth>
-    </areaSource>
-\end{Verbatim}
-\end{comment}
-\subsection{The Ground Motion System definition}
+
 \begin{comment}
 In this Chapter we provide with the reader a description of the input 
 files containing the information necessary to completely describe a 
