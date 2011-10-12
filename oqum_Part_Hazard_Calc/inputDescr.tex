@@ -417,7 +417,8 @@ A truncated Gutenberg-Richter magnitude frequency distribution is defined in ter
 \end{Verbatim}
 The incremental evenly-discretized magnitude frequency distribution is defined instead as:
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
-<\textcolor{red}{evenlyDiscretizedIncrementalMFD} \textcolor{green}{binSize}="BIN_SIZE"
+<\textcolor{red}{evenlyDiscretizedIncrementalMFD} 
+        \textcolor{green}{binSize}="BIN_SIZE"
  	 \textcolor{blue}{minVal}="MINIMUM_VALUE">
               RATE_1
               RATE_2
@@ -501,8 +502,53 @@ where the \Verb+location+ element is defined as follows:
 \end{Verbatim}
 
 \subsubsection{Simple fault source definition}
-
-
+The fault source-specific elements are:
+\begin{itemize}
+\item \Verb+rake+: defines the rake value.
+\item \Verb+truncatedGutenbergRichter+ or \Verb+evenlyDiscretizedIncrementalMFD+: define the magnitude frequency distribution.
+\item \Verb+simpleFaultGeometry+: defines the fault surface geometry.
+\end{itemize}
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{simpleFaultSource} gml:id="ID">
+	<gml:name>SOURCE_NAME</gml:name>
+	<tectonicRegion>TECT_REG_TYPE</tectonicRegion>
+	<\textcolor{green}{rake}>
+	...
+	</\textcolor{green}{rake}>
+	<\textcolor{blue}{truncatedGutenbergRichter}>
+	...
+	</\textcolor{blue}{truncatedGutenbergRichter}>
+		\textit{OR}
+	<\textcolor{blue}{evenlyDiscretizedIncrementalMFD}>
+	...
+	</\textcolor{blue}{evenlyDiscretizedIncrementalMFD}>
+	<\textcolor{magenta}{simpleFaultGeometry}>
+	...
+	</\textcolor{magenta}{simpleFaultGeometry}>
+</\textcolor{red}{simpleFaultSource}>
+\end{Verbatim}
+The \Verb+rake+ element contains a single rake value:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{rake}>RAKE_VALUE</\textcolor{red}{rake}>
+\end{Verbatim}
+The \Verb+simpleFaultGeometry+ element is defined as follows:
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{simpleFaultGeometry} gml:id="ID">
+	<\textcolor{green}{faultTrace}>
+		<gml:\textcolor{blue}{LineString}>
+			<gml:posList>
+				LON1 LAT1 DEPTH1
+				LON2 LAT2 DEPTH2
+				...
+				LONN LATN DEPTHN
+			</gml:posList>
+		</gml:\textcolor{blue}{LineString}>
+	</\textcolor{green}{faultTrace}>
+	<\textcolor{magenta}{dip}>DIP_VALUE</\textcolor{magenta}{dip}>
+	<\textcolor{orange}{upperSeismogenicDepth}>UPPER_DEPTH</\textcolor{orange}{upperSeismogenicDepth}>
+	<\textcolor{violet}{lowerSeismogenicDepth}>LOWER_DEPTH</\textcolor{violet}{lowerSeismogenicDepth}>
+</\textcolor{red}{simpleFaultGeometry}>
+\end{Verbatim}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Ground Motion System definition}
 The Ground Motion System is defined in a \Verb+logicTree+ element with the following constrains:
