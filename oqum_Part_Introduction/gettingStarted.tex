@@ -1,0 +1,79 @@
+\section{Installing OpenQuake}
+bla, bla, bla ...
+\section{OpenQuake Calculators and Input definition}
+OpenQuake offers the possibility to perform different types of analysis/calculations for seismic hazard assessment:
+\begin{itemize}
+\item Classical (Cornell-type) PSHA
+\item Event based PSHA
+\item Disaggregation analysis
+\item Uniform Hazard Spectra calculation
+\item Deterministic (single earthquake scenario) SHA
+\end{itemize}
+
+and for seismic risk assessment:
+\begin{itemize}
+\item ...
+\item ...
+\end{itemize}
+
+For each type of analysis, a configuration file (consisting of statements in the format \Verb+KEY=VALUE+) and one or more input data files in nrML format (an XML based format) are required.
+
+The configuration file consists of three sections:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+[\textcolor{red}{general}]
+...
+[\textcolor{green}{HAZARD}]
+...
+[\textcolor{blue}{RISK}]
+...
+\end{Verbatim}
+ 
+The \Verb+[general]+ section contains calculation parameters that are common to both hazard and risk analysis, while the \Verb+[HAZARD]+ and \Verb+[RISK]+ sections contains parameters specific for hazard and risk analysis, respectively.
+
+The different types of analysis can be selected inside the \Verb+[general]+ section of the configuration file, by setting  the \Verb+CALCULATION_MODE+ key:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+[\textcolor{red}{general}]
+
+CALCULATION_MODE =
+\end{Verbatim}
+
+Valid values are: 
+\begin{itemize}
+\item \Verb+Classical+ (for Classical PSHA)
+\item \Verb+Event Based+ (for Event Based PSHA)
+\item \Verb+Disaggregation+ (for Disaggregation analysis)
+\item \Verb+UHS+ (for Uniform Hazard Spectra calculation)
+\item \Verb+Deterministic+ ( for Deterministic SHA)
+\item ...
+\end{itemize}
+
+Each analysis is performed over a set of geographical locations, that can be defined as grid points in a geographical region:
+
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+[\textcolor{red}{general}]
+...
+REGION_VERTEX = LAT_1, LON_1, LAT_2, LON_2, ..., LAT_N, LON_N
+REGION_GRID_SPACING = DELTA_GRID
+\end{Verbatim}
+
+where \Verb+REGION_VERTEX+ is a list of vertices coordinates (latitude, longitude) defining a polygonal region. The list of vertices can be defined in clock or counter-clock wise order. \Verb+REGION_GRID_SPACING+ defines the discretization step utilized for the grid construction. No restrictions are given in the number of vertices in the polygon definition.
+
+A second option is to define a list of independent geographical locations:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+[\textcolor{red}{general}]
+...
+SITES = LAT_1, LON_1, LAT_2, LON_2,..., LAT_N, LON_N
+\end{Verbatim}
+each location being defined by latitude and longitude. Again no restrictions are given in the number of locations.
+
+In case of risk analysis, a third option allows to perform calculations on the geographical locations defined in the exposure model. To select this option, the key \Verb+COMPUTE_HAZARD_AT_ASSETS_LOCATIONS+ must be set to \Verb+true+ in the \Verb+[RISK]+ section of the configuration file.
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+[\textcolor{red}{RISK}]
+...
+COMPUTE_HAZARD_AT_ASSETS_LOCATIONS = true
+\end{Verbatim}
+if set to false, the region or sites defined in the \Verb+[general]+ section will be used instead.
+
+Once the \Verb+CALCULATION_MODE+ and the locations of interest have been defined, the user is required to define the input data (in nrML format) and the calculation parameters (in the configuration file) for the requested analysis.
+
+Chapters \ref{chap:hazinp} and \ref{chap:riskinp} describe the parameters and input data needed to perform all the supported hazard an risk analysis.
