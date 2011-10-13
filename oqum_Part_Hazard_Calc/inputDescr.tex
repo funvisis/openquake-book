@@ -306,7 +306,7 @@ Figure \ref{lt2} shows an example of Ground Motion System as defined in a \Verb+
 \end{figure}
 
 \subsection{The Seismic Source Model definition}\label{seismicSourceNrml}
-To complete the Seismic Source System definition  the the required seismic source models must be defined. A Seismic Source Model is defined as a collection of seismic sources. Four source typologies can be currently defined:
+To complete the Seismic Source System definition the required seismic source models must be defined. A Seismic Source Model is defined as a collection of seismic sources. Four source typologies can be currently defined:
 \begin{itemize}
 \item Area
 \item Point
@@ -408,6 +408,7 @@ The area boundary is defined by a list of vertices coordinates (longitude, latit
 		</gml:\textcolor{blue}{exterior}>
 	</gml:\textcolor{green}{Polygon}>
 </\textcolor{red}{areaBoundary}>
+Polygon coordinates can be given in clock or counter-clock wise order.
 \end{Verbatim}
 The \Verb+ruptureRateModel+ element contains the definition of a magnitude frequency distribution (\Verb+truncatedGutenbergRichter+ or \Verb+evenlyDiscretizedIncrementalMFD+) and a focal mechanism (\Verb+focalMechanism+). That is:
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
@@ -440,6 +441,7 @@ A truncated Gutenberg-Richter magnitude frequency distribution is defined in ter
 	<\textcolor{orange}{maxMagnitude}>MAXIMUM_MAGNITUDE</\textcolor{orange}{maxMagnitude}>
 </\textcolor{red}{truncatedGutenbergRichter}>
 \end{Verbatim}
+the \Verb+CUMULATIVE_A_VALUE+ is assumed to be defined with respect to magnitude equal to 0.\\
 The incremental evenly-discretized magnitude frequency distribution is defined instead as:
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
 <\textcolor{red}{evenlyDiscretizedIncrementalMFD} 
@@ -451,7 +453,7 @@ The incremental evenly-discretized magnitude frequency distribution is defined i
               RATE_N
 </\textcolor{red}{evenlyDiscretizedIncrementalMFD}>
 \end{Verbatim}
-where \Verb+BIN_SIZE+ represents the discretization interval of the magnitude-frequency distribution, and \Verb+MINIMUM_VALUE+ represents the minimum value in the distribution (interpreted as the middle-point value of the first bin in the distribution).\\
+where \Verb+BIN_SIZE+ represents the discretization interval of the magnitude-frequency distribution, and \Verb+MINIMUM_VALUE+ represents the minimum value in the distribution (interpreted as the middle-point value of the first bin in the distribution). \Verb+RATE_1+...\Verb+RATE_N+ represent annual rates of occurrence starting from the minimum magnitude (\Verb+minVal+) up to the maximum magnitude.\\
 The focal mechanism is defined in terms of strike, dip and rake values:
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
 <\textcolor{red}{focalMechanism} publicID="ID">
@@ -481,11 +483,16 @@ The \Verb+ruptureDepthDistribution+ contains a list of magnitude and depth value
 	<\textcolor{blue}{depth}>DEPTH_1 DEPTH_2 ... DEPTH_N</\textcolor{blue}{depth}>
 </\textcolor{red}{ruptureDepthDistribution}>
 \end{Verbatim}
-The last element needed to define an area source is the hypocentral depth:
+The magnitude values define the bin edges of the distribution, that is:
+\begin{alltt}MAG_1 \(\leq\) m \(<\) MAG_2, top of rupture depth = DEPTH_1 \end{alltt}
+\begin{alltt}MAG_2 \(\leq\) m \(<\) MAG_3, top of rupture depth = DEPTH_2 \end{alltt}
+		...
+\begin{alltt}MAG_N-1 \(\leq\) m \(<\) MAG_N, top of rupture depth = DEPTH_N-1 \end{alltt}
+\begin{alltt}m \(\geq\) MAG_N, top of rupture depth = DEPTH_N \end{alltt}
+The hypocentral depth is specified by a single value:
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
 <\textcolor{red}{hypocentralDepth}>HYPOCENTRAL_DEPTH</\textcolor{red}{hypocentralDepth}>
 \end{Verbatim}
-that is expressed by a single value.
 
 \subsubsection{Point source definition}
 The point source definition follows the same schema of the area source definition, the only
@@ -574,172 +581,117 @@ The \Verb+simpleFaultGeometry+ element is defined as follows:
 	<\textcolor{violet}{lowerSeismogenicDepth}>LOWER_DEPTH</\textcolor{violet}{lowerSeismogenicDepth}>
 </\textcolor{red}{simpleFaultGeometry}>
 \end{Verbatim}
+The fault trace is defined as a 3D line, each point in the line being defined by longitude, latitude, and depth values. Fault trace coordinates must be given in the (positive) strike direction, in this way the fault surface is correctly constructed, dipping down to the right of the strike direction. Dip is specified by a single value, as well as the upper and lower seismogenic depths. 
 
+\subsection{Complex fault source definition}
+The complex fault source definition follows closely the simple fault source definition, the only difference being the absence of the \Verb+simpleFaultGeometry+ element, that is replaced by a \Verb+complexFaultGeometry+ element.
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{complexFaultSource} gml:id="ID">
+	<gml:name>NAME</gml:name>
+	<tectonicRegion>TECT_REG_TYPE</tectonicRegion>
+	<\textcolor{green}{rake}>RAKE_VALUE</\textcolor{green}{rake}>
+	<\textcolor{blue}{truncatedGutenbergRichter}>
+	...
+	</\textcolor{blue}{truncatedGutenbergRichter}>
+		\textit{OR}
+	<\textcolor{blue}{evenlyDiscretizedIncrementalMFD}>
+	...
+	</\textcolor{blue}{evenlyDiscretizedIncrementalMFD}>
+	<\textcolor{magenta}{complexFaultGeometry}>
+	...
+	</\textcolor{magenta}{complexFaultGeometry}>
+</\textcolor{red}{complexFaultSource}>
+\end{Verbatim}
+The geometry is specified by the fault's top and bottom edge coordinates (in the \Verb+faultTopEdge+ and \Verb+faultBottomEdge+ elements). Coordinates must be given in the (positive) strike direction, in this way the fault surface is correctly constructed, dipping down to the right of the strike direction.
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
+<\textcolor{red}{complexFaultGeometry}>
+	<\textcolor{green}{faultEdges}>
+		<\textcolor{blue}{faultTopEdge}>
+			<gml:LineString>
+				<gml:posList>
+					LON1 LAT1 DEPTH1
+					LON2 LAT2 DEPTH2
+					..
+					LONN LATN DEPTHN
+				</gml:posList>
+			</gml:LineString>
+		</\textcolor{blue}{faultTopEdge}>
+		<\textcolor{magenta}{faultBottomEdge}>
+			<gml:LineString>
+				<gml:posList>
+					LON1 LAT1 DEPTH1
+					LON2 LAT2 DEPTH2
+					..
+					LONN LATN DEPTHN
+				</gml:posList>
+			</gml:LineString>
+		</\textcolor{magenta}{faultBottomEdge}>
+	</\textcolor{green}{faultEdges}>
+</\textcolor{red}{complexFaultGeometry}>
+\end{Verbatim}
 
-
-\begin{comment}
-In this Chapter we provide with the reader a description of the input 
-files containing the information necessary to completely describe a 
-\gls{pshainputmodel} following a format compatible with \gls{acr:oq}. 
-%
-In OpenQuake the information commonly characterizing a 
-\gls{pshainputmodel} is organized into - at least - four main files:
-%
+\section{Configuration Parameters for Classical, Event Based, Disaggregation and UHS}
+Configuration parameters can be broadly divided into three main groups:
 \begin{itemize}
-	\item A \gls{configurationfile} (usually named config.gem) - It contains the 	
-	\item A file describing the \gls{seismicsourcesystem}
-	\item One or several files corresponding to the number of 
-		\glspl{initialseismicsourcemodel}
-	\item A file containing the information relative to the 
-		\glspl{groundmotionsystem}
+\item Source Model parameters
+\item GMPE parameters
+\item Calculator specific parameters
 \end{itemize}
 
-%
-% ==============================================================================
-\section{Anatomy of the configuration file for hazard calculation}
-The configuration file contains the following parts
-parts\footnote{
-Each line starting with a cancel symbol is a comment line that is skipped
-by the file parser.
-}:
+\subsubsection{Source Model parameters}
+Source Model parameters define how seismic sources are modeled by the engine in order to create the earthquake rupture forecast (ERF).\\
+Each source typology has its own set of parameters. For area sources, the following keys must be set:
 \begin{itemize}
-	\item general 
-	\item hazard
+\item \Verb+INCLUDE_AREA_SOURCES+: if \Verb+true+ all area sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
+\item \Verb+TREAT_AREA_SOURCE_AS+: specifies how ruptures in area sources must be modeled. Allowed values are:
+\begin{itemize}
+\item \Verb+Point Sources+
+\item \Verb+Line Sources (random or given strike)+
+\item \Verb+Cross Hair Line Sources+
+\item \Verb+16 Spoked Line Sources+
 \end{itemize}
-Each line starting with a cancel symbol is a comment line that is skipped
-by the file parser. 
-
-In order to discuss the content of the input file we use the 'config.gem' 
-provided with the hazard demo relative to the PEER test set 1 case 10.
-
-This is the general section of this file 
-\begin{Verbatim}[baselinestretch=1,fontsize=\small,numbers=left,frame=single]
-[general]
-CALCULATION_MODE = Classical
-# NOTE: The order of the vertices is to be kept!!!
-# lat, lon of polygon vertices (in clock or counter-clock wise order)
-REGION_VERTEX = 38.000, -122.000, 38.000, -122.000, 38.000, ...
-# degrees
-REGION_GRID_SPACING = 0.1
-\end{Verbatim}
-%
-The first line contains a label specifying the section (in this 
-particular case the 'general' section.
-
-The second part composing the configuration file contains hazard 
-specific information that can be divided into the following units: 
-general calculation parameters and PSHA input model files, 
-ground-motion model, seismic source model section and, results.
-%
-%
-\subsubsection{General calculation parameters and PSHA input model files}
-%
-\begin{Verbatim}[baselinestretch=1,fontsize=\small,numbers=left,frame=single]
-[HAZARD]
-SOURCE_MODEL_LT_RANDOM_SEED = 23
-GMPE_LT_RANDOM_SEED = 5
-GMF_RANDOM_SEED = 3
-
-# file containing erf logic tree structure
-SOURCE_MODEL_LOGIC_TREE_FILE = source_model_logic_tree.xml
-# file containing gmpe logic tree structure
-GMPE_LOGIC_TREE_FILE = gmpe_logic_tree.xml
-# output directory - relative to this file
-OUTPUT_DIR = computed_output
-
-# moment magnitude (Mw)
-MINIMUM_MAGNITUDE = 5.0
-# years
-INVESTIGATION_TIME = 1.0
-# maximum integration distance (km)
-MAXIMUM_DISTANCE = 200.0
-# bin width of the magnitude frequency distribution
-WIDTH_OF_MFD_BIN = 0.1
-\end{Verbatim}
-
-%
-% ============================================================================== 
-\section{Description of the seismic source system file}
-The seismic source system is described by an XML formatted file 
-compatible with the NRML schema.
-\marginpar{We miss a citation for NRML and a website as well!!}
-%
-\begin{Verbatim}[baselinestretch=1,fontsize=\small,numbers=left,frame=single]
-	<logicTreeSet>
-        <logicTree id="lt1">
-            <logicTreeBranchSet branchingLevel="1" 
-                                uncertaintyType="sourceModel">
-                <logicTreeBranch>
-                    <uncertaintyModel>source_model.xml</uncertaintyModel>
-                    <uncertaintyWeight>1.0</uncertaintyWeight>
-                </logicTreeBranch>
-             </logicTreeBranchSet>
-        </logicTree>
-    </logicTreeSet>
-\end{Verbatim}
-%
-% ------------------------------------------------------------------------------
-\subsection{Basic seismic source typologies }
-
-%
-% ------------------------------------------------------------------------------
-\subsection{Initial Seismic Source Model description}
-The initial seismic source model used in this example is extremely simple, 
-since it contains a single area source. 
-%
-\begin{Verbatim}[baselinestretch=1,fontsize=\small,numbers=left,frame=single]
-    <areaSource gml:id="Src1">
-      <gml:name>PEER test "AREA 1" model</gml:name>
-      <tectonicRegion>Active Shallow Crust</tectonicRegion>
-      <areaBoundary>
-        <gml:Polygon>
-          <gml:exterior>
-            <gml:LinearRing>
-              <gml:posList>
-				-122.000 38.901 
-				-121.920 38.899 
-				...
-				-122.160 38.892 
-				-122.080 38.899 
-			  </gml:posList>
-            </gml:LinearRing>
-          </gml:exterior>
-        </gml:Polygon>
-      </areaBoundary>
-      <ruptureRateModel>
-        <truncatedGutenbergRichter>
-          <aValueCumulative>3.097</aValueCumulative>
-          <bValue>0.9</bValue>
-          <minMagnitude>5.0</minMagnitude>
-          <maxMagnitude>6.5</maxMagnitude>
-        </truncatedGutenbergRichter>
-        <focalMechanism publicID="smi:f01/11">
-          <qml:nodalPlanes>
-            <qml:nodalPlane1>
-              <qml:strike>
-                <qml:value>0.0</qml:value>
-              </qml:strike>
-              <qml:dip>
-                <qml:value>90.0</qml:value>
-              </qml:dip>
-              <qml:rake>
-                <qml:value>0.0</qml:value>
-              </qml:rake>
-            </qml:nodalPlane1>
-          </qml:nodalPlanes>
-        </focalMechanism>
-      </ruptureRateModel>
-      <ruptureDepthDistribution>
-        <magnitude>6.5</magnitude>
-        <depth>5.0</depth>
-      </ruptureDepthDistribution>
-      <hypocentralDepth>5.0</hypocentralDepth>
-    </areaSource>
-  </sourceModel>
-\end{Verbatim}
-
-
-%
-% ============================================================================== 
-\section{Ground-motion system file description}
-\end{comment}
+\item \Verb+AREA_SOURCE_DISCRETIZATION+: defines area source region discretization step (in decimal degrees).
+\item \Verb+AREA_SOURCE_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
+\end{itemize}
+Point sources require similar parameters:
+\begin{itemize}
+\item \Verb+INCLUDE_GRID_SOURCES+: if \Verb+true+ all point sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
+\item \Verb+TREAT_GRID_SOURCE_AS+: specifies how ruptures in point sources must be modeled. Allowed values are:
+\begin{itemize}
+\item \Verb+Point Sources+
+\item \Verb+Line Sources (random or given strike)+
+\item \Verb+Cross Hair Line Sources+
+\item \Verb+16 Spoked Line Sources+
+\end{itemize}
+\item \Verb+GRID_SOURCE_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
+\end{itemize}
+Simple fault sources require the following parameters:
+\begin{itemize}
+\item \Verb+INCLUDE_FAULT_SOURCE+: if \Verb+true+ all simple fault sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
+\item \Verb+FAULT_RUPTURE_OFFSET+: specifies the amount by which ruptures are offset on the fault (in km)
+\item \Verb+FAULT_SURFACE_DISCRETIZATION+: specifies the fault surface discretization step (in km).
+\item \Verb+FAULT_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
+\item \Verb+FAULT_MAGNITUDE_SCALING_SIGMA+: the standard deviation of log(Length) or log(Area)
+\item \Verb+RUPTURE_ASPECT_RATIO+: rupture aspect ratio (rupture length / rupture width)
+\item \Verb+RUPTURE_FLOATING_TYPE+: rupture floating algorithm. Allowed values are:
+\begin{itemize}
+\item \Verb+Only along strike ( rupture full DDW)+
+\item \Verb+Along strike and down dip+
+\item \Verb+Along strike & centered down dip+
+\end{itemize}
+\end{itemize}
+Complex fault sources require the same set of parameters:
+\begin{itemize}
+\item \Verb+INCLUDE_SUBDUCTION_FAULT_SOURCE+: if \Verb+true+ all complex fault sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
+\item \Verb+SUBDUCTION_FAULT_RUPTURE_OFFSET+: specifies the amount by which ruptures are offset on the fault (in km)
+\item \Verb+SUBDUCTION_FAULT_SURFACE_DISCRETIZATION+: specifies the fault surface discretization step (in km).
+\item \Verb+SUBDUCTION_FAULT_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
+\item \Verb+SUBDUCTION_FAULT_MAGNITUDE_SCALING_SIGMA+: the standard deviation of log(Length) or log(Area)
+\item \Verb+SUBDUCTION_RUPTURE_ASPECT_RATIO+: rupture aspect ratio (rupture length / rupture width)
+\item \Verb+SUBDUCTION_RUPTURE_FLOATING_TYPE+: rupture floating algorithm. Allowed values are:
+\begin{itemize}
+\item \Verb+Only along strike ( rupture full DDW)+
+\item \Verb+Along strike and down dip+
+\item \Verb+Along strike & centered down dip+
+\end{itemize}
+\end{itemize}
