@@ -631,15 +631,18 @@ The geometry is specified by the fault's top and bottom edge coordinates (in the
 \end{Verbatim}
 
 \section{Configuration Parameters for Classical, Event Based, Disaggregation and UHS}
-Configuration parameters can be broadly divided into three main groups:
+Configuration parameters can be broadly divided into five main groups:
 \begin{itemize}
 \item Source Model parameters
 \item GMPE parameters
+\item Site parameters
+\item Logic Tree parameters
 \item Calculator specific parameters
 \end{itemize}
 
 \subsubsection{Source Model parameters}
 Source Model parameters define how seismic sources are modeled by the engine in order to create the earthquake rupture forecast (ERF).\\
+
 Each source typology has its own set of parameters. For area sources, the following keys must be set:
 \begin{itemize}
 \item \Verb+INCLUDE_AREA_SOURCES+: if \Verb+true+ all area sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
@@ -653,6 +656,7 @@ Each source typology has its own set of parameters. For area sources, the follow
 \item \Verb+AREA_SOURCE_DISCRETIZATION+: defines area source region discretization step (in decimal degrees).
 \item \Verb+AREA_SOURCE_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
 \end{itemize}
+
 Point sources require similar parameters:
 \begin{itemize}
 \item \Verb+INCLUDE_GRID_SOURCES+: if \Verb+true+ all point sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
@@ -665,6 +669,7 @@ Point sources require similar parameters:
 \end{itemize}
 \item \Verb+GRID_SOURCE_MAGNITUDE_SCALING_RELATIONSHIP+: specifies the magnitude scaling relationship used for modeling finite ruptures (list of available scaling relationships are given in Appendix B).
 \end{itemize}
+
 Simple fault sources require the following parameters:
 \begin{itemize}
 \item \Verb+INCLUDE_FAULT_SOURCE+: if \Verb+true+ all simple fault sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
@@ -680,6 +685,7 @@ Simple fault sources require the following parameters:
 \item \Verb+Along strike & centered down dip+
 \end{itemize}
 \end{itemize}
+
 Complex fault sources require the same set of parameters:
 \begin{itemize}
 \item \Verb+INCLUDE_SUBDUCTION_FAULT_SOURCE+: if \Verb+true+ all complex fault sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
@@ -694,4 +700,86 @@ Complex fault sources require the same set of parameters:
 \item \Verb+Along strike and down dip+
 \item \Verb+Along strike & centered down dip+
 \end{itemize}
+\end{itemize}
+
+\subsubsection{GMPE parameters}
+The GMPE parameters configures the GMPEs chosen for calculation. The currently supported parameters are:
+\begin{itemize}
+\item \Verb+COMPONENT+: specifies the GMPE component. Allowed values are:
+\begin{itemize}
+\item \Verb+Average Horizontal+
+\item \Verb+Average Horizontal (GMRotI50)+
+\item \Verb+Random Horizontal+
+\item \Verb+Greater of Two Horz.+
+\item \Verb+Vertical+
+\end{itemize}
+\item \Verb+INTENSITY_MEASURE_TYPE+: Allowed options are:
+\begin{itemize}
+\item \Verb+PGA+: (g)
+\item \Verb+PGD+: (cm)
+\item \Verb+PGV+: (cm/s)
+\item \Verb+SA+: (g)
+\end{itemize}
+\item \Verb+PERIOD+: spectral acceleration period (in seconds)
+\item \Verb+DAMPING+: in percent
+\item \Verb+GMPE_TRUNCATION_TYPE+: truncation algorithm for the GMPE distribution. Allowed values are:
+\begin{itemize}
+\item \Verb+None+: no truncation is applied.
+\item \Verb+1 Sided+: truncation of upper side of distribution only.
+\item \Verb+2 Sided+: truncation of both upper and lower sides of distribution.
+\end{itemize}
+\item \Verb+TRUNCATION_LEVEL+: units of sigma for GMPE distribution truncation.
+\item \Verb+STANDARD_DEVIATION_TYPE+: type of standard deviation in the GMPE distribution. Allowed values are:
+\begin{itemize}
+\item \Verb+Total+
+\item \Verb+Inter-Event+
+\item \Verb+Intra-Event+
+\item \Verb+None (zero)+
+\end{itemize}
+\end{itemize}
+
+\subsubsection{Site parameters}
+Site parameters describe site conditions that are used by GMPEs:
+\begin{itemize}
+\item \Verb+REFERENCE_VS30_VALUE+: shear wave velocity in the uppermost 30 meters (in m/s)
+\item \Verb+VS30_TYPE+: allowed values:
+\begin{itemize}
+\item \Verb+measured+
+\item \Verb+inferred+
+\end{itemize}
+\item \Verb+DEPTHTO1PT0KMPERSEC+: depth to where shear-wave velocity is equal to 1.0 km/s (in m).
+\item \Verb+REFERENCE_DEPTH_TO_2PT5KM_PER_SEC_PARAM+: depth to where shear-wave velocity is equal to 2.5 km/s (in km).
+\end{itemize}
+
+\subsubsection{Logic Tree parameters}
+Logic tree parameters configure the logic tree processing:
+\begin{itemize}
+\item \Verb+NUMBER_OF_LOGIC_TREE_SAMPLES+: number of logic tree traversals (obtained through random sampling of tree branches).
+\item \Verb+SOURCE_MODEL_LT_RANDOM_SEED+: seed number for random number generator used for sampling the source model logic tree.
+\item \Verb+GMPE_LT_RANDOM_SEED+: seed number for random number generator used for sampling the GMPE logic tree.
+\end{itemize}
+
+\subsubsection{Classical PSHA parameters}
+Parameters required for configuring the Classical PSHA calculator are:
+\begin{itemize}
+\item \Verb+MINIMUM_MAGNITUDE+: minimum (moment) magnitude to be used in the ERF construction.
+\item \Verb+INVESTIGATION_TIME+: time span (in years) for computing probability of exceedance.
+\item \Verb+MAXIMUM_DISTANCE+: maximum distance of sources to be considered in the calculation. Sources more than this distance away are ignored.
+\item \Verb+WIDTH_OF_MFD_BIN+: discretization interval for  magnitude-frequency distribution.
+\item \Verb+INTENSITY_MEASURE_LEVELS+: comma separated list of intensity measure levels for which to compute probability of exceedance.
+\item \Verb+COMPUTE_MEAN_HAZARD_CURVE+: if true, mean hazard curves are calculated and saved to file.
+\item \Verb+POES+: on or more probability values for computing hazard maps (from mean hazard curves).
+\item \Verb+QUANTILE_LEVELS+: one or more quantile levels for computing quantile hazard curves.
+\end{itemize}
+
+\subsubsection{Event Based PSHA parameters}
+Parameters required for configuring the Event Based PSHA calculator are:
+\begin{itemize}
+\item \Verb+MINIMUM_MAGNITUDE+: minimum (moment) magnitude to be used in the ERF construction.
+\item \Verb+INVESTIGATION_TIME+: time span (in years) for computing probability of exceedance.
+\item \Verb+MAXIMUM_DISTANCE+: maximum distance of sources to be considered in the calculation. Sources more than this distance away are ignored.
+\item \Verb+WIDTH_OF_MFD_BIN+: discretization interval for  magnitude-frequency distribution.
+\item \Verb+NUMBER_OF_SEISMICITY_HISTORIES+: for each logic tree sample, the number of stochastic event sets to be generated.
+\item \Verb+GMF_RANDOM_SEED+: seed number for random number generator initialization used for ground motion field calculation.
+\item \Verb+GMF_OUTPUT+: if true, ground motion fields are saved to file.
 \end{itemize}
