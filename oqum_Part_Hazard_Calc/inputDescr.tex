@@ -8,13 +8,13 @@ The paths to the Seismic Source and Ground Motion System files are given in the
 \Verb+SOURCE_MODEL_LOGIC_TREE_FILE+ and \Verb
 +GMPE_LOGIC_TREE_FILE+ keys, respectively, both defined in the \Verb+[HAZARD]+ section of the configuration file.\\
 The information required to define both the Seismic Source and Ground Motion Systems is stored in a \Verb+logicTree+ element: 
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 ...
 </\textcolor{red}{logicTree}>
 \end{Verbatim}
 A \Verb+logicTree+ is defined as a sequence of \Verb+logicTreeBranchingLevel+ elements. The position in the sequence specifies in which level of the tree the branching level is located. That is, the first logicTreeBranchingLevel element in the sequence represents the first level in the tree, the second element the second level in the tree, and so on.
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID_1">
 		...
@@ -30,7 +30,7 @@ A \Verb+logicTree+ is defined as a sequence of \Verb+logicTreeBranchingLevel+ el
 \end{Verbatim}
 No restrictions are present on the number of tree levels that can be defined.\\
 A \Verb+logicTreeBranchingLevel+ is defined as a sequence of \Verb+logicTreeBranchSet+ elements. Each \Verb+logicTreeBranchSet+ defines a particular epistemic uncertainty inside a branching level. A branch set has two required attributes (\Verb+branchingLevelID+ and \Verb+uncertaintyType+ (defining the type of epistemic uncertainty the branch set is defining))
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 ...
 	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID_#">
@@ -62,7 +62,7 @@ Possible values for the \Verb+uncertaintyType+ attribute are:
 \end{itemize}
 No restrictions are given on the number of branch sets that can be defined inside a branching level.\\
 A \Verb+branchSet+ is defined as a sequence of  \Verb+logicTreeBranch+ elements, each defined by an \Verb+uncertaintyModel+ element (a string identifying an uncertainty model; the content of the string varies with the uncertaintyType attribute value of the branchSet element) and the uncertaintyWeight element (specifying the probability/weight associated to the uncertaintyModel):
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <\textcolor{red}{logicTree} logicTreeID="ID">
 ...
 	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID_#">
@@ -95,23 +95,23 @@ A \Verb+branchSet+ is defined as a sequence of  \Verb+logicTreeBranch+ elements,
 Depending on the \Verb+uncertaintyType+ the content of the \Verb+<uncertaintyModel>+ element changes:
 \begin{itemize}
 \item if \Verb+uncertaintyType="gmpeModel"+, the uncertainty model contains the name of a ground motion prediction equation (a list of available GMPEs are given in appendix A), e.g.:
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <uncertaintyModel>GMPE_NAME</uncertaintyModel>
 \end{Verbatim}
 \item if \Verb+uncertaintyType="sourceModel"+, the uncertainty model contains the paths to a source model file, e.g.:
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <uncertaintyModel>SOURCE_MODEL_FILE_PATH</uncertaintyModel>
 \end{Verbatim}
 \item if \Verb+uncertaintyType="maxMagGRRelative"+, the uncertainty model contains the increment to be added (or subtracted, depending on the sign) to the Gutenberg-Richter maximum magnitude:
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <uncertaintyModel>MAX_MAGNITUDE_INCREMENT</uncertaintyModel>
 \end{Verbatim}
 \item if \Verb+uncertaintyType="bGRRelative"+, the uncertainty model contains the increment to be added (or subtracted, depending on the sign) to the Gutenberg-Richter b value:
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <uncertaintyModel>B_VALUE_INCREMENT</uncertaintyModel>
 \end{Verbatim}
 \item if \Verb+uncertaintyType="abGRAbsolute"+, the uncertainty model contains one (if the uncertainty apply to a source with only one Gutenberg-Richter magnitude frequency distribution) or more (if the source has more than one magnitude frequency distributions) a and b pairs:
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <uncertaintyModel>
 A_VALUE_1 B_VALUE_1
  ... 
@@ -119,7 +119,7 @@ A_VALUE_N B_VALUE_N
 </uncertaintyModel>
 \end{Verbatim}
 \item if \Verb+uncertaintyType="maxMagGRAbsolute"+, the uncertainty model contains one or more (depending on the number of magnitude frequency distributions in the source) Gutenberg-Richter maximum magnitude values:
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 <uncertaintyModel>
 MAX_MAGNITUDE_1
  ... 
@@ -131,21 +131,21 @@ No restrictions are given on the number of \Verb+logicTreeBranch+ elements that 
 The \Verb+logicTreeBranchSet+ element offers also a number of optional attributes allowing for complex tree definitions:
 \begin{itemize}
 \item \Verb+applyToBranches+: specifies to which \Verb+logicTreeBranch+ elements (one or more), in the previous branching level, the branch set is linked to. The linking is established by defining the IDs of the branches to link to:
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
-applyToBranches="logicTreeBranchID1 logicTreeBranchID2 .... logicTreeBranchIDN"
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+applyToBranches="branchID1 branchID2 .... branchIDN"
 \end{Verbatim}
 The default is the keyword ALL, which means that a branch set is by default linked to all branches in the previous branching level. By specifying one or more branches to which the branch set links to, non-symmetric logic trees can be defined.
 \item \Verb+applyToSources+: specifies to which source in a source model the uncertainty applies to. Sources are specified in terms of their IDs:
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 applyToSources="srcID1 srcID2 .... srcIDN"
 \end{Verbatim}
 \item \Verb+applyToSourceType+: specifies to which source type the uncertainty applies to.
 Only one source typology can be defined (\Verb+area+, \Verb+point+, \Verb+simpleFault+, \Verb+complexFault+), e.g.:
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 applyToSources="area"
 \end{Verbatim}
 \item \Verb+applyToTectonicRegionType+: specifies to which tectonic region type the uncertainty applies to. Only one tectonic region type can be defined (\Verb+Active Shallow Crust+, \Verb+Stable Shallow Crust+,  \Verb+Subduction Interface+, \Verb+Subduction IntraSlab+, \Verb+Volcanic+), e.g.:
-\begin{Verbatim}[frame=single, commandchars=\\\{\}]
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 applyToTectonicRegionType="Active Shallow Crust"
 \end{Verbatim}
 \end{itemize}
@@ -227,8 +227,86 @@ Figure \ref{lt1} shows an example of Seismic Source System consisting of two ini
 \end{center}
 \end{figure}
 
+\subsection{The Ground Motion System definition}
+The Ground Motion System is defined in a \Verb+logicTree+ element with the following constrains:
+\begin{itemize}
+\item Only one branch set can be defined per branching level.
+\item Each branch set must define uncertainties of type \Verb+gmpeModel+.
+\item All branch sets must define the applyToTectonicRegionType attribute. This is the only attribute allowed.
+\item Each branch set must refer to a different tectonic region type.
+\item In all branch sets, branch weights must sum to 1.
+\end{itemize}
+Figure \ref{lt2} shows an example of Ground Motion System as defined in a \Verb+logicTreeElement+. Each branching level contains only one \Verb+branchSet+, each referring to a different tectonic region type. Each branch set can contain a variable number of GMPEs.
+\begin{figure}[htbp]
+\begin{center}
+\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\scriptsize, samepage=true]
+<\textcolor{red}{logicTree} logicTreeID="ID">       
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
+		applyToTectonicRegionType="\textcolor{orange}{Active Shallow Crust}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>                
+		</\textcolor{blue}{logicTreeBranchSet}>       
+	</\textcolor{green}{logicTreeBranchingLevel}>
+		<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
+		applyToTectonicRegionType="\textcolor{orange}{Stable Shallow Crust}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>                
+		</\textcolor{blue}{logicTreeBranchSet}>       
+	</\textcolor{green}{logicTreeBranchingLevel}>
+		<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
+		applyToTectonicRegionType="\textcolor{orange}{Subduction IntraSlab}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>                
+		</\textcolor{blue}{logicTreeBranchSet}>       
+	</\textcolor{green}{logicTreeBranchingLevel}>
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
+		applyToTectonicRegionType="\textcolor{orange}{Subduction Interface}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>                
+		</\textcolor{blue}{logicTreeBranchSet}>
+	</\textcolor{green}{logicTreeBranchingLevel}>
+	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
+		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
+		applyToTectonicRegionType="\textcolor{orange}{Volcanic}">
+			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
+				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
+				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
+			</\textcolor{magenta}{logicTreeBranch}>                
+		</\textcolor{blue}{logicTreeBranchSet}>
+	</\textcolor{green}{logicTreeBranchingLevel}>           
+</\textcolor{red}{logicTree}>
+\end{Verbatim}
+\caption{Example of Ground Motion System definition. GMPEs are defined for the tectonic region types currently supported by OpenQuake.}
+\label{lt2}
+\end{center}
+\end{figure}
+
 \subsection{The Seismic Source Model definition}\label{seismicSourceNrml}
-A Seismic Source Model is defined as a collection of seismic sources. Four source typologies can be currently defined:
+To complete the Seismic Source System definition  the the required seismic source models must be defined. A Seismic Source Model is defined as a collection of seismic sources. Four source typologies can be currently defined:
 \begin{itemize}
 \item Area
 \item Point
@@ -496,84 +574,7 @@ The \Verb+simpleFaultGeometry+ element is defined as follows:
 	<\textcolor{violet}{lowerSeismogenicDepth}>LOWER_DEPTH</\textcolor{violet}{lowerSeismogenicDepth}>
 </\textcolor{red}{simpleFaultGeometry}>
 \end{Verbatim}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The Ground Motion System definition}
-The Ground Motion System is defined in a \Verb+logicTree+ element with the following constrains:
-\begin{itemize}
-\item Only one branch set can be defined per branching level.
-\item Each branch set must define uncertainties of type \Verb+gmpeModel+.
-\item All branch sets must define the applyToTectonicRegionType attribute. This is the only attribute allowed.
-\item Each branch set must refer to a different tectonic region type.
-\item In all branch sets, branch weights must sum to 1.
-\end{itemize}
-Figure \ref{lt2} shows an example of Ground Motion System as defined in a \Verb+logicTreeElement+. Each branching level contains only one \Verb+branchSet+, each referring to a different tectonic region type. Each branch set can contain a variable number of GMPEs.
-\begin{figure}[htbp]
-\begin{center}
-\begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\scriptsize, samepage=true]
-<\textcolor{red}{logicTree} logicTreeID="ID">       
-	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
-		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
-		applyToTectonicRegionType="\textcolor{orange}{Active Shallow Crust}">
-			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
-				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
-				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
-			</\textcolor{magenta}{logicTreeBranch}>
-			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
-				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
-				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
-			</\textcolor{magenta}{logicTreeBranch}>                
-		</\textcolor{blue}{logicTreeBranchSet}>       
-	</\textcolor{green}{logicTreeBranchingLevel}>
-		<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
-		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
-		applyToTectonicRegionType="\textcolor{orange}{Stable Shallow Crust}">
-			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
-				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
-				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
-			</\textcolor{magenta}{logicTreeBranch}>
-			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
-				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
-				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
-			</\textcolor{magenta}{logicTreeBranch}>                
-		</\textcolor{blue}{logicTreeBranchSet}>       
-	</\textcolor{green}{logicTreeBranchingLevel}>
-		<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
-		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
-		applyToTectonicRegionType="\textcolor{orange}{Subduction IntraSlab}">
-			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
-				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
-				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
-			</\textcolor{magenta}{logicTreeBranch}>
-			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
-				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
-				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
-			</\textcolor{magenta}{logicTreeBranch}>                
-		</\textcolor{blue}{logicTreeBranchSet}>       
-	</\textcolor{green}{logicTreeBranchingLevel}>
-	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
-		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
-		applyToTectonicRegionType="\textcolor{orange}{Subduction Interface}">
-			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
-				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
-				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
-			</\textcolor{magenta}{logicTreeBranch}>                
-		</\textcolor{blue}{logicTreeBranchSet}>
-	</\textcolor{green}{logicTreeBranchingLevel}>
-	<\textcolor{green}{logicTreeBranchingLevel} branchingLevelID="ID">
-		<\textcolor{blue}{logicTreeBranchSet} branchSetID="ID" uncertaintyType="gmpeModel" 
-		applyToTectonicRegionType="\textcolor{orange}{Volcanic}">
-			<\textcolor{magenta}{logicTreeBranch} branchID="ID">
-				<uncertaintyModel>GMPE_NAME</uncertaintyModel>
-				<uncertaintyWeight>WEIGHT</uncertaintyWeight>
-			</\textcolor{magenta}{logicTreeBranch}>                
-		</\textcolor{blue}{logicTreeBranchSet}>
-	</\textcolor{green}{logicTreeBranchingLevel}>           
-</\textcolor{red}{logicTree}>
-\end{Verbatim}
-\caption{Example of Ground Motion System definition. GMPEs are defined for the tectonic region types currently supported by OpenQuake.}
-\label{lt2}
-\end{center}
-\end{figure}
+
 
 
 \begin{comment}
