@@ -583,7 +583,7 @@ The \Verb+simpleFaultGeometry+ element is defined as follows:
 \end{Verbatim}
 The fault trace is defined as a 3D line, each point in the line being defined by longitude, latitude, and depth values. Fault trace coordinates must be given in the (positive) strike direction, in this way the fault surface is correctly constructed, dipping down to the right of the strike direction. Dip is specified by a single value, as well as the upper and lower seismogenic depths. 
 
-\subsection{Complex fault source definition}
+\subsubsection{Complex fault source definition}
 The complex fault source definition follows closely the simple fault source definition, the only difference being the absence of the \Verb+simpleFaultGeometry+ element, that is replaced by a \Verb+complexFaultGeometry+ element.
 \begin{Verbatim}[frame=single, commandchars=\\\{\},fontsize=\normalsize, samepage=true]
 <\textcolor{red}{complexFaultSource} gml:id="ID">
@@ -642,7 +642,6 @@ Configuration parameters can be broadly divided into five main groups:
 
 \subsubsection{Source Model parameters}
 Source Model parameters define how seismic sources are modeled by the engine in order to create the earthquake rupture forecast (ERF).\\
-
 Each source typology has its own set of parameters. For area sources, the following keys must be set:
 \begin{itemize}
 \item \Verb+INCLUDE_AREA_SOURCES+: if \Verb+true+ all area sources in the source model are included in the ERF calculation. They are exclude if \Verb+false+.
