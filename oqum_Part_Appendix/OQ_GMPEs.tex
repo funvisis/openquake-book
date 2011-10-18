@@ -1,11 +1,78 @@
-\section{GMPEs in OpenQuake}
+%\section{GMPEs in OpenQuake}
 \label{app:gmpes}
 The list of currently supported GMPEs is the following:
 \begin{itemize}
+
 \item \Verb+AB_2003_AttenRel+: implements the GMPE described in "Empirical Ground Motion Relations for Subduction-Zone Earthquakes and their application to Cascadia and other regions", Gail M.Atkinson and David M. Boore, Bulletin of the Seismological Society of America, Vol. 93, No. 4, pp 1703-1729, (2003).  It also considers the: "Erratum to 'Empirical Ground Motion Relations for Subduction-Zone Earthquakes and their application to Cascadia and other regions'", Gail M. Atkinson and David M. Boore, Vol. 98, No. 5, pp.2567-2569, 2008. The GMPE implements the global model but not the corrections for Japan/Cascadia.
+
 \item \Verb+AS_1996_AttenRel+: implements the GMPE (for horizontal component) described in "Empirical ground motion models", Abrahamson, N. A. and Silva, W. J. Report to Brookhaven National Laboratory, (1996). Reported in: Stewart J. P., Chiou S.-J., Bray J. D., Graves R. W., Somerville P. G., and Abrahamson N. A., 2001. Ground motion evaluation procedures for performance-based design. PEER Report 2001/09, Pacific Earthquake Engineering Research Center, College of Engineering, University of California, Berkeley, USA.
+
+\item \Verb+AS_1997_AttenRel+: implements the GMPE described in "Empirical Response Spectral Attenuation Relations for Shallow Crustal Earthquakes", N. A. Abrahamson and W. J. Silva, Seismological Research Letters, Vol. 68, No. 1, 94-127 (1997).
+
 \item \Verb+AS_2008_AttenRel+: implements the GMPE described in "Summary of the Abrahamson and Silva NGA Ground-Motion Relations", Abrahamson, N. A., and W. J. Silva, Earthquake Spectra, 24(1), 67-97 (2008).
+
+\item \Verb+AW_2010_AttenRel+: implements the IPE (intensity prediction equation) from T. Allen and D. Wald described in '"Best Practices" for using Macro-seismic Intensity and Ground Motion-Intensity Conversion Equations for Hazard and Loss Models in GEM1', G. Cua et. al.,GEM Technical Report 2010-4, GEM Foundation, Pavia, Italy (2010).
+
 \item \Verb+Abrahamson_2000_AttenRel+: implements the GMPE described in: "Effects of rupture directivity on probabilistic seismic hazard analysis", Abrahamson, N. A., Proceedings of the 6th International Conference on Seismic Zonation, Palm Springs, CA, Earthquake Engineering Research Institute (EERI) (2000).
+
 \item \Verb+AkB_2010_AttenRel+: implements the GMPE described in: "Empirical Equations for the Prediction of PGA , PGV, and Spectral Accelerations in Europe, the Mediterranean Region, and the Middle East", Sinnan Akkar, Julian J. Bommer, Seismological Research Letters Vol. 81, No 2,  pp 195-206, March-April (2010).
+
 \item \Verb+BA_2008_AttenRel+: implements the GMPE described in: "Ground-Motion Prediction Equations for the Average Horizontal Component of PGA, PGV, and 5\%-Damped PSA at Spectral Periods between 0.01 s and 10.0 s",  Boore, D. M. and Atkinson, G. M, Earthquake Spectra, Volume 24, Number 1, pp. 99-138 (2008).
+
+\item \Verb+BC_2004_AttenRel+: implements the site effect model described in "Ground-Motion Amplification in Nonlinear Soil Sites with Uncertain Properties", P. Bazzurro and C. A. Cornell, v. 94; no. 6; p. 2090-2109 (2004). The model is applied to the Abrahamson and Silva 1997 (\Verb+AS_1997_AttenRel+) rock site prediction.
+
+\item \Verb+BJF_1997_AttenRel+: implements the GMPE described in "Equations for estimating horizontal response spectra and peak acceleration from western North American earthquakes: A summary of recent work",  Boore, D. M., W. B. Joyner, and T. E. Fumal, Seismological Research Letters, 68(1), 128-153 (1997).
+
+\item \Verb+BS_2003_AttenRel+: implements the site effect model described in "Uncertainty and bias in ground motion estimates from ground response analyses",  Baturay, M. B., and J. P. Stewart, Bull. Seism. Soc. Am.93 , no. 5,2025 Ð2042 (2003). The model is applied to the Abrahamson and Silva 1997 (\Verb+AS_1997_AttenRel+) rock site prediction.
+
+\item \Verb+BW_1997_AttenRel+: implements the IPE described in: "Estimating earthquake location and magnitude from seismic intensity data", Bakun, W. H. and C. M. Wentworth, Bull. Seism. Soc. Am. 87, 1502-1521(1997).
+
+\item \Verb+BommerEtAl_2009_AttenRel+: implements the GMPE described in: "Empirical equations for the prediction of the significant, bracketed, and uniform duration of earthquake ground motion", Bommer, J. J., Stafford, P. J. and Alarcon, J. E, Bulletin of the Seismological Society of America, 99(6),3217-3233 (2009).
+
+\item \Verb+CB_2003_AttenRel+: implements the GMPE described in: "Updated near-source ground motion (attenuation) relations for the horizontal and vertical components of peak ground acceleration and acceleration response spectra", Campbell, K. W. and Y. Bozorgnia, Bulletin of the Seismological Society of America, 93(1), 314 -331 (2003).
+
+\item \Verb+CB_2008_AttenRel+: implements the GMPE described in: "NGA Ground Motion Model for the Geometric Mean Horizontal Component of PGA, PGV, PGD and 5\% Damped Linear Elastic Response Spectra for Periods Ranging from 0.01 to 10 s", Campbell, K. W. and Y. Bozorgnia, Earthquake Spectra, Volume 24, Number 1, pp. 139-171(2008).
+
+\item \Verb+CF_2008_AttenRel+: implements the GMPE described in: "Broadband (0.05 to 20s) prediction of displacement response spectra based on worldwide digital records", Cauzzi, C. and Faccioli, E., Journal of Seismology, Volume 12,pp. 453-475 (2008).
+
+\item \Verb+CL_2002_AttenRel+: implements the IPE described in:"Intensity attenuation relationship for the South China region and comparison with the component attenuation model", Chandler, A. M. and Lam, N. T. K., Journal of Asian Earth Sciences, Volume 20, Issue 7, Pages 775-790 (2002).
+
+\item \Verb+CS_2005_AttenRel+: implements the site effect model described in: "Nonlinear Site Amplification as a Function of 30 m Shear Wave Velocity", Choi, Y. and Stewart, J. P., Earthquake Spectra, 21 (1), 1-30 (2005). The model is applied to the Abrahamson and Silva 1997 (\Verb+AS_1997_AttenRel+) rock site prediction.
+
+\item \Verb+CY_2008_AttenRel+: implements the GMPE described in: "An NGA Model for the Average Horizontal Component of Peak Ground Motion and Response Spectra", Chiou, B. S.-J. and Youngs, R. R., Earthquake Spectra, Volume 24, No. 1, pages 173Ð215, (2008).
+
+\item \Verb+Campbell_1997_AttenRel+: implements the GMPE described in: "Empirical near-source attenuation relationships for horizontal and vertical components of peak ground acceleration, peak ground velocity, and pseudo-absolute acceleration response spectra", Campbell, K. W., Seismological Research Letters, 68(1), 154 -179 (1997). It implements also the Erratum: Campbell, K. W., Seismological Research Letters, 71(3), 352-354. (2000).
+
+\item \Verb+Campbell_2003_AttenRel+: implements the GMPE described in: "Prediction of Strong Ground Motion Using the Hybrid Empirical Method and Its Use in the Development of Ground-Motion (Attenuation) Relations in Eastern North America", Campbell, K. W., BSSA, vol 93, no 3, pp 1012-1033 (2003).
+
+\item \Verb+Campbell_2003_SHARE_AttenRel+: implements the Campbell 2003 GMPE (\Verb+Campbell_2003_AttenRel+), but adjusted for a reference $vs_{30}=800 m/s$ and for style of faulting as requested by the SHARE project.
+
+\item \Verb+DahleEtAl_1995_AttenRel+: implements the GMPE developed by Dahle et al.: Proc. 5th Int. Conf. on Seismic Zonation, Oct 17-19, Nice, France, p 1005-1012 (1995).
+
+\item \Verb+FS_2011_AttenRel+: implements the GMPE described in: "A predictive model for Arias intensity at multiple sites and consideration of spatial correlations", Foulser-Piggott, R. and Stafford, P. J.  Earthquake Engineering and Structural Dynamics (2011).
+
+\item \Verb+Field_2000_AttenRel+: implements the GMPE described in: "A modified ground motion attenuation relationship for Southern California that accounts for detailed site classification and a basin-depth effect.", Field, E. H,  Bull. Seism. Soc. Amer., 90, 209-221(2000).
+
+\item \Verb+KS_2006_AttenRel+: implements the GMPE described in: "Prediction equations for significant duration of earthquake ground motions considering site and near-source effects", Kempton, J. J. and Stewart, J. P. Earthquake Spectra, 22(4), 985-1013 (2006).
+
+\item \Verb+LL_2008_AttenRel+: implements the GMPE described in: "Ground-Motion Attenuation Relationships for Subduction-Zone Earthquakes in Northeastern Taiwan", Po-Shen Lin and Chyi-Tyi Lee, Bulletin of the Seismological Society of America, Vol. 98, No. 1, pp 220-240, (2008).
+
+\item \Verb+McVerryetal_2000_AttenRel+: implements the GMPE described in: "Crustal and subduction zone attenuation relations for New Zealand Earthquakes", Proc. 12th World Conference on Earthquake Engineering (2000). 
+
+\item \Verb+SEA_1999_AttenRel+: implements the GMPE described in: "SEA99: a revised ground motion prediction relation for use in extensional tectonic regimes", Spudich et. al., Bull. Seism. Soc. Am. 89, no. 1, 1156Ð1170 (1999).
+
+\item \Verb+SadighEtAl_1997_AttenRel+: implements the GMPE described in: "Attenuation relationships for shallow crustal earthquakes based on California strong motion data", Sadigh, K., C. -Y. Chang, J. A. Egan, F. Makdisi, and R. R. Youngs, Seismological Research Letters, 68(1), 180-189 (1997).
+
+\item \Verb+StaffordEtAl_2009_AttenRel+: implements the GMPE described in: "New predictive equations for Arias intensity from crustal earthquakes in New Zealand",  Stafford, P. J., Berrill, J. B. and Pettinga, J. R., Journal of Seismology, Vol. 13, no. 1, pp 31-52 (2009).
+
+\item \Verb+ToroEtAl_2002_AttenRel+: implements the GMPE descrived in: "Modification of the Toro Et Al. (1997) Attenuation Equations for Large Magnitudes and Short Distances", Toro, G. R. (2002).
+
+\item \Verb+ToroEtAl_2002_SHARE_AttenRel+: implements the Toro et. al. 2002 GMPE (\Verb+ToroEtAl_2002_AttenRel+), but adjusted for a reference $vs_{30}=800 m/s$ and for style of faulting as requested by the SHARE project.
+
+\item \Verb+TravasarouEtAl_2003_AttenRel+: implements the GMPE described in: "Empirical attenuation relationship for Arias intensity", Travasarou, T., Bray, J. D. and Abrahamson, N. A., Earthquake Engineering and Structural Dynamics, Vol. 32, pp 1133-1155, (2003).
+
+\item \Verb+YoungsEtAl_1997_AttenRel+: implements the GMPE described in: "Strong Ground Motion Attenuation Relationships for Subduction Zone Earthquakes", R.R.Youngs, S.J. Chiou, W.J. Silva, J. R. Humphrey, Seismological Research Letters, Volume 68, Number 1 (1997).
+
+\item \Verb+ZhaoEtAl_2006_AttenRel+: implements the GMPE described in: "Attenuation Relations of Strong Ground Motion in Japan Using Site Classification Based on Predominant Period", John X. Zhao et al, Bulletin of the Seismological Society of America, Vol. 96, No. 3, pp 898-913 (2006).
+
 \end{itemize}
