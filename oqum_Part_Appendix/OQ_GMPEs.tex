@@ -1,13 +1,70 @@
-%\section{GMPEs in OpenQuake}
 \label{app:gmpes}
 The list of currently supported GMPEs is the following:
 \begin{itemize}
 
-\item \Verb+AB_2003_AttenRel+: implements the GMPE described in "Empirical Ground Motion Relations for Subduction-Zone Earthquakes and their application to Cascadia and other regions", Gail M.Atkinson and David M. Boore, Bulletin of the Seismological Society of America, Vol. 93, No. 4, pp 1703-1729, (2003).  It also considers the: "Erratum to 'Empirical Ground Motion Relations for Subduction-Zone Earthquakes and their application to Cascadia and other regions'", Gail M. Atkinson and David M. Boore, Vol. 98, No. 5, pp.2567-2569, 2008. The GMPE implements the global model but not the corrections for Japan/Cascadia.
+\item \Verb+AB_2003_AttenRel+:
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{ab2003} and \cite{ab2003Erratum}. The GMPE implements the global model but not the corrections for Japan/Cascadia.
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping)
+\item \textbf{Supported components}: random horizontal, average horizontal (added assuming equivalence to average horizontal - \cite{dEtAl2010})
+\item \textbf{Supported standard deviation types}: total, inter-event, intra-event, none
+\item \textbf{Supported periods}: 0.0, 0.04, 0.1, 0.2, 0.4, 1.0, 2.0, 3.0
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item closest distance to rupture
+\item vs30 (the model assumes the following classification):
+\begin{itemize}
+\item vs30 $> 760$ - NEHRP B
+\item $360 <$ vs30 $\leq 760$ - NEHRP C 
+\item $180 \leq$ vs30 $\leq 360$ - NEHRP D 
+\item vs30 $< 180$ - NEHRP E
+\end{itemize}
+\item tectonic region type (interface or intraslab)
+\item focal depth
+\end{itemize}
+\end{itemize}
 
-\item \Verb+AS_1996_AttenRel+: implements the GMPE (for horizontal component) described in "Empirical ground motion models", Abrahamson, N. A. and Silva, W. J. Report to Brookhaven National Laboratory, (1996). Reported in: Stewart J. P., Chiou S.-J., Bray J. D., Graves R. W., Somerville P. G., and Abrahamson N. A., 2001. Ground motion evaluation procedures for performance-based design. PEER Report 2001/09, Pacific Earthquake Engineering Research Center, College of Engineering, University of California, Berkeley, USA.
+\item \Verb+AS_1996_AttenRel+: 
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{as1996} and reported in \cite{s2001}.
+\item \textbf{Supported intensity measure parameters}: Relative Significant Duration (s)
+\item \textbf{Supported components}: average horizontal
+\item \textbf{Supported standard deviation types}: total, none
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item closest distance to rupture
+\item vs30 (the model assumes the following classification):
+\begin{itemize}
+\item vs30 $>600$ - rock
+\item vs30 $\leq180$ - soil
+\end{itemize}
+\end{itemize}
+\end{itemize}
 
-\item \Verb+AS_1997_AttenRel+: implements the GMPE described in "Empirical Response Spectral Attenuation Relations for Shallow Crustal Earthquakes", N. A. Abrahamson and W. J. Silva, Seismological Research Letters, Vol. 68, No. 1, 94-127 (1997).
+\item \Verb+AS_1997_AttenRel+: 
+\begin{itemize}
+\item \textbf{Description}: implements GMPE described in \cite{abrahamson1997a}.
+\item \textbf{Supported intensity measure parameters}: PGA (g), SA (g, at 5\% damping)
+\item \textbf{Supported components}: average horizontal, vertical
+\item \textbf{Supported standard deviation types}: total, none
+\item \textbf{Supported periods}: 0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.075, 0.09, 0.1, 0.12, 0.15, 0.17, 0.2, 0.24, 0.3, 0.36, 0.40, 0.46, 0.5, 0.6, 0.75, 0.85, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0
+\item \textbf{Independent variables}:
+\begin{itemize}
+\item moment magnitude
+\item closest distance to rupture
+\item site class: "Rock/Shallow-Soil",  "Deep-Soil"
+\item rake (to take into account faulting style, the model assumes the following classification):
+\begin{itemize}
+\item 67.5 $\leq$ rake $\leq$ 112.5 - reverse
+\item 22.5 $\leq$ rake $<$ 67.5 - reverse-oblique
+\item 112.5 $<$ rake $\leq$ 157.5 - reverse-oblique
+\end{itemize}
+if not in the above ranges, faulting style is classified as 'other'.
+\item dip (to take into account the hanging-wall effect)
+\end{itemize}
+\end{itemize}
 
 \item \Verb+AS_2008_AttenRel+: implements the GMPE described in "Summary of the Abrahamson and Silva NGA Ground-Motion Relations", Abrahamson, N. A., and W. J. Silva, Earthquake Spectra, 24(1), 67-97 (2008).
 
