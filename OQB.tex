@@ -3,7 +3,7 @@
 % 
 % Authors: 
 % 	H. Crowley 		- Executive Committee - GEM Foundation, Pavia, Italy
-% 	D. Monelli 		- GEM Model Facility, Zurich, Switzerland
+% 	D. Monelli 		- GEM Model Facility, ETH-SED, Zurich, Switzerland
 % 	M. Pagani 		- Executive Committee - GEM Foundation, Pavia, Italy
 % 	V. Silva 		- GEM Model Facility, Pavia, Italy
 %	G. Weatherhill 	- GEM Model Facility, Pavia, Italy
@@ -21,28 +21,28 @@
    Helen Crowley$^1$, Damiano Monelli$^2$, 
    Marco Pagani$^1$, Vitor Silva$^3$, Graeme Weatherill$^3$ \\ \hfill \\
    \small
-   $^1$ GEM Foundation\\
-   via Ferrata, 1 \\ 
-   20133 Pavia \\
-   Italy \\
-   \hfill\\
-   $^1$ GEM Model Facility\hfill\\
-   SED - ETHZ\hfill\\ 
-   Sonneggstrasse, 5\\
-   CH-8092 Zurich\hfill\\
-   Switzerland \hfill\\ 
-   \hfill\\
-   $^3$ GEM Model Facility\hfill\\
-   via Ferrata, 1\hfill\\ 
-   20133 Pavia\hfill\\
-   Italy\hfill\\
-   \hfill\\
-   
-   Email address (for all the authors):\hfill\\
-   $<$name.surname$>$@globalquakemodel.org
-   \normalsize
+   \begin{tabular}{p{4cm}p{4cm}p{4cm}}
+   $^1$ GEM Foundation \hfill \newline
+   via Ferrata, 1 \hfill \newline 
+   20133 Pavia \hfill \newline
+   Italy \hfill \newline
+   & 
+   $^1$ GEM Model Facility \hfill \newline
+   SED - ETHZ \hfill \newline  
+   Sonneggstrasse, 5 \hfill \newline
+   CH-8092 Zurich\hfill \newline
+   Switzerland \hfill \newline
+   &
+   $^3$ GEM Model Facility \hfill \newline 
+   via Ferrata, 1 \hfill \newline 
+   20133 Pavia \hfill \newline
+   Italy \hfill \newline   
+	\end{tabular} \hfill \newline
    %
-   \vspace{1.5cm} \hfill \\
+	Email address (for all the authors):\hfill\\
+   $<$name.surname$>$@globalquakemodel.org
+   %
+   \vspace{0.2cm} \hfill \\
    {\bf{Disclaimer}} \hfill \\
    The OpenQuake Book is distributed in the hope that it will be useful, 
    but without any warranty: without even the implied warranty of 
@@ -57,12 +57,16 @@
    The Book provided hereunder is on as "as is" basis, and the authors 
    and GEM Foundation have no obligations to provide maintenance, support,
    updates, enhancements, or modifications. 
-   
-   %
    \hfill \\
+   The current version of the book has been revised only by members of 
+   the GEM model facility and it must be considered a draft copy.
+   %
+   \vspace{0.2cm} \hfill \\
    {\bf{License}} \hfill \\
    This Book is distributed under the Creative Common License 
-   Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0) (see link below). You can download this Book and share it with others as long as you provide proper 
+   Attribution-NonCommercial-NoDerivs 3.0 Unported (CC BY-NC-ND 3.0) 
+   (see link below). You can download this Book and share it with others 
+   as long as you provide proper 
    credit, but you cannot change it in any way or use it commercially 
    \hfill \\
    \href{http://creativecommons.org/licenses/by-nc-nd/3.0/}
@@ -72,6 +76,7 @@
    {\bf{Credit}} \hfill \\
    Crowley, H., D. Monelli, M. Pagani, V. Silva, G. Weatherill (2011). 
    OpenQuake Book. The GEM Foundation, Pavia, Italy.   
+   \normalsize
 }  
 %
 % =============================================================== BEGIN DOCUMENT
@@ -104,9 +109,9 @@
 	\rput[r](19.5cm,2cm){\sffamily\large\color{gray01}{Version 0.1}}
 \end{pspicture}
 %  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Second page
-\hfill \\
-\clearpage
 \restoregeometry
+\thispagestyle{empty}
+\cleardoublepage
 % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  Load the glossary
 \input{./Part_Introduction/glossary.tex}
 %
@@ -127,8 +132,8 @@
 \tableofcontents
 %
 % --------------------------------------------------------- Symbols and acronyms
-\chapter*{Symbols and Acronyms}
-	\input{./Part_Introduction/symbolsAcronyms.tex}
+% \chapter*{Symbols and Acronyms}
+%	\input{./Part_Introduction/symbolsAcronyms.tex}
 % ==============================================================================
 % ------------------------------------------------------------------------- Part
 \thispagestyle{empty}
