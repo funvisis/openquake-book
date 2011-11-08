@@ -8,6 +8,8 @@ The OpenQuake installation is currently supported on the Ubuntu Operating System
    {http://www.ubuntu.com/}), and installation instructions can be find here:\\ \\
     \href{https://github.com/gem/openquake/wiki/Ubuntu-11.04}
    {https://github.com/gem/openquake/wiki/Ubuntu-11.04}\\ \\
+The installation instructions refer to a single-user/ single-machine scenario. Installation for a multi-user / multi-machine 
+environment is currently not supported. See the section 'Using the engine', for instructions about checking that OpenQuake is installed and working properly.
 Installation on Mac OS X and Windows is not supported, however a workaround is possible by using a virtual machine. For instruction see here:\\ \\
 \href{https://github.com/gem/openquake/wiki/Mac-OS-X}
    {https://github.com/gem/openquake/wiki/Mac-OS-X}   for Mac\\ \\
@@ -17,6 +19,11 @@ Installation on Mac OS X and Windows is not supported, however a workaround is p
 As an alternative of locally installing OpenQuake, the GEM-Model Facility has developed the OpenQuake Alpha Testing Service that gives the possibility to access the latest OpenQuake Alpha release on a cloud based server:\\ \\
 \href{http://openquake.org/alpha-testing-services/}
    {http://openquake.org/alpha-testing-services/}
+   
+\section{Running OpenQuake}
+OpenQuake can be currently run using a Command Line Interface (CLI). The software can be launched by typing the command \Verb+openquake+:
+\begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
+\end{Verbatim}
 
 \section{OpenQuake Calculators and Input definition}
 OpenQuake offers the possibility to perform different types of analysis/calculations for seismic hazard assessment:
