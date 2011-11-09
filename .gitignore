@@ -7,3 +7,9 @@
 *.log
 *.out
 *.toc
+*.acr
+*.alg
+*.bbl
+*.blg
+*.glg
+*.gls
