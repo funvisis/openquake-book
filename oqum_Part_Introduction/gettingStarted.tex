@@ -13,7 +13,7 @@ The OpenQuake installation is currently supported on the Ubuntu Operating System
     \href{https://github.com/gem/openquake/wiki/Ubuntu-11.04}
    {https://github.com/gem/openquake/wiki/Ubuntu-11.04}\\ \\
 The installation instructions refer to a single-user/ single-machine scenario. Installation for a multi-user / multi-machine 
-environment is currently not supported. To checking that OpenQuake is installed and working properly, see the section 'Using the engine'.\\
+environment is currently not supported.\\
 Installation on Mac OS X and Windows is not supported, however a workaround is possible by using a virtual machine. For instruction see here:\\ \\
 \href{https://github.com/gem/openquake/wiki/Mac-OS-X}
    {https://github.com/gem/openquake/wiki/Mac-OS-X}   for Mac\\ \\
@@ -96,14 +96,14 @@ By default OpenQuake saves output data into the OpenQuake-Data Base (that is inc
 openquake --\textcolor{red}{config_file}=/PATH/TO/CONFIG/FILE --\textcolor{red}{output_type}=xml
 \end{Verbatim}
 
-\section{The configuration file}
+\section{Configuring OpenQuake}
 The configuration file follows the INI file format, and consist of statements in the format \Verb+KEY=VALUE+ organized in three main sections:
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
 [\textcolor{red}{general}]
 ...
-[\textcolor{green}{HAZARD}]
+[\textcolor{red}{HAZARD}]
 ...
-[\textcolor{blue}{RISK}]
+[\textcolor{red}{RISK}]
 ...
 \end{Verbatim}
  
@@ -134,7 +134,7 @@ REGION_VERTEX = LAT_1, LON_1, LAT_2, LON_2, ..., LAT_N, LON_N
 REGION_GRID_SPACING = DELTA_GRID
 \end{Verbatim}
 
-where \Verb+REGION_VERTEX+ is a list of vertices coordinates (latitude, longitude) defining a polygonal region. The list of vertices can be defined in clock or counter-clock wise order. \Verb+REGION_GRID_SPACING+ defines the discretization step utilized for the grid construction. No restrictions are given in the number of vertices in the polygon definition.
+where \Verb+REGION_VERTEX+ is a list of vertices coordinates (latitude, longitude, in decimal degrees) defining a polygonal region. The list of vertices can be defined in clock or counter-clock wise order. \Verb+REGION_GRID_SPACING+ defines the discretization step (in decimal degrees) utilized for the grid construction. No restrictions are given in the number of vertices in the polygon definition.
 
 A second option is to define a list of independent geographical locations:
 \begin{Verbatim}[frame=single, commandchars=\\\{\}, samepage=true]
